@@ -1,0 +1,219 @@
+/*------------------------------------------------------------------------
+# JA Barite 1.0 - Feb, 2008
+# ------------------------------------------------------------------------
+# Copyright (C) 2004-2008 J.O.O.M Solutions Co., Ltd. All Rights Reserved.
+# @license - Copyrighted Commercial Software
+# Author: J.O.O.M Solutions Co., Ltd
+# Websites:  http://www.joomlart.com -  http://www.joomlancers.com
+-------------------------------------------------------------------------*/
+
+/* Son of Suckerfish Dropdowns
+---------------------------------------------------------
+Originally developed by Patrick Griffiths and Dan Webb
+http://www.htmldog.com/articles/suckerfish/dropdowns/
+---------------------------------------------------------
+NOTE: After a deep research, we decide to divide this
+CSS into 2 parts. The first part will define the layout.
+The second part will define the visual look for this menu.
+---------------------------------------------------------*/
+
+#ja-cssmenu {
+	margin: 0; /* all lists */
+	padding: 0;
+}
+
+#ja-cssmenu ul {
+	margin: 0; /* all lists */
+	padding: 0;
+}
+#ja-cssmenu li a {
+	-moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-top-color: #EAEAEA;
+	border-bottom-color:#CACACA;
+    border-style: solid;
+    border-width: 1px;
+    position: relative;
+	border-left-color:transparent;
+	border-right-color:transparent;
+	border-bottom: 2px solid #e7e7e7;
+	background: -moz-linear-gradient(#FAFAFA, #EAEAEA) repeat scroll 0 0 transparent;
+    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+#ja-cssmenu li a{
+	padding-left:10px;
+	padding-right:10px;
+	color:#777777;
+    display: block;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 32px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 0 white;
+}
+#ja-cssmenu li {
+	margin: 0; 
+	padding: 0;
+	float: left;
+	display: block;
+	cursor: pointer;
+}
+
+#ja-cssmenu li ul {
+	position:absolute; /* second-level lists */
+	z-index:9999;
+	left: -999em; /* using left instead of display to hide menus because display: none isn't read by screen readers */
+	height: auto;
+	width: 15.9em;
+}
+
+#ja-cssmenu li ul ul {
+	margin: -2.25em 0 0 15.9em; /* third-and-above-level lists */
+}
+
+#ja-cssmenu li li {
+	padding: 0 1em 0 0;
+	margin: 0;
+	width: 14.9em;
+}
+
+#ja-cssmenu ul a {
+	width: 14.9em;
+	width: 13.8em;
+}
+
+#ja-cssmenu li:hover ul ul, #ja-cssmenu li:hover ul ul ul {
+	left: -999em;
+}
+#ja-cssmenu li:hover ul, #ja-cssmenu li li:hover ul, #ja-cssmenu li li li:hover ul {
+	left: auto;
+}
+
+/* STYLING THE MENU
+-----------------------------------*/
+/* 1st level */
+/*#ja-cssmenu li a {
+	display:block;
+	font-weight:bold;
+	line-height:32px;
+	margin:0;
+	padding:0 10px;
+	text-decoration:none;
+	background:transparent url(img/menu_bg.gif) no-repeat scroll 0 0;
+	background-position:-10px 0;
+	border-right:1px solid #ccc;
+}*/
+/*
+ #ja-cssmenu li {
+	border-bottom: 2px solid #DADADA;
+    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    border-right: 1px solid rgba(0, 0, 0, 0.04);
+    color: #777777;
+    display: block;
+    font-size: 12px;
+    line-height: 32px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 0 white;
+}*/
+#ja-cssmenu li a:hover,
+#ja-cssmenu li a:active{
+	color:#000;
+	text-decoration:none;
+}
+
+#ja-cssmenu li:hover a{
+    background: -moz-linear-gradient(#FAFBFD, #DCE6EF) repeat scroll 0 0 transparent;
+    border-bottom: 2px solid #CFDCE8;
+    color: #4183C4;
+}
+#ja-cssmenu li a.active,
+#ja-cssmenu li a.active:focus,
+#ja-cssmenu li a:focus  {
+	border-bottom:2px solid red !important;
+	text-decoration:none;
+	color:#000;
+}
+
+#ja-cssmenu li a.active:hover,
+#ja-cssmenu li a.active:active {
+	color:#fff;
+}
+
+/* 2nd level and above */
+#ja-cssmenu li ul {
+	border-right:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	border-left:1px solid #ccc;
+	background:#f2f2f2;
+}
+
+#ja-cssmenu li ul li {
+	border-top:1px solid #ccc;
+	background:#f2f2f2;
+}
+#ja-cssmenu li ul li a {
+	border:none !important;
+}
+#ja-cssmenu li:hover li a {
+	background:none;
+	color:#333;
+}
+
+#ja-cssmenu li ul a {
+	margin:0;
+	padding:0 10px;
+	border:none;
+	white-space:nowrap;
+	font-weight:normal;
+	line-height:26px;
+}
+
+#ja-cssmenu li ul a:hover,
+#ja-cssmenu li ul a:active,
+#ja-cssmenu li ul a:focus,
+#ja-cssmenu ul li:hover {
+	background:#e2e2e2;
+	text-decoration:none;
+	color:#333;
+}
+
+#ja-cssmenu li li a {
+background:#f2f2f2;
+}
+
+#ja-cssmenu ul li a.active,
+#ja-cssmenu ul li a.active:hover,
+#ja-cssmenu ul li a.active:active,
+#ja-cssmenu ul li a.active:focus {
+	font-weight:bold;
+	text-decoration:none;
+}
+#ja-cssmenu li ul a.x,
+#ja-cssmenu ul ul li a.x {
+	background:url(img/expand-menu.gif) no-repeat scroll 0 0;
+	background-position:100% 7px;
+	cursor:pointer;
+}
+#ja-cssmenu li ul a.x:hover,
+#ja-cssmenu li ul a.x:active,
+#ja-cssmenu li ul a.x:focus {
+	background:url(img/expand-menu.gif) no-repeat scroll 0 0;
+	background-position:100% -12px;
+	cursor:pointer;
+}
+#ja-cssmenu li a.first {
+background-position:left 0;
+border-top-left-radius:10px;
+border-left-color:#dcdada;
+}
+#ja-cssmenu li a.last {
+background-position:right 0;
+border-top-right-radius:10px;
+border-right:1px solid #dcdada !important;
+}
