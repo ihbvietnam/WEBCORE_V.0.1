@@ -66,7 +66,7 @@
     "$('.slider-folder').delegate('.close', 'click', function() {
   			$('#popup_value').val($(this).parent().attr('id'));
   			jConfirm(
-  				\"Bạn muốn xóa ảnh này này?\",
+  				\"Bạn muốn xóa ảnh này?\",
   				\"Xác nhận xóa ảnh\",
   				function(r){
   					if(r){
