@@ -1,7 +1,7 @@
-<?php
-	echo CHtml::activeHiddenField($model,$attribute,array('id'=>'list_image')); 
+<?php 
+	echo CHtml::activeHiddenField($model,$attribute,array('id'=>'list_image_'.$attribute)); 
     $category=get_class($model);
-      $h=Image::$config_thumb_size[$category][$type_image]['h'];
+    $h=Image::$config_thumb_size[$category][$type_image]['h'];
     $w=Image::$config_thumb_size[$category][$type_image]['w'];
 	$this->widget('ext.EAjaxUpload.EAjaxUpload',
 	array(
@@ -13,17 +13,17 @@
                //'minSizeLimit'=>10*1024*1024,// minimum file size in bytes
                //'onSubmit'=>"js:function(id, fileName){ $('.qq-upload-list').hide()}",
                'onComplete'=>"js:function(id, fileName, responseJSON){ 
-               	var current_list_image=$('#list_image').val();
+               	var current_list_image=$('#list_image_".$attribute."').val();
                	if (typeof responseJSON.id != 'undefined')  
         		{
                	if(current_list_image != ''){
-               		$('#list_image').val(current_list_image+','+responseJSON.id);
+               		$('#list_image_".$attribute."').val(current_list_image+','+responseJSON.id);
                	}
                	else {
-               		$('#list_image').val(responseJSON.id);
+               		$('#list_image_".$attribute."').val(responseJSON.id);
                	}
                	$('.qq-upload-list').hide();
-               	$('#".$attribute."').append('<div class=\"item-image\" id=\"'+responseJSON.id+'\"><img style=\"height:".$h."px; width:".$w."px\" src=\"'+responseJSON.url+'\" /><a target=\"_blank\" class=\"edit\" href=\"/admin/image/update/id/'+responseJSON.id+'\"></a><a class=\"close\"></a></div>');
+               	$('#".$attribute."').append('<div class=\"item-image\" id=\"'+responseJSON.id+'\"><img style=\"height:".$h."px; width:".$w."px\" src=\"'+responseJSON.url+'\" /><a class=\"close\"></a></div>'); 
                	}
                	}",
                'messages'=>array(
@@ -49,13 +49,12 @@
               )
 	)); 
 	?>
-    <div class="item-folder" id="<?php echo $attribute;?>">
+    <div class="slider-folder" id="<?php echo $attribute;?>">
     <?php 
     foreach (array_diff(explode(',',$model->$attribute),array('')) as $image_id){
     	$image=Image::model()->findByPk($image_id);
-    	if(isset($image))
-    		echo '<div class="item-image" id="'.$image_id.'"><img style="height:'.$h.'px; width:'.$w.'px" src="'.$image->getThumb($category,$type_image).'" /><a target="_blank" class="edit" href="'.Yii::app()->createUrl('admin/image/update',array('id'=>$image_id)).'"></a><a class="close"></a></div>';
-    }
+    	echo '<div class="item-image" id="'.$image_id.'"><img style="height:'.$h.'px; width:'.$w.'px" src="'.$image->getThumb($category,$type_image).'" /><a class="close"></a></div>';
+	}
     ?>
     </div>
     <div type="hidden" value="" id="popup_value"></div>
@@ -64,7 +63,7 @@
     $cs->registerScriptFile(Yii::app()->request->getBaseUrl(true).'/js/common/jquery.alerts.js');
 	$cs->registerCssFile(Yii::app()->request->getBaseUrl(true).'/css/common/jquery.alerts.css');
     $cs->registerScript('',
-    "$('.item-folder').delegate('.close', 'click', function() {
+    "$('.slider-folder').delegate('.close', 'click', function() {
   			$('#popup_value').val($(this).parent().attr('id'));
   			jConfirm(
   				\"Bạn muốn xóa ảnh này này?\",
@@ -81,12 +80,12 @@
 							else {
 								jAlert('Không thể xóa ảnh');
 							}
-							var list=$('#list_image').val();
+							var list=$('#list_image_".$attribute."').val();
   						 	var list_image = list.split(',');
   						 	list_image = jQuery.grep(list_image, function(value) {
 								return value != data.id;
 							});
-							$('#list_image').val(list_image.join(',')
+							$('#list_image_".$attribute."').val(list_image.join(',')
 							);
         				},
         				'type':'GET',
@@ -98,3 +97,4 @@
         	return false;
 	});");
 	?>
+

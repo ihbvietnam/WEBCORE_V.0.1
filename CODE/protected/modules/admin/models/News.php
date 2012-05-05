@@ -393,28 +393,32 @@ class News extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search()
-	{
+	public function search() {
 		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-
-		$criteria=new CDbCriteria;
-		$criteria->compare('lang',$this->lang);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('catid',$this->catid);
-		if(isset($_GET['pageSize']))
-				Yii::app()->user->setState('pageSize',$_GET['pageSize']);
-		if($this->special !='')	
-			$criteria->addInCondition('special',self::getCode_special($this->special));
+		// should not be searched.	
+		$criteria = new CDbCriteria ();
+		$criteria->compare ( 'lang', $this->lang );
+		$criteria->compare ( 'title', $this->title, true );
+		//Filter catid
+		$cat = Category::model ()->findByPk ( $this->catid );
+		if ($cat != null) {
+			$child_categories = $cat->child_categories;
+			$list_child_id = array ();
+			//Set itself
+			$list_child_id [] = $cat->id;
+			if ($child_categories != null)
+				foreach ( $child_categories as $id => $child_cat ) {
+					$list_child_id [] = $id;
+				}
+			$criteria->addInCondition ( 'catid', $list_child_id );
+		}
+		if (isset ( $_GET ['pageSize'] ))
+			Yii::app ()->user->setState ( 'pageSize', $_GET ['pageSize'] );
+		if ($this->special != '')
+			$criteria->addInCondition ( 'special', self::getCode_special ( $this->special ) );
+		
 		//$criteria->order="order_view DESC,id DESC";
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-			'pagination'=>array(
-				'pageSize'=>Yii::app()->user->getState('pageSize',Yii::app()->params['defaultPageSize']),
-    		),
-    		'sort'=>array(
-    			'defaultOrder'=>'order_view DESC,id DESC',
-  			)    		
+		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Yii::app ()->params ['defaultPageSize'] ) ), 'sort' => array ('defaultOrder' => 'order_view DESC,id DESC' )    		
 		));
 	}
 	/**
