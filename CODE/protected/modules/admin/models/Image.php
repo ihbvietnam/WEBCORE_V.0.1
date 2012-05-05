@@ -22,6 +22,7 @@ class Image extends CActiveRecord
 	 */
 	static $config_category=array(
 		'News'=>'News',
+		'Product'=>'Product',
 		'Album'=>'Album',
 		'GalleryVideo'=>'GalleryVideo',
 		'Banner'=>'Banner',
@@ -38,6 +39,9 @@ class Image extends CActiveRecord
 			'thumb_homepage'=>array('h'=>90,'w'=>90),
 			'thumb_detailpage'=>array('h'=>90, 'w'=>125),
 			'thumb_listpage'=>array('h'=>90,'w'=>90)
+		),
+		'Product'=>array(
+			'thumb_update'=>array('h'=>45,'w'=>45),
 		),
 		'Album'=>array(
 			'thumb_update'=>array('h'=>70,'w'=>100),
@@ -387,6 +391,10 @@ class Image extends CActiveRecord
 						$parent = Album::model ()->findByPk ( $this->parent_id );
 						$parent->scenario = 'upload-image';
 						break;
+					case self::$config_category ['Product'] :
+						$parent = Product::model ()->findByPk ( $this->parent_id );
+						$parent->scenario = 'upload-image';
+						break;
 					case self::$config_category ['Banner'] :
 						$parent = Banner::model ()->findByPk ( $this->parent_id );
 						$parent->scenario = 'upload-image';
@@ -430,6 +438,9 @@ class Image extends CActiveRecord
 				switch ($this->category) {
 					case self::$config_category ['News'] :
 						$parent = News::model ()->findByPk ( $this->parent_id );
+						break;
+					case self::$config_category ['Product'] :
+						$parent = Product::model ()->findByPk ( $this->parent_id );
 						break;
 					case self::$config_category ['Album'] :
 						$parent = Album::model ()->findByPk ( $this->parent_id );
