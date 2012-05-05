@@ -1,5 +1,5 @@
 <?php
-	echo CHtml::activeHiddenField($model,$attribute,array('id'=>'list_image')); 
+	echo CHtml::activeHiddenField($model,$attribute,array('id'=>'list_image_'.$attribute)); 
     $category=get_class($model);
       $h=Image::$config_thumb_size[$category][$type_image]['h'];
     $w=Image::$config_thumb_size[$category][$type_image]['w'];
@@ -13,9 +13,9 @@
                //'minSizeLimit'=>10*1024*1024,// minimum file size in bytes
                //'onSubmit'=>"js:function(id, fileName){ $('.qq-upload-list').hide()}",
                'onComplete'=>"js:function(id, fileName, responseJSON){ 
-               if($(\"#list_image\").val() != ''){
+               if($(\"#list_image_".$attribute."\").val() != ''){
                		jQuery.ajax({
-  						'data':{id : $(\"#list_image\").val()},
+  						'data':{id : $(\"#list_image_".$attribute."\").val()},
   						'dataType':'json',
   						'success':function(data){
   							if(data.status == false){
@@ -28,7 +28,7 @@
         		}
         		if (typeof responseJSON.id != 'undefined')  
         		{
-        			$('#list_image').val(responseJSON.id);
+        			$('#list_image_".$attribute."').val(responseJSON.id);
                		$('.qq-upload-list').hide();
                		$('#".$attribute."').html('<div class=\"item-image\" id=\"'+responseJSON.id+'\"><img style=\"height:".$h."px; width:".$w."px\" src=\"'+responseJSON.url+'\" /></div>');
                	} 
@@ -59,15 +59,12 @@
     <?php 
     foreach (array_diff(explode(',',$model->$attribute),array('')) as $image_id){
     	$image=Image::model()->findByPk($image_id);
-    	if(isset($image))
-    		echo '<div class="item-image" id="'.$image_id.'"><img style="height:'.$h.'px; width:'.$w.'px" src="'.$image->getThumb($category,$type_image).'" /></div>';
-    	else 
-    		echo '<div class="item-image" id="'.$image_id.'"><img style="height:'.$h.'px; width:'.$w.'px" src="'.Image::getDefaultThumb($category,$type_image).'" /></div>';
+    	echo '<div class="item-image" id="'.$image_id.'"><img style="height:'.$h.'px; width:'.$w.'px" src="'.$image->getThumb($category,$type_image).'" /></div>';
     }
     ?>
     </div>
         <?php 
     $cs = Yii::app()->getClientScript(); 
-    $cs->registerScriptFile(Yii::app()->request->getBaseUrl(true).'/js/common/jquery.alerts.js');
-	$cs->registerCssFile(Yii::app()->request->getBaseUrl(true).'/css/common/jquery.alerts.css');
+    $cs->registerScriptFile('js/common/jquery.alerts.js');
+	$cs->registerCssFile('css/common/jquery.alerts.css');
 	?>

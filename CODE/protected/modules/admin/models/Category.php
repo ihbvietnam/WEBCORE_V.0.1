@@ -18,6 +18,8 @@ class Category extends CActiveRecord
 	const GROUP_ADMIN_MENU=1;
 	const GROUP_USER_MENU=2;
 	const GROUP_NEWS=3;
+	const GROUP_PRODUCT=4;
+	const GROUP_MANUFACTURER=5;
 	/*
 	 * Config default controller and action when create admin menu
 	 */
