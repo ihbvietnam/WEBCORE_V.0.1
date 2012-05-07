@@ -50,7 +50,7 @@ class Product extends CActiveRecord
 	public $old_introimage;
 	public $old_name;
 	public $list_special;
-	private $config_other_attributes=array('modified','unit','year','warranty','parameter','price','description','introimage','otherimage','metakey','metadesc');	
+	private $config_other_attributes=array('list_suggest','modified','unit','year','warranty','parameter','price','description','introimage','otherimage','metakey','metadesc');	
 	private $list_other_attributes;
 	
 	/*
@@ -189,7 +189,7 @@ class Product extends CActiveRecord
 		return array(
 			array('name,catid,manufacturer_id,code,introimage','required','message'=>'Dữ liệu bắt buộc','on'=>'write'),
 			array('description,parameter', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'write'),
-			array('list_special,lang,num_price,unit_price,otherimage', 'safe','on'=>'write'),
+			array('list_special,lang,num_price,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
 			array('lang', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
 			array('name,lang, manufacturer_id, catid,special, amount_status','safe','on'=>'search'),
 			array('introimage','safe','on'=>'upload_image'),		
@@ -232,7 +232,8 @@ class Product extends CActiveRecord
 			'special'=>'Trạng thái hiển thị',
 			'introimage'=>'Ảnh giới thiệu',
 			'otherimage'=>'Các ảnh khác',
-			'amount_status'=>'Trạng thái hàng trong kho'
+			'amount_status'=>'Trạng thái hàng trong kho',
+			'list_suggest'=>'Sản phẩm liên quan'
 		);
 	}
 /**
@@ -289,6 +290,10 @@ class Product extends CActiveRecord
 				$modified[time()]=Yii::app()->user->id;
 				$this->modified=json_encode($modified);	
 				if($this->name != $this->old_name) $this->alias=iPhoenixString::createAlias($this->name).'-'.date('d').date('m').date('Y');
+				//Handler list suggest news
+				$list_clear=array_diff(explode(',',$this->list_suggest),array(''));
+				$list_filter=array_diff($list_clear,array($this->id));
+				$this->list_suggest=implode(',', $list_filter);
 			}	
 			//Encode special
 			$this->special=iPhoenixStatus::encodeStatus($this->list_special);

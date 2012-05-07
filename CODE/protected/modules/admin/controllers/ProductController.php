@@ -26,7 +26,7 @@ class ProductController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','create','suggestName'),
+				'actions'=>array('index','create','suggestName','updateSuggest'),
 				'roles'=>array('create'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
@@ -80,10 +80,20 @@ class ProductController extends Controller
 			if($manufacturer['lang']==Article::LANG_VI) $list_manufacturer[$id]=$manufacturer;
 		}
 		
+		//Handler list suggest product
+		if(!Yii::app()->getRequest()->getIsAjaxRequest())
+			Yii::app ()->session ["checked-suggest-list"]=array();
+		$this->initCheckbox('checked-suggest-list');
+		$suggest=new Product('search');
+		$suggest->unsetAttributes();  // clear any default values
+		if(isset($_GET['catid'])) $suggest->catid=$model->catid;
+		if(isset($_GET['SuggestProduct']))
+		$suggest->attributes=$_GET['SuggestProduct'];
 		$this->render('create',array(
 			'model'=>$model,
 			'list_category'=>$list_category,
-			'list_manufacturer'=>$list_manufacturer
+			'list_manufacturer'=>$list_manufacturer,
+			'suggest'=>$suggest
 		));
 	}
 
@@ -124,9 +134,20 @@ class ProductController extends Controller
 			if($manufacturer['lang']==Article::LANG_VI) $list_manufacturer[$id]=$manufacturer;
 		}
 			
+		//Handler list suggest Product
+		if(!Yii::app()->getRequest()->getIsAjaxRequest())
+			Yii::app ()->session ["checked-suggest-list"]=array_diff(explode(',',$model->list_suggest),array(''));
+		$this->initCheckbox('checked-suggest-list');
+		$suggest=new Product('search');
+		$suggest->unsetAttributes();  // clear any default values
+		if(isset($_GET['catid'])) $suggest->catid=$model->catid;
+		if(isset($_GET['SuggestProduct']))
+			$suggest->attributes=$_GET['SuggestProduct'];
+			
 			$this->render ( 'update', array ('model' => $model,
 			'list_category'=>$list_category,
-			'list_manufacturer'=>$list_manufacturer ) );
+			'list_manufacturer'=>$list_manufacturer,
+			'suggest'=>$suggest ) );
 		}		
 	}
 
@@ -155,7 +176,7 @@ class ProductController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$this->initCheckbox();
+		$this->initCheckbox('checked-product-list');
 		$model=new Product('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Product']))
@@ -231,13 +252,24 @@ class ProductController extends Controller
 	{
 		if(Yii::app()->getRequest()->getIsAjaxRequest())
 		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
+			if( !isset($_GET['ajax'] )  || ($_GET['ajax'] != 'list-product-suggest' && $_GET['ajax'] != 'product-list')){
+				echo CActiveForm::validate($model);
+				Yii::app()->end();
+			}
 		}
+	}
+	/*
+	 * List Product suggest 
+	 */
+	public function actionUpdateSuggest()
+	{
+		$this->initCheckbox('checked-suggest-list');
+		$list_checked = Yii::app()->session["checked-suggest-list"];
+		echo implode(',',$list_checked);
 	}
 public function actionCheckbox($action)
 	{
-		$this->initCheckbox();
+		$this->initCheckbox('checked-product-list');
 		$list_checked = Yii::app()->session["checked-product-list"];
 		switch ($action) {
 			case 'delete' :
@@ -264,29 +296,29 @@ public function actionCheckbox($action)
 	/*
 	 * Init checkbox
 	 */
-	public function initCheckbox(){
-		if(!isset(Yii::app()->session['checked-product-list']))
-			Yii::app()->session['checked-product-list']=array();		
+	public function initCheckbox($name_params){
+		if(!isset(Yii::app()->session[$name_params]))
+			Yii::app()->session[$name_params]=array();	
 		if(isset($_POST['list-checked'])){
 			$list_new=array_diff ( explode ( ',', $_POST['list-checked'] ), array ('' ));
-		 	$list_old=Yii::app()->session['checked-product-list'];
+		 	$list_old=Yii::app()->session[$name_params];
 		 	$list=$list_old;
           	foreach ($list_new as $id){
           		if(!in_array($id, $list_old))
                		$list[]=$id;
           	}
-          	Yii::app()->session['checked-product-list']=$list;
+          	Yii::app()->session[$name_params]=$list;
 		 }
 		if(isset($_POST['list-unchecked'])){
 			$list_unchecked=array_diff ( explode ( ',', $_POST['list-unchecked'] ), array ('' ));
-		 	$list_old=Yii::app()->session['checked-product-list'];
+		 	$list_old=Yii::app()->session[$name_params];
 		 	$list=array();
           	foreach ($list_old as $id){
           		if(!in_array($id, $list_unchecked)){
                		$list[]=$id;
           		}
           	}
-          	Yii::app()->session['checked-product-list']=$list;
+          	Yii::app()->session[$name_params]=$list;
 		 }
 	}
 }

@@ -72,7 +72,8 @@ class NewsController extends Controller
 			if($cat['lang']==Article::LANG_VI) $list_category[$id]=$cat;
 		}
 		//Handler list suggest news
-		Yii::app ()->session ["checked-suggest-list"]=array();
+		if(!Yii::app()->getRequest()->getIsAjaxRequest())
+			Yii::app ()->session ["checked-suggest-list"]=array();
 		$this->initCheckbox('checked-suggest-list');
 		$suggest=new News('search');
 		$suggest->unsetAttributes();  // clear any default values
