@@ -71,6 +71,16 @@ class CategoryController extends Controller
 				$model->scenario='news';	
 				$form="_form_news";
 				break;
+				case
+				Category::GROUP_PRODUCT: 
+				$model->scenario='product';	
+				$form="_form_product";
+				break;
+				case
+				Category::GROUP_MANUFACTURER: 
+				$model->scenario='manufacturer';	
+				$form="_form_manufacturer";
+				break;
 				
 			}
 			Yii::app()->clientScript->scriptMap['jquery.js'] = false;
@@ -115,6 +125,16 @@ class CategoryController extends Controller
 				$model->scenario='news';	
 				$form="_form_news";
 				break;
+				case
+				Category::GROUP_PRODUCT: 
+				$model->scenario='product';	
+				$form="_form_product";
+				break;
+				case
+				Category::GROUP_MANUFACTURER: 
+				$model->scenario='manufacturer';	
+				$form="_form_manufacturer";
+				break;
 				
 			}
 			Yii::app()->clientScript->scriptMap['jquery.js'] = false;
@@ -157,6 +177,16 @@ class CategoryController extends Controller
 				Category::GROUP_NEWS: 
 				$model->scenario='news';	
 				$form="_form_news";
+				break;
+				case
+				Category::GROUP_PRODUCT: 
+				$model->scenario='product';	
+				$form="_form_product";
+				break;
+				case
+				Category::GROUP_MANUFACTURER: 
+				$model->scenario='manufacturer';	
+				$form="_form_manufacturer";
 				break;
 				
 			}
@@ -239,6 +269,14 @@ class CategoryController extends Controller
 				Category::GROUP_NEWS: 
 				$model->scenario='news';	
 				break;
+				case
+				Category::GROUP_PRODUCT: 
+				$form="_form_product";
+				break;
+				case
+				Category::GROUP_MANUFACTURER: 	
+				$form="_form_manufacturer";
+				break;
 				
 			}
 			echo CActiveForm::validate($model);
@@ -267,6 +305,14 @@ class CategoryController extends Controller
 				case				
 				Category::GROUP_NEWS: 
 				$model->scenario='news';	
+				break;
+				case
+				Category::GROUP_PRODUCT: 
+				$model->scenario='product';	
+				break;
+				case
+				Category::GROUP_MANUFACTURER: 
+				$form="_form_manufacturer";
 				break;
 				
 			}
@@ -312,6 +358,16 @@ class CategoryController extends Controller
 				Category::GROUP_NEWS: 
 				$model->scenario='news';	
 				$form="_form_news";
+				break;
+				case
+				Category::GROUP_PRODUCT: 
+				$model->scenario='product';	
+				$form="_form_product";
+				break;
+				case
+				Category::GROUP_MANUFACTURER: 
+				$model->scenario='manufacturer';	
+				$form="_form_manufacturer";
 				break;
 				
 			}

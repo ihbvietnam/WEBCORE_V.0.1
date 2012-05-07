@@ -153,7 +153,7 @@ class qqFileUploader {
         	$image->parent_id=$_GET['parent_id'];
         	$type_image=isset($_GET['type_image'])?$_GET['type_image']:'thumb_update';
         	if($image->save()){
-            	return array('success'=>true,'filename'=>$filename,'id'=>$image->id, 'url'=>$image->getThumb($image->category,$type_image));
+            	return array('success'=>true,'filename'=>$filename,'id'=>$image->id,'link_update'=>Yii::app()->createUrl('admin/image/update',array('id'=>$image->id)), 'url'=>$image->getThumb($image->category,$type_image));
         	}
         	else {
         		 return array('error'=> 'Không thể lưu lại file');

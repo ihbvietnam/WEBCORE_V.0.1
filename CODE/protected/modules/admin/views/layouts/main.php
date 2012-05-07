@@ -7,6 +7,8 @@
 <script src="<?php echo Yii::app()->request->getBaseUrl(true)?>/js/admin/mootools.v1.11.js" language="javascript" type="text/javascript"></script>
 <script src="<?php echo Yii::app()->request->getBaseUrl(true)?>/js/admin/ja.moomenu.js" language="javascript" type="text/javascript"></script>
 <script src="<?php echo Yii::app()->request->getBaseUrl(true)?>/js/admin/iphoenix.js" language="javascript" type="text/javascript"></script>
+<script src="<?php echo Yii::app()->request->getBaseUrl(true)?>/js/admin/csspopup.js" type="text/javascript" ></script>
+<script src="<?php echo Yii::app()->request->getBaseUrl(true)?>/js/admin/popup.js" type="text/javascript" ></script>
 <title>.:: Trang quản trị | IHB Việt Nam ::.</title>
 <!--[if IE]>
 <style type="text/css" media="screen, projection">
@@ -22,6 +24,7 @@
 </head>
 
 <body id="home">
+<div id="blanket" style="display: none;"></div>
 <!--begin top panel-->
 <div id="TP_fixed_header" style="position:absolute; top:0%;">
 	<div id="TP_container">

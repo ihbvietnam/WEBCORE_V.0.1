@@ -17,6 +17,10 @@ $cs->registerCssFile(Yii::app()->request->getBaseUrl(true).'/css/admin/sprite.cs
 				break;
 				case Category::GROUP_NEWS: echo "Danh mục bài viết";
 				break;
+				case Category::GROUP_PRODUCT: echo "Danh mục sản phẩm";
+				break;
+				case Category::GROUP_MANUFACTURER:  echo "Danh sách nhà sản xuất";
+				break;
 				default: echo 'Danh mục';
 				break;
 				
@@ -35,6 +39,10 @@ $cs->registerCssFile(Yii::app()->request->getBaseUrl(true).'/css/admin/sprite.cs
 				case Category::GROUP_ROOT: echo "Danh mục gốc";
 				break;
 				case Category::GROUP_NEWS: echo "Danh mục bài viết";
+				break;
+				case Category::GROUP_PRODUCT: echo "Danh mục sản phẩm";
+				break;
+				case Category::GROUP_MANUFACTURER:  echo "Danh sách nhà sản xuất";
 				break;
 				default: echo 'Danh mục';
 				break;
@@ -57,6 +65,10 @@ $cs->registerCssFile(Yii::app()->request->getBaseUrl(true).'/css/admin/sprite.cs
 				case Category::GROUP_ROOT: $form="_form_root";
 				break;
 				case Category::GROUP_NEWS: $form="_form_news";
+				break;
+				case Category::GROUP_PRODUCT: $form="_form_product";
+				break;
+				case Category::GROUP_MANUFACTURER: $form="_form_manufacturer";
 				break;
 				default: $form='_form';
 				break;

@@ -3,7 +3,7 @@ class QA extends CActiveRecord
 {
 	public function tableName()
 	{
-		return 'article';
+		return 'tbl_article';
 	}
 	/*
 	 * Config scope of news
@@ -41,7 +41,7 @@ class QA extends CActiveRecord
 	
 	public $old_answer;
 	public $old_title;
-	private $config_other_attributes=array('created_date','modified','question','answer','phone','email','fullname','metakey','metadesc');	
+	private $config_other_attributes=array('modified','question','answer','phone','email','fullname','metakey','metadesc');	
 	private $list_other_attributes;
 	/*
 	 * Get url
@@ -283,7 +283,7 @@ class QA extends CActiveRecord
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
 		->select('status')
-		->from('article')
+		->from('tbl_article')
 		->where('id=:id',array(':id'=>$id))
 		->queryRow();
 		switch ($command['status']){
@@ -298,7 +298,7 @@ class QA extends CActiveRecord
 				break;
 				break;
 		}
-		$sql='UPDATE article SET status = '.$status.' WHERE id = '.$id;
+		$sql='UPDATE tbl_article SET status = '.$status.' WHERE id = '.$id;
 		$command=Yii::app()->db->createCommand($sql);
 		if($command->execute()) {
 			switch ($status) {

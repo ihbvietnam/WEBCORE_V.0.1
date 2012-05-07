@@ -1179,3 +1179,27 @@ div.form span.required
 	background:url(img/topMenuImages.png) 100% -90px no-repeat;
 }
 /*end tab*/
+/* Pop up form*/
+#blanket {
+   //background-color:#111;
+   opacity: 0.65;
+   position:absolute;
+   z-index: 9001;
+   width:100%;
+}
+#popUpDiv {
+    position:absolute;
+    width:520px;
+    height:400px;
+    z-index: 9002;
+}
+.sendMark{
+	margin:auto auto;
+	width:500px;
+	height:auto; 
+	border:8px solid #EEEEEE;
+	display: block;
+	border-radius:5px;
+	background:#E5F1F4;
+}
+/*End of pop up form*/

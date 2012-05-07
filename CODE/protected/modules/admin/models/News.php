@@ -7,7 +7,7 @@ class News extends CActiveRecord
 {	
 	public function tableName()
 	{
-		return 'article';
+		return 'tbl_article';
 	}
 	/*
 	 * Config scope of news
@@ -57,7 +57,7 @@ class News extends CActiveRecord
 	public $old_introimage;
 	public $list_special;
 	public $old_title;
-	private $config_other_attributes=array('created_date','modified','fulltext','introtext','introimage','metakey','metadesc','up_introimage',);	
+	private $config_other_attributes=array('modified','fulltext','introtext','introimage','list_suggest','metakey','metadesc');	
 	private $list_other_attributes;
 	/*
 	 * Get list order view
@@ -206,7 +206,7 @@ class News extends CActiveRecord
 			array('catid,lang,order_view', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
 			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'write'),
 			array('introimage', 'length', 'max'=>8,'on'=>'write'),
-			array('fulltext,list_special,lang', 'safe', 'on'=>'write'),
+			array('fulltext,list_special,lang,list_suggest', 'safe', 'on'=>'write'),
 			array('introimage','safe','on'=>'upload_image'),
 			array('title,catid,special,lang','safe','on'=>'search'),
 			array('status','safe','on'=>'reverse_status')
@@ -260,7 +260,8 @@ class News extends CActiveRecord
 			'special'=>'Lọc theo nhóm hiển thị',
 			'catid' => 'Thuộc danh mục',
 			'lang'=>'Ngôn ngữ',
-			'order_view'=>'Mức ưu tiên hiển thị'
+			'order_view'=>'Mức ưu tiên hiển thị',
+			'list_suggest'=>'Bài viết liên quan'
 		);
 	}
 	/**
@@ -319,6 +320,10 @@ class News extends CActiveRecord
 				$modified[time()]=Yii::app()->user->id;
 				$this->modified=json_encode($modified);	
 				if($this->title != $this->old_title) $this->alias=iPhoenixString::createAlias($this->title);
+				//Handler list suggest news
+				$list_clear=array_diff(explode(',',$this->list_suggest),array(''));
+				$list_filter=array_diff($list_clear,array($this->id));
+				$this->list_suggest=implode(',', $list_filter);
 			}
 			//Encode special
 			$this->special=iPhoenixStatus::encodeStatus($this->list_special);		
@@ -448,7 +453,7 @@ class News extends CActiveRecord
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
 		->select('status')
-		->from('article')
+		->from('tbl_article')
 		->where('id=:id',array(':id'=>$id))
 		->queryRow();
 		switch ($command['status']){
@@ -459,7 +464,7 @@ class News extends CActiveRecord
 				$status=self::STATUS_PENDING;
 				break;
 		}
-		$sql='UPDATE article SET status = '.$status.' WHERE id = '.$id;
+		$sql='UPDATE tbl_article SET status = '.$status.' WHERE id = '.$id;
 		$command=Yii::app()->db->createCommand($sql);
 		if($command->execute()) {
 			switch ($status) {

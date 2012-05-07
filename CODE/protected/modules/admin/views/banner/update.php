@@ -1,22 +1,22 @@
 <?php 
 							switch ($model->id){
-								case Banner::CODE_RIGHT: 
-									$type_image="thumb_right";
-									break;
-								case Banner::CODE_LINK_PARTNER:
-									$type_image="link_partner";
+								case Banner::CODE_TOP:
+									$type_image="thumb_top";
 									break;
 								case Banner::CODE_MAIN:
 									$type_image="thumb_main";
 									break;
+								case Banner::CODE_RIGHT: 
+									$type_image="thumb_right";
+									break;
+								case Banner::CODE_LEFT:
+									$type_image="thumb_left";
+									break;
 								case Banner::CODE_FOOTER:
 									$type_image="thumb_footer";
 									break;
-								case Banner::CODE_TOP_VI:
-									$type_image="thumb_top";
-									break;
-								case Banner::CODE_TOP_EN:
-									$type_image="thumb_top";
+								case Banner::CODE_LINK_PARTNER:
+									$type_image="link_partner";
 									break;
 							}
 ?>
@@ -35,7 +35,6 @@
 		<div class="folder-content form">
 		<div>
                 <input type="button" class="button" value="Danh sách banner" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/banner')?>'"/>
-                <input type="button" class="button" value="Quản trị ảnh" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/image/list',array('category'=>'Banner','parent_id'=>$model->id))?>'"/>
                 <div class="line top bottom"></div>	
             </div>
 		<?php $form=$this->beginWidget('CActiveForm', array('method'=>'post','enableAjaxValidation'=>true)); ?>	

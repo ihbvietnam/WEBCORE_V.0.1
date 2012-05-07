@@ -114,7 +114,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'user';
+		return 'tbl_user';
 	}
 
 	/**
@@ -383,7 +383,7 @@ class User extends CActiveRecord
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
 		->select('status')
-		->from('user')
+		->from('tbl_user')
 		->where('id=:id',array(':id'=>$id))
 		->queryRow();
 		switch ($command['status']){
@@ -394,7 +394,7 @@ class User extends CActiveRecord
 				$status=self::STATUS_PENDING;
 				break;
 		}
-		$sql='UPDATE user SET status = '.$status.' WHERE id = '.$id;
+		$sql='UPDATE tbl_user SET status = '.$status.' WHERE id = '.$id;
 		$command=Yii::app()->db->createCommand($sql);
 		if($command->execute()) {
 			switch ($status) {

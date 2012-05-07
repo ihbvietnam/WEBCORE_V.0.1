@@ -27,7 +27,7 @@ class NewsController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','create','copy','suggestTitle','dynamicCat','checkbox'),
+				'actions'=>array('index','create','copy','suggestTitle','dynamicCat','checkbox','updateSuggest'),
 				'roles'=>array('create'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
@@ -71,10 +71,19 @@ class NewsController extends Controller
 		foreach ($list as $id=>$cat){
 			if($cat['lang']==Article::LANG_VI) $list_category[$id]=$cat;
 		}
-
+		//Handler list suggest news
+		Yii::app ()->session ["checked-suggest-list"]=array();
+		$this->initCheckbox('checked-suggest-list');
+		$suggest=new News('search');
+		$suggest->unsetAttributes();  // clear any default values
+		if(isset($_GET['catid'])) $suggest->catid=$model->catid;
+		if(isset($_GET['SuggestNews']))
+			$suggest->attributes=$_GET['SuggestNews'];
+			
 		$this->render('create',array(
 			'model'=>$model,
-			'list_category'=>$list_category
+			'list_category'=>$list_category,
+			'suggest'=>$suggest
 			
 		));
 	}
@@ -129,9 +138,20 @@ class NewsController extends Controller
 		foreach ($list as $id=>$cat){
 			if($cat['lang']==$model->lang) $list_category[$id]=$cat;
 		}
+		
+		//Handler list suggest news
+		if(!Yii::app()->getRequest()->getIsAjaxRequest())
+			Yii::app ()->session ["checked-suggest-list"]=array_diff(explode(',',$model->list_suggest),array(''));
+		$this->initCheckbox('checked-suggest-list');
+		$suggest=new News('search');
+		$suggest->unsetAttributes();  // clear any default values
+		if(isset($_GET['catid'])) $suggest->catid=$model->catid;
+		if(isset($_GET['SuggestNews']))
+			$suggest->attributes=$_GET['SuggestNews'];
 		$this->render('update',array(
 			'model'=>$model,
-			'list_category'=>$list_category
+			'list_category'=>$list_category,
+			'suggest'=>$suggest
 		));		
 		}
 		else 
@@ -165,7 +185,7 @@ class NewsController extends Controller
 	 */
 	public function actionCheckbox($action)
 	{
-		$this->initCheckbox();
+		$this->initCheckbox('checked-news-list');
 		$list_checked = Yii::app()->session["checked-news-list"];
 		switch ($action) {
 			case 'delete' :
@@ -216,14 +236,13 @@ class NewsController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$this->initCheckbox();
+		$this->initCheckbox('checked-news-list');
 		$model=new News('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['catid'])) $model->catid=News::PRESENT_CATEGORY;
 		$model->lang=Article::LANG_VI;
 		if(isset($_GET['News']))
-			$model->attributes=$_GET['News'];
-			
+			$model->attributes=$_GET['News'];	
 		//Group categories that contains news
 		$group=new Category();		
 		$group->group=Category::GROUP_NEWS;
@@ -285,30 +304,39 @@ class NewsController extends Controller
 	/*
 	 * Init checkbox
 	 */
-	public function initCheckbox(){
-		if(!isset(Yii::app()->session['checked-news-list']))
-			Yii::app()->session['checked-news-list']=array();			
+	public function initCheckbox($name_params){
+		if(!isset(Yii::app()->session[$name_params]))
+			Yii::app()->session[$name_params]=array();	
 		if(isset($_POST['list-checked'])){
 			$list_new=array_diff ( explode ( ',', $_POST['list-checked'] ), array ('' ));
-		 	$list_old=Yii::app()->session['checked-news-list'];
+		 	$list_old=Yii::app()->session[$name_params];
 		 	$list=$list_old;
           	foreach ($list_new as $id){
           		if(!in_array($id, $list_old))
                		$list[]=$id;
           	}
-          	Yii::app()->session['checked-news-list']=$list;
+          	Yii::app()->session[$name_params]=$list;
 		 }
 		if(isset($_POST['list-unchecked'])){
 			$list_unchecked=array_diff ( explode ( ',', $_POST['list-unchecked'] ), array ('' ));
-		 	$list_old=Yii::app()->session['checked-news-list'];
+		 	$list_old=Yii::app()->session[$name_params];
 		 	$list=array();
           	foreach ($list_old as $id){
           		if(!in_array($id, $list_unchecked)){
                		$list[]=$id;
           		}
           	}
-          	Yii::app()->session['checked-news-list']=$list;
+          	Yii::app()->session[$name_params]=$list;
 		 }
+	}
+	/*
+	 * List news suggest 
+	 */
+	public function actionUpdateSuggest()
+	{
+		$this->initCheckbox('checked-suggest-list');
+		$list_checked = Yii::app()->session["checked-suggest-list"];
+		echo implode(',',$list_checked);
 	}
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
@@ -331,7 +359,7 @@ class NewsController extends Controller
 	{
 		if(Yii::app()->getRequest()->getIsAjaxRequest() )
 		{
-		if( !isset($_GET['ajax'] )  || $_GET['ajax'] != 'list-news-suggest' ){
+		if( !isset($_GET['ajax'] )  || ($_GET['ajax'] != 'list-news-suggest' && $_GET['ajax'] != 'news-list')){
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}

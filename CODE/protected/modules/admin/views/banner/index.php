@@ -11,6 +11,10 @@
 		</div>
 		<!--end title-->
 		<div class="folder-content">
+			<div>
+            	<input type="button" class="button" value="Thêm banner" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/banner/create')?>'"/>
+                <div class="line top bottom"></div>	
+            </div>
              <!--begin box search-->
          <?php 
 			Yii::app()->clientScript->registerScript('search', "
