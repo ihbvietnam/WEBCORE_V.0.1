@@ -99,8 +99,8 @@
                     	<div class="row">
 							<li>
 								<?php echo $form->labelEx($model,'list_suggest'); ?>
-								<input type="button" id="btn-add-product" class="button" value="Chọn tin tức"	style="width: 125px;" onclick="showPopUp();return false;"/>
-								<?php echo $form->hiddenField($model,'list_suggest'); ?>				
+								<?php echo $form->textField($model,'list_suggest',array('readonly'=>'readonly','style'=>'width:200px')); ?>	
+								<input type="button" id="btn-add-product" class="button" value="Chọn tin tức"	style="width: 125px;" onclick="showPopUp();return false;"/>			
 							</li>
 						</div>
 					</div>
