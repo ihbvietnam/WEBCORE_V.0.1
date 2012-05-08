@@ -1,6 +1,5 @@
 assets/*
 protected/runtime/*
-protected/modules/admin/runtime/*
 upload/*
 .settings/*
 .buildpath
