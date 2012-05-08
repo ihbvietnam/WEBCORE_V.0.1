@@ -71,7 +71,7 @@ return array(
 		*/
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=phoenix',
+			'connectionString' => 'mysql:host=localhost;dbname=dogo',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => 'thanhdaica',
