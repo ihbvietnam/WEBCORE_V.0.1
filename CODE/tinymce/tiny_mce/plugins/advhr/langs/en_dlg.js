@@ -1,1 +1,5 @@
-tinyMCE.addI18n('en.advhr_dlg',{size:"Height",noshade:"No shadow",width:"Width"});
+tinyMCE.addI18n('en.advhr_dlg',{
+width:"Width",
+size:"Height",
+noshade:"No shadow"
+});
