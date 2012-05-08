@@ -1,8 +1,8 @@
-assets/
-protected/runtime/
-protected/modules/admin/runtime/
-upload/
-.settings/
+assets/*
+protected/runtime/*
+protected/modules/admin/runtime/*
+upload/*
+.settings/*
 .buildpath
 .project
 error_log
