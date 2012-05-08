@@ -20,4 +20,11 @@ class SiteController extends Controller
 					$this->render( 'error', $error );
 			}
 	}
+	/**
+	 * This is the action to handle view home page
+	 */
+	public function actionHome()
+	{
+		$this->render( 'home' );
+	}	
 }

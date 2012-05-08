@@ -1,0 +1,291 @@
+/* CSS Framework, create by Lee Haira - Leehaira@gmail.com */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+html
+{
+	height: 100%;
+}
+body,html,* {
+	padding: 0;
+	margin: 0;
+	font-family: Tahoma, Arial, san-serifs;
+	font-size:12px;
+}
+body {
+	overflow-x: hidden;
+	word-wrap: break-word;
+}
+a{
+	text-decoration:none;
+	color:#D3A551;
+	font-weight:bold;
+	cursor:pointer;
+}
+:focus {
+	outline:none;
+}
+::-moz-focus-inner {
+	border:0;
+}
+ins
+{
+	text-decoration: none;
+}
+del,.del
+{
+	text-decoration: line-through;
+	color:#f30
+}
+ol, ul {
+	list-style: none;
+}
+img {
+	border: none;
+	overflow:hidden;
+	font-size:10px;
+	color: transparent;
+  	vertical-align: middle;
+	/*For IE.  http://css-tricks.com/ie-fix-bicubic-scaling-for-images*/
+  	-ms-interpolation-mode: bicubic;
+}
+table{
+	border-collapse:collapse;
+}
+p, h5 {
+	font-size:12px;
+}
+h1 {
+	font-size:18px;
+}
+h2 {
+	font-size:16px;
+}
+h3, label {
+	font-size:14px;
+}
+h4 {
+	font-size:13px;
+}
+h6 {
+	font-size:11px;
+}
+/* PREDEFINED */
+.input-blur {
+	color: #686f76 !IMPORTANT;
+	font-weight:normal !IMPORTANT;
+}
+.input-focus {
+}
+._absolute {
+	position: absolute;
+}
+._italic {
+	position: italic;
+}
+._shadow {
+	text-shadow: 2px 2px 2px #551111;
+}
+._test {
+	border: 1px solid red;
+}
+._pointer {
+	cursor: pointer !IMPORTANT;
+}
+.clear, ._clear {
+	clear: both !IMPORTANT
+}
+._normal {
+	font-weight: normal !IMPORTANT
+}
+._bold {
+	font-weight: bold !IMPORTANT
+}
+._underline {
+	text-decoration: underline;
+}
+._hidden, .hidden {
+	display: none;
+}
+._invisible {
+	opacity:0;
+	filter:alpha(opacity=0));
+}
+._center {
+	text-align: center;
+}
+._justify {
+	text-align: justify;
+}
+._full {
+	width: 100%;
+}
+._f11 {
+	font-size:11px;
+}
+._f12 {
+	font-size:12px;
+}
+._f13 {
+	font-size:13px;
+}
+._f14 {
+	font-size:14px;
+}
+._f15 {
+	font-size:15px;
+}
+._bold {
+	font-weight: bold;
+}
+._inline {
+	display: inline-block;
+}
+.line, ._line {
+	height:1px;
+	width:100%;
+	background:#dce0e4;
+	float:left;
+}
+.wline, ._wline {
+	height:1px;
+	width:100%;
+	background:#fff;
+	display:block;
+}
+.fleft{
+	float:left;
+}
+.fright{
+	float:right;
+}
+/*color*/
+.white, ._white {
+	color:#fff !important;
+}
+.black, .black {
+	color:#000 !important;
+}
+.red, ._red {
+	color:red !important;
+}
+.reditalic, ._reditalic {
+	color:red;
+	font-style:italic;
+}
+/*end color*/
+/*fix border*/
+.fix-bordertop {
+	border-top:none !important;
+}
+.fix-borderbottom {
+	border-bottom:none !important;
+}
+.fix-borderleft {
+	border-left:none !important;
+}
+.fix-borderright {
+	border-right:none !important;
+}
+/*end fix border*/
+/*clearfix for all browers*/
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+} 
+.clearfix {
+	display: inline-block;
+}
+html[xmlns] .clearfix {
+	display: block;
+}
+* html .clearfix {
+	height: 1%;
+}
+hr {
+	background:#ddd;
+	color:#ddd;
+	clear:both;
+	float:none;
+	width:100%;
+	height:1px;
+	margin:0 0 17px;
+	border:none;
+}
+hr.space {
+	background:#fff;
+	color:#fff;
+	visibility:hidden;
+}
+/*end clearfix*/
+.margin-bottom-0{
+	margin-bottom:0 !important;
+}
+.box-button{
+	overflow:hidden;
+	padding:5px 10px 5px 0;
+}
+.button{
+	border:none;
+	font-size:12px;
+	font-weight:bold;
+	background:#cb9446;
+	padding:7px 25px !important;
+	color:#fff;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+}
+.button:hover{
+	background:#f37613;
+	color:#fff;
+}
+input[type=submit].button{
+	color:#fff;
+	line-height:20px;
+}
+input[type=reset].button, input[type=button].button{
+	color:#fff;
+	line-height:20px;
+}
+.big-button{
+	display:inline-block;
+	background: url(../../images/front/front/big-button.png) no-repeat;
+	border:none;
+	cursor:pointer;
+	text-align:center;
+	color:#000;
+	line-height:26px;
+	height:33px;
+	width:114px;
+	padding:3px 0 !important;
+	font-size:13px;
+	font-weight:normal;
+	text-transform:uppercase;
+	text-shadow:1px 1px 1px rgba(255,255,255,0.5);
+}
+.big-button:hover, a.big-button:hover{
+	color:#333;
+}
+.empty{
+	display:block;
+	padding:10px 0;
+}
