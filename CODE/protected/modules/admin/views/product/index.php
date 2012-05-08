@@ -40,32 +40,8 @@
 								'style'=>'width:230px;',
 								),
 						)); ?>
-						<li>
-						<?php 
-							$list=array(''=>'Không lọc');
-							$list +=Product::getList_label_specials();
-						?>	
-						<li>
-							<?php echo $form->labelEx($model,'special'); ?>
-							<?php echo $form->dropDownList($model,'special',$list,array('style'=>'width:200px')); ?>
-						</li>					
-						<li>
-                        <?php 
-							echo CHtml::submitButton('Lọc kết quả',
-    						array(
-    							'class'=>'button',
-    							'style'=>'margin-left:153px; width:95px;',
-    							''
-    						)); 						
-    					?>
-                        </li>                                             
-                    </ul>
-                </div>
-                <!--end left content-->     
-                <!--begin right content-->
-                <div class="fl" style="width:480px;">
-                   <ul>
-                   <?php 
+						</li>
+						 <?php 
 					$list=array(''=>'Tất cả các nhóm');
 					foreach ($list_category as $id=>$cat){
 						$view = "";
@@ -92,7 +68,39 @@
                     <li>
 						<?php echo $form->labelEx($model,'manufacturer_id'); ?>
                         <?php echo $form->dropDownList($model,'manufacturer_id', $list);?>														
-                    </li>                   	                   	
+                    </li>  										
+						<li>
+                        <?php 
+							echo CHtml::submitButton('Lọc kết quả',
+    						array(
+    							'class'=>'button',
+    							'style'=>'margin-left:153px; width:95px;',
+    							''
+    						)); 						
+    					?>
+                        </li>                                             
+                    </ul>
+                </div>
+                <!--end left content-->     
+                <!--begin right content-->
+                <div class="fl" style="width:480px;">
+                   <ul>
+                     <?php 
+							$list=array(''=>'Không lọc');
+							$list +=Product::getList_label_specials();
+						?>	
+						<li>
+							<?php echo $form->labelEx($model,'special'); ?>
+							<?php echo $form->dropDownList($model,'special',$list,array('style'=>'width:200px')); ?>
+						</li>	
+						 <?php 
+							$list=array(''=>'Tất cả');
+							$list +=array(Order::STATUS_PENDING=>'Hết hàng',Order::STATUS_ACTIVE=>'Còn hàng trong kho');
+						?>	
+						<li>
+							<?php echo $form->labelEx($model,'amount_status'); ?>
+							<?php echo $form->dropDownList($model,'amount_status',$list,array('style'=>'width:200px')); ?>
+						</li>	              	                   	
                    </ul>
                 </div>
                 <!--end right content-->           

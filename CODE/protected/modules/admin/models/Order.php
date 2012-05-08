@@ -3,20 +3,18 @@ class Order extends CActiveRecord
 {
 	public function tableName()
 	{
-		return 'article';
+		return 'tbl_order';
 	}
 	/*
 	 * Config scope of news
 	 */
 	public function defaultScope(){
-	if(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'en')
+		if(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'en')
 			return array(
-			'condition'=>'type = '.Article::ARTICLE_ORDER.' AND lang = '.Article::LANG_EN,
-		);
-		else 
-			return array(
-			'condition'=>'type = '.Article::ARTICLE_ORDER,
-		);	
+				'condition'=>'lang = '.Article::LANG_EN,
+			);
+		else
+			return array();
 	}
 	/*
 	 * Config status of contact
@@ -46,13 +44,9 @@ class Order extends CActiveRecord
 	public function getOrder_Content($content){
 		$order_content = '';
 		foreach($content as $code => $amount){
-				$product_name=Yii::app()->db->createCommand()
-				->select('name')
-				->from('product')
-				->where('code=:code',array(':code'=>$code))
-				->queryall();
-			if($product_name){
-				$order_content .=" <br/> Sản phẩm: ".$product_name[0]['name']." - Số lượng: ".$amount;
+			$product=Product::model()->findByPk($code);
+			if(isset($product)){
+				$order_content .=" <br/> Sản phẩm: ".$product->name." - Số lượng: ".$amount;
 			}
 		}		
 		return ($order_content);
@@ -212,7 +206,6 @@ class Order extends CActiveRecord
 				$modified[time()]=Yii::app()->user->id;
 				$this->modified=json_encode($modified);	
 			}	
-			$this->type=Article::ARTICLE_ORDER;
 			//Encode list item
 			$this->content=json_encode($this->list_item);
 			$this->other=json_encode($this->list_other_attributes);
@@ -232,7 +225,6 @@ class Order extends CActiveRecord
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
-		$criteria->compare('created_by',$this->created_by);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('process_status',$this->process_status);
 		if($this->start_time !=null){			
@@ -278,7 +270,7 @@ class Order extends CActiveRecord
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
 		->select('status')
-		->from('article')
+		->from('tbl_order')
 		->where('id=:id',array(':id'=>$id))
 		->queryRow();
 		switch ($command['status']){
@@ -289,7 +281,7 @@ class Order extends CActiveRecord
 				$status=self::STATUS_PENDING;
 				break;
 		}
-		$sql='UPDATE article SET status = '.$status.' WHERE id = '.$id;
+		$sql='UPDATE tbl_order SET status = '.$status.' WHERE id = '.$id;
 		$command=Yii::app()->db->createCommand($sql);
 		if($command->execute()) {
 			switch ($status) {
@@ -311,7 +303,7 @@ class Order extends CActiveRecord
 	static function reverseProcessStatus($id){
 		$command=Yii::app()->db->createCommand()
 		->select('process_status')
-		->from('article')
+		->from('tbl_order')
 		->where('id=:id',array(':id'=>$id))
 		->queryRow();
 		switch ($command['process_status']){
@@ -322,7 +314,7 @@ class Order extends CActiveRecord
 				$status=self::STATUS_PENDING;
 				break;
 		}
-		$sql='UPDATE article SET process_status = '.$status.' WHERE id = '.$id;
+		$sql='UPDATE tbl_order SET process_status = '.$status.' WHERE id = '.$id;
 		$command=Yii::app()->db->createCommand($sql);
 		if($command->execute()) {
 			switch ($status) {

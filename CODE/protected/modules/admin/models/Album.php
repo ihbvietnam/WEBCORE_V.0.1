@@ -3,7 +3,7 @@ class Album extends CActiveRecord
 {
 	public function tableName()
 	{
-		return 'article';
+		return 'tbl_article';
 	}
 	/*
 	 * Get scope of album
@@ -44,7 +44,7 @@ class Album extends CActiveRecord
 	public $old_title;
 	public $list_special;
 	private $list_other_attributes;
-	private $config_other_attributes=array('created_date','modified','images','description','metakey','metadesc');	
+	private $config_other_attributes=array('modified','images','description','metakey','metadesc');	
 	/*
 	 * Get image url which view status of album 
 	 */
@@ -264,6 +264,7 @@ class Album extends CActiveRecord
 			}	
 			//Encode special
 			$this->special=iPhoenixStatus::encodeStatus($this->list_special);
+			/*
 			//Set list_special of other album to empty
 			if(sizeof($this->list_special)>0){
 				$list_album=Album::model()->findAll('id <> '.$this->id.' AND lang = '.$this->lang);
@@ -272,6 +273,7 @@ class Album extends CActiveRecord
 					$album->save();
 				}
 			} 
+			*/
 			$this->type=Article::ARTICLE_ALBUM;
 			$this->other=json_encode($this->list_other_attributes);
 			return true;
@@ -361,7 +363,7 @@ class Album extends CActiveRecord
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
 		->select('status')
-		->from('article')
+		->from('tbl_article')
 		->where('id=:id',array(':id'=>$id))
 		->queryRow();
 		switch ($command['status']){
@@ -372,7 +374,7 @@ class Album extends CActiveRecord
 				$status=self::STATUS_PENDING;
 				break;
 		}
-		$sql='UPDATE article SET status = '.$status.' WHERE id = '.$id;
+		$sql='UPDATE tbl_article SET status = '.$status.' WHERE id = '.$id;
 		$command=Yii::app()->db->createCommand($sql);
 		if($command->execute()) {
 			switch ($status) {

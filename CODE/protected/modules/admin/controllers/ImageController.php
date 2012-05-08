@@ -78,7 +78,7 @@ class ImageController extends Controller
 			$size['w']=$zoom*$model->width;
 			$size['h']=$zoom*$model->height;
 			$thumb_url=Yii::app()->request->getBaseUrl(true).'/'.$model->src.'/origin/'.$model->filename.'.'.$model->extension;			
-			$this->render ( 'update', array ('model' => $model,'thumb_url'=> $thumb_url, 'size'=>$size ) );
+			$this->renderPartial('update', array ('model' => $model,'thumb_url'=> $thumb_url, 'size'=>$size ) );
 	}
 	
 	/**

@@ -3,7 +3,7 @@ class GalleryVideo extends CActiveRecord
 {
 	public function tableName()
 	{
-		return 'article';
+		return 'tbl_article';
 	}
 	/*
 	 * Get scope of gallery video
@@ -45,7 +45,7 @@ class GalleryVideo extends CActiveRecord
 	public $old_introimage;
 	public $old_title;
 	public $list_special;
-	private $config_other_attributes=array('created_date','modified','link','description','introimage','metakey','metadesc');	
+	private $config_other_attributes=array('modified','link','description','introimage','metakey','metadesc');	
 	private $list_other_attributes;
 	
 	/*
@@ -381,7 +381,7 @@ class GalleryVideo extends CActiveRecord
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
 		->select('status')
-		->from('article')
+		->from('tbl_article')
 		->where('id=:id',array(':id'=>$id))
 		->queryRow();
 		switch ($command['status']){
@@ -392,7 +392,7 @@ class GalleryVideo extends CActiveRecord
 				$status=self::STATUS_PENDING;
 				break;
 		}
-		$sql='UPDATE article SET status = '.$status.' WHERE id = '.$id;
+		$sql='UPDATE tbl_article SET status = '.$status.' WHERE id = '.$id;
 		$command=Yii::app()->db->createCommand($sql);
 		if($command->execute()) {
 			switch ($status) {

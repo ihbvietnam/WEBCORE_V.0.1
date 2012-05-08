@@ -3,7 +3,7 @@ class Banner extends CActiveRecord
 {
 	public function tableName()
 	{
-		return 'article';
+		return 'tbl_article';
 	}
 	/*
 	 * Config scope of banner
@@ -23,17 +23,17 @@ class Banner extends CActiveRecord
 	/*
 	 * Config code of banner (id)
 	 */
-	const CODE_RIGHT=1;
-	const CODE_FOOTER=3;
-	const CODE_LINK_PARTNER=2;
-	const CODE_MAIN=4;
-	const CODE_TOP_VI=43;
-	const CODE_TOP_EN=44;
+	const CODE_TOP=1;
+	const CODE_MAIN=2;
+	const CODE_RIGHT=3;
+	const CODE_LEFT=4;
+	const CODE_FOOTER=5;
+	const CODE_LINK_PARTNER=6;
 	
 	public $old_images;
 	public $old_title;
 	private $list_other_attributes;
-	private $config_other_attributes=array('created_date','modified','images','description','metakey','metadesc');	
+	private $config_other_attributes=array('modified','images','description','metakey','metadesc');	
 	
 	/*
 	 * Get image url which view status of banner 
@@ -281,7 +281,7 @@ class Banner extends CActiveRecord
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
 		->select('status')
-		->from('article')
+		->from('tbl_article')
 		->where('id=:id',array(':id'=>$id))
 		->queryRow();
 		switch ($command['status']){
@@ -292,7 +292,7 @@ class Banner extends CActiveRecord
 				$status=self::STATUS_PENDING;
 				break;
 		}
-		$sql='UPDATE article SET status = '.$status.' WHERE id = '.$id;
+		$sql='UPDATE tbl_article SET status = '.$status.' WHERE id = '.$id;
 		$command=Yii::app()->db->createCommand($sql);
 		if($command->execute()) {
 			switch ($status) {

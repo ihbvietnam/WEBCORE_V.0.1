@@ -123,15 +123,15 @@ class CActiveDataProvider extends CDataProvider
 	protected function fetchData()
 	{
 		$criteria=clone $this->getCriteria();
-
+		
 		if(($pagination=$this->getPagination())!==false)
 		{
 			$pagination->setItemCount($this->getTotalItemCount());
 			$pagination->applyLimit($criteria);
 		}
-
+		
 		$baseCriteria=$this->model->getDbCriteria(false);
-
+		
 		if(($sort=$this->getSort())!==false)
 		{
 			// set model criteria so that CSort can use its table alias setting
@@ -145,7 +145,6 @@ class CActiveDataProvider extends CDataProvider
 				$this->model->setDbCriteria($criteria);
 			$sort->applyOrder($criteria);
 		}
-
 		$this->model->setDbCriteria($baseCriteria!==null ? clone $baseCriteria : null);
 		$data=$this->model->findAll($criteria);
 		$this->model->setDbCriteria($baseCriteria);  // restore original criteria

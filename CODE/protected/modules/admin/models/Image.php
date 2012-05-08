@@ -10,8 +10,8 @@
  */
 class Image extends CActiveRecord
 {
-	const MAX_WIDTH_THUMB_IMAGE_UPDATE=450;
-	const MAX_WIDTH_THUMB_AUTO=150;
+	const MAX_WIDTH_THUMB_IMAGE_UPDATE=300;
+	const MAX_WIDTH_THUMB_AUTO=10;
 	/*
 	 * Config status of image
 	 */
@@ -72,6 +72,10 @@ class Image extends CActiveRecord
 		),
 		'Image'=>array(
 			'thumb_image_update'=>array('h'=>300,'w'=>450),
+		),
+		'Category'=>array(
+			'logo'=>array('h'=>60,'w'=>60),
+			'thumb_category'=>array('h'=>155,'w'=>229)
 		)	
 	);	
 	/*
@@ -79,7 +83,7 @@ class Image extends CActiveRecord
 	 * Use remove image
 	 */
 	static $config_thumb_type=array('thumb_auto','thumb_right','thumb_update','thumb_detail_video','thumb_list_page','thumb_image_big','thumb_image_small','thumb_listpage','thumb_detailpage','link_partner','footer','right','other_image_homepage','first_image_homepage','thumb_update','thumb_list_admin','headline','thumb_headline');
-	private $config_other_attributes=array('created_date','created_by');	
+	private $config_other_attributes=array();	
 	private $list_other_attributes;
 	
 	/*
@@ -277,7 +281,7 @@ class Image extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'image';
+		return 'tbl_image';
 	}
 
 	/**
@@ -582,7 +586,7 @@ class Image extends CActiveRecord
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
 		->select('status')
-		->from('image')
+		->from('tbl_image')
 		->where('id=:id',array(':id'=>$id))
 		->queryRow();
 		switch ($command['status']){
@@ -593,7 +597,7 @@ class Image extends CActiveRecord
 				$status=self::STATUS_PENDING;
 				break;
 		}
-		$sql='UPDATE image SET status = '.$status.' WHERE id = '.$id;
+		$sql='UPDATE tbl_image SET status = '.$status.' WHERE id = '.$id;
 		$command=Yii::app()->db->createCommand($sql);
 		if($command->execute()) {
 			switch ($status) {

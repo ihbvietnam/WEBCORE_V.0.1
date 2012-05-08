@@ -12,8 +12,7 @@
 		<!--end title-->
 		<div class="folder-content form">
 		<div>
-            	<input type="button" class="button" value="Thêm banner" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/news/create')?>'"/>
-                <input type="button" class="button" value="Danh sách banner" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/news')?>'"/>
+                <input type="button" class="button" value="Danh sách banner" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/banner')?>'"/>
                 <div class="line top bottom"></div>	
             </div>
 		<?php $form=$this->beginWidget('CActiveForm', array('method'=>'post','enableAjaxValidation'=>true)); ?>	
