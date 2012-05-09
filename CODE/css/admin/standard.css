@@ -1123,8 +1123,8 @@ div.form span.required
 	height:300px;
 	font:12px Verdana, Arial, Helvetica, sans-serif;
 	color:#444444;
-	border:4px solid #9fb2d6;
-	overflow:auto;
+	border:2px solid #9fb2d6;
+	overflow:hidden;
 } 
 #tabContent .content{
 	display:none;
@@ -1177,6 +1177,8 @@ div.form span.required
 	font:12px Verdana, Arial, Helvetica, sans-serif;
 	background:url(img/topMenuImages.png) 0px -90px no-repeat;
 	color:rgb(82,82,82);
+	display:block;
+	line-height:30px;
 } 
 .menu li a.active span, .menu li a.active:hover span{
 	background:url(img/topMenuImages.png) 100% -90px no-repeat;
