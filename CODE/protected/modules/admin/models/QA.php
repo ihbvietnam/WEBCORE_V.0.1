@@ -9,21 +9,8 @@ class QA extends CActiveRecord
 	 * Config scope of news
 	 */
 	public function defaultScope(){
-		if(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'en')
-			return array(
-			'condition'=>'type = '.Article::ARTICLE_QA.' AND lang = '.Article::LANG_EN,
-		);
-		elseif(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'vi')
-			return array(
-			'condition'=>'type = '.Article::ARTICLE_QA.' AND lang = '.Article::LANG_VI,
-		);
-		elseif(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'all')
-			return array(
+		return array(
 			'condition'=>'type = '.Article::ARTICLE_QA,
-		);
-		else 
-			return array(
-			'condition'=>'type = '.Article::ARTICLE_QA.' AND lang = '.Article::LANG_VI,
 		);	
 	}
 	/*

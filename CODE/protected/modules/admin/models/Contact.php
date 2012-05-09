@@ -9,12 +9,7 @@ class Contact extends CActiveRecord
 	 * Config scope of news
 	 */
 	public function defaultScope(){
-	if(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'en')
-			return array(
-			'condition'=>'type = '.Article::ARTICLE_CONTACT.' AND lang = '.Article::LANG_EN,
-		);
-		else 
-			return array(
+		return array(
 			'condition'=>'type = '.Article::ARTICLE_CONTACT,
 		);	
 	}
