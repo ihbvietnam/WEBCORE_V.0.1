@@ -86,7 +86,8 @@
 							<li>
 								<?php echo $form->labelEx($model,'list_suggest'); ?>
 								<?php echo $form->textField($model,'list_suggest',array('readonly'=>'readonly','style'=>'width:200px')); ?>	
-								<input type="button" id="btn-add-product" class="button" value="Chọn tin" style="width:60px;padding:1px;margin-top:-5px;" onclick="showPopUp();return false;"/>			
+								<!-- <input type="button" id="btn-add-product" class="button" value="Chọn tin" style="width:60px;padding:1px;margin-top:-5px;" onclick="showPopUp();"/>-->
+								<a title="Đăng nhập" href="#" onclick="showPopUp();" id="btn-add-product" class="button" style="width: 60px;padding:1px;margin-top:-5px;text-decoration:none;">Chọn tin</a>
 							</li>
 						</div>
 					</div>
@@ -154,7 +155,6 @@
 		<?php echo $form->dropDownList($suggest,'catid',$list,array('style'=>'width:200px','name'=>'SuggestNews[catid]')); ?>
 	</li>            
 	<li>
-	<label>&nbsp;</label> 
 	<input type="submit" class="button" value="Lọc bài viết">
 	</li>
 	<?php $this->endWidget(); ?>	
@@ -167,7 +167,7 @@
 					array(
       					'class'=>'CCheckBoxColumn',
 						'selectableRows'=>2,
-						'headerHtmlOptions'=>array('width'=>'2%','class'=>'table-title'),
+						'headerHtmlOptions'=>array('width'=>'1%','class'=>'table-title'),
 						'checked'=>'in_array($data->id,Yii::app()->session["checked-suggest-list"])'
     				),			
     				array(

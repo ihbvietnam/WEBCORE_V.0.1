@@ -1222,7 +1222,12 @@ div.form span.required
 	margin-left:10px;
 	margin-top:-2px;
 }
-
-#news-list-suggest{
-	
+#news-list-suggest table{
+	height:300px;
+	overflow-x:hidden;
+	overflow-y:scroll;
+	display: block;
+}
+.main-popup .grid-view{
+	padding:0px;
 }
