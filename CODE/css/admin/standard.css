@@ -958,7 +958,7 @@ div.item-image:hover .close{
 	position:absolute;
 	background:#fff;
 	width:700px;
-	height:520px;
+	height:auto;
 	left:50%;
 	top:50%;
 	z-index:10002;

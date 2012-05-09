@@ -100,7 +100,7 @@
 							<li>
 								<?php echo $form->labelEx($model,'list_suggest'); ?>
 								<?php echo $form->textField($model,'list_suggest',array('readonly'=>'readonly','style'=>'width:200px')); ?>	
-								<a title="Đăng nhập" href="#" onclick="showPopUp();" id="btn-add-product" class="button" style="width: 60px;padding:1px;margin-top:-5px;text-decoration:none;">Chọn tin</a>			
+								<a title="Chọn tin" href="#" onclick="showPopUp();" id="btn-add-product" class="button" style="width: 60px;padding:1px;margin-top:-5px;text-decoration:none;">Chọn tin</a>			
 							</li>
 						</div>
 					</div>

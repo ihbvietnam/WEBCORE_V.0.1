@@ -55,7 +55,7 @@
 						<div class="row">
 							<li>
 							<?php echo $form->labelEx($model,'catid'); ?>
-							<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:200px')); ?>
+							<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:250px')); ?>
 							<?php echo $form->error($model, 'catid'); ?>
 							</li>
 						</div>				
@@ -80,27 +80,22 @@
 							<li>
 							<?php echo $form->labelEx($model,'price'); ?>
 							<?php echo $form->textField($model,'num_price',array('style'=>'width:100px;','maxlength'=>'256')); ?>
-							<?php echo $form->error($model, 'price'); ?>	
-							</li>	
-						</div>	
-							<div class="row">
-							<li>
-							<?php echo $form->labelEx($model,'unit_price'); ?>
-							<?php echo $form->dropDownList($model,'unit_price',Product::$config_unit_price,array('style'=>'width:60px')); ?>	
+							<?php echo $form->error($model, 'price'); ?>
+							<?php echo $form->dropDownList($model,'unit_price',Product::$config_unit_price,array('style'=>'width:58px;margin-top:-5px;height:22px;')); ?>	
 							<?php echo $form->error($model, 'unit_price'); ?>	
 							</li>	
 						</div>									
 					</div><!--end left above content-->	
 					<div id="right_row">
 					
-					<div class="row">
+					<div class="row" style="min-height:100px;">
 							<li>
 								<?php echo $form->labelEx($model,'introimage'); ?>
 								<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_update')); ?>		
 								<?php echo $form->error($model, 'introimage'); ?>
 							</li>
 					</div>	
-					<div class="row">
+					<div class="row" style="min-height:100px;">
 							<li>
 								<?php echo $form->labelEx($model,'otherimage'); ?>
 								<?php echo $this->renderPartial('/image/_multiupload', array('model'=>$model,'attribute'=>'otherimage','type_image'=>'thumb_update')); ?>		
@@ -110,8 +105,8 @@
 					<div class="row">
 							<li>
 								<?php echo $form->labelEx($model,'list_suggest'); ?>
-								<?php echo $form->textField($model,'list_suggest',array('readonly'=>'readonly','style'=>'width:200px')); ?>				
-								<input type="button" id="btn-add-product" class="button" value="Chọn tin tức"	style="width: 125px;" onclick="showPopUp();return false;"/>								
+								<?php echo $form->textField($model,'list_suggest',array('readonly'=>'readonly','style'=>'width:160px')); ?>				
+								<a title="Chọn sản phẩm" href="#" onclick="showPopUp();" id="btn-add-product" class="button" style="width: 100px;padding:1px;margin-top:-5px;text-decoration:none;">Chọn sản phẩm</a>								
 							</li>
 					</div>
 					</div><!--end right above content-->							
