@@ -319,6 +319,9 @@ border-bottom:1px solid #ccc;
 overflow:hidden;
 padding:15px 10px;
 }
+.folder-content .fl ul{
+	margin-left:15px;
+}
 .table-content {
 padding:10px !important;
 }
@@ -1203,3 +1206,23 @@ div.form span.required
 	background:#E5F1F4;
 }
 /*End of pop up form*/
+/*For Iphoenix gridview*/
+.list-action-checbox{
+	float:left;
+	margin-bottom: 5px;
+}
+.list-action-checbox img{
+	margin-bottom: -5px;
+}
+.grid-view .summary{
+	float:right;
+}
+.display-box{
+	float:right;
+	margin-left:10px;
+	margin-top:-2px;
+}
+
+#news-list-suggest{
+	
+}

@@ -186,7 +186,7 @@
 					),    				
  	 			),
  	 			'template'=>'{displaybox}{checkbox}{summary}{items}{pager}',
-  				'summaryText'=>'Có tổng cộng {count} tin',
+  				'summaryText'=>'Có {count} tin',
  	 			'pager'=>array('class'=>'CLinkPager','header'=>'','prevPageLabel'=>'< Trước','nextPageLabel'=>'Sau >','htmlOptions'=>array('class'=>'pages fr')),
 				'actions'=>array(
 					'delete'=>array(
@@ -206,7 +206,7 @@
 		</div>
 	</div>
 	<!--end inside content-->
-	<?php 
+<?php 
 $cs = Yii::app()->getClientScript(); 
 $cs->registerScriptFile(Yii::app()->request->getBaseUrl(true).'/js/common/jquery.alerts.js');
 $cs->registerCssFile(Yii::app()->request->getBaseUrl(true).'/css/common/jquery.alerts.css');

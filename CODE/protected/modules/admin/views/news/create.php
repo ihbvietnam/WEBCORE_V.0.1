@@ -2,7 +2,7 @@
 	<div class="folder top">
 		<!--begin title-->
 		<div class="folder-header">
-			<h1>quản trị tin tức</h1>
+			<h1>Quản trị tin tức</h1>
 			<div class="header-menu">
 				<ul>
 					<li><a class="header-menu-active new-icon" href=""><span>Thêm bài viết mới</span></a></li>					
@@ -27,14 +27,34 @@
 								<?php echo $form->textField($model,'title',array('style'=>'width:280px;','maxlength'=>'256')); ?>	
 								<?php echo $form->error($model, 'title'); ?>				
 							</li>
-						</div>					
+						</div>
+						<div class="row">
+							<li>
+								<?php echo $form->labelEx($model,'lang'); ?>
+								<?php echo $form->dropDownList(
+										$model,
+										'lang',
+										array(Article::LANG_EN=>'English',Article::LANG_VI=>'Tiếng Việt'),
+										array(
+											'ajax' => array(
+												'type'=>'POST', 
+												'url'=>CController::createUrl('news/dynamicCat'), 
+												'data'=>'js:{lang:$(this).val()}',
+												'update'=>'#News_catid', 
+											),
+											'style'=>'width:200px'
+										)
+									); ?>
+								<?php echo $form->error($model, 'lang'); ?>
+							</li>
+						</div>
 					   <div class="row">
 							<li>
 								<?php echo $form->labelEx($model,'introimage'); ?>
 								<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_update')); ?>		
 								<?php echo $form->error($model, 'introimage'); ?>
 							</li>
-						</div>						
+						</div>
 					</div>
 					<div class="right_row">
 						<li>
@@ -49,26 +69,6 @@
 									)
 								); ?>
 							<?php echo $form->error($model, 'order_view'); ?>
-						</li>
-					</div>
-					<div class="right_row">
-						<li>
-							<?php echo $form->labelEx($model,'lang'); ?>
-							<?php echo $form->dropDownList(
-									$model,
-									'lang',
-									array(Article::LANG_EN=>'English',Article::LANG_VI=>'Tiếng Việt'),
-									array(
-										'ajax' => array(
-											'type'=>'POST', 
-											'url'=>CController::createUrl('news/dynamicCat'), 
-											'data'=>'js:{lang:$(this).val()}',
-											'update'=>'#News_catid', 
-										),
-										'style'=>'width:200px'
-									)
-								); ?>
-							<?php echo $form->error($model, 'lang'); ?>
 						</li>
 					</div>
 					<div id="right_row">	
@@ -100,22 +100,21 @@
 							<li>
 								<?php echo $form->labelEx($model,'list_suggest'); ?>
 								<?php echo $form->textField($model,'list_suggest',array('readonly'=>'readonly','style'=>'width:200px')); ?>	
-								<input type="button" id="btn-add-product" class="button" value="Chọn tin tức"	style="width: 125px;" onclick="showPopUp();return false;"/>			
+								<input type="button" id="btn-add-product" class="button" value="Chọn tin" style="width: 60px;padding:1px;margin-top:-5px;" onclick="showPopUp();return false;"/>			
 							</li>
 						</div>
 					</div>
 					</div>		
                     <div class="row">
                     <li>
-                        <?php echo $form->labelEx($model,'fulltext'); ?>
                         <?php  
-                        $this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'fulltext','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:800px;height:550px'))); 
+                        $this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'fulltext','language'=>'vi','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
                         ?>
                         <?php echo $form->error($model,'fulltext'); ?>
                     </li>
                     </div>
                     <li>
-						<input type="reset" class="button" value="Hủy thao tác" style="margin-left:153px; width:125px;" />	
+						<input type="reset" class="button" value="Hủy thao tác" style="margin-left:15px; width:125px;" />	
 						<input type="submit" class="button" value="Cập nhật" style="margin-left:20px; width:125px;" />	
 					</li>
 				</ul>
@@ -126,8 +125,7 @@
 		</div>
 	</div>
 	<!--end inside content-->
-	
-	
+
 <!-- Main popup -->
 <div class="bg-overlay"></div>
 <div class="main-popup"><a class="popup-close" onclick="hidenPopUp();return false;"></a>
@@ -166,7 +164,7 @@
 		}
 	?>
 	<li>
-		<label>Thuộc danh mục:</label>
+		<label>Thuộc thư mục:</label>
 		<?php echo $form->dropDownList($suggest,'catid',$list,array('style'=>'width:200px','name'=>'SuggestNews[catid]')); ?>
 	</li>            
 	<li>
@@ -207,7 +205,7 @@
 					), 	
 				),			
  	 			'template'=>'{displaybox}{summary}{items}{pager}',
-  				'summaryText'=>'Có tổng cộng {count} tin',
+  				'summaryText'=>'Có {count} tin',
  	 			'pager'=>array('class'=>'CLinkPager','header'=>'','prevPageLabel'=>'< Trước','nextPageLabel'=>'Sau >','htmlOptions'=>array('class'=>'pages fr')),
  	 			)); ?>
 	</li>
