@@ -31,7 +31,7 @@ class LanguageController extends Controller
 				'roles'=>array('update'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('create','delete'),
+				'actions'=>array('create','delete','import'),
 				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -98,6 +98,55 @@ class LanguageController extends Controller
 		$model->store_action=$model->action;
 		$list=$model->search();	
 		$this->render ( 'edit', array ('model' => $model, 'list'=>$list ) );
+	}
+	public function actionImport() {
+		$model=new ImportForm();
+		$model->lang=Language::DEFAULT_LANGUAGE;
+	 	if(isset($_POST['ImportForm'])&&CUploadedFile::getInstance($model,'file') != null)
+        {
+            $model->file=CUploadedFile::getInstance($model,'file');
+            $file=$model->file->getTempName();
+            $model->lang=$_POST['ImportForm']['lang'];
+			Yii::import('admin.extensions.vendors.PHPExcel',true);					
+			$objReader = PHPExcel_IOFactory::createReader('Excel2007');
+            $objPHPExcel = $objReader->load($file); //$file --> your filepath and filename          
+            $objWorksheet = $objPHPExcel->getActiveSheet();
+            $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
+            $highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
+            $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
+            for ($row = 2; $row <= $highestRow; ++$row) {
+                $origin=$objWorksheet->getCellByColumnAndRow(0, $row)->getValue();
+                $translation=$objWorksheet->getCellByColumnAndRow(1, $row)->getValue();
+                $module=$objWorksheet->getCellByColumnAndRow(2, $row)->getValue();
+                $controller=$objWorksheet->getCellByColumnAndRow(3, $row)->getValue();
+                $action=$objWorksheet->getCellByColumnAndRow(4, $row)->getValue();    
+               	$criteria = new CDbCriteria ();
+				$criteria->compare ( 'lang', $model->lang );
+				$criteria->compare ( 'module', $module );
+				$criteria->compare ( 'controller', $controller);
+				$criteria->compare ( 'action', $action );
+				$criteria->compare ( 'origin', $origin );
+				$list = Language::model ()->findAll ( $criteria );
+				if(sizeof($list)>0){
+					foreach ($list as $item){
+						$item->translation=$translation;
+						$item->save();
+					}
+				}
+				else {
+					$item=new Language();
+					$item->lang = $model->lang;
+					$item->origin = $origin;
+					$item->translation = $translation;
+					$item->module = $module;
+					$item->controller = $controller;
+					$item->action = $action;
+					$item->save();
+				}
+            }
+            Yii::app()->user->setFlash('success', Language::t('Bạn đã nhập dữ liệu thành công'));
+		}
+		$this->render('import',array('model'=>$model));
 	}
 }
 
