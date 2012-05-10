@@ -248,15 +248,7 @@ class GalleryVideo extends CActiveRecord
 				if($this->title != $this->old_title) $this->alias=iPhoenixString::createAlias($this->title).'-'.date('d').date('m').date('Y');
 			}	
 			//Encode special
-			$this->special=iPhoenixStatus::encodeStatus($this->list_special);
-			//Set list_special of other gallery to empty
-			if(sizeof($this->list_special)>0){
-				$list_gallery=GalleryVideo::model()->findAll('id <> '.$this->id.' AND lang = '.$this->lang);
-				foreach ($list_gallery as $gallery){
-					$gallery->list_special=array();
-					$gallery->save();
-				}
-			} 
+			$this->special=iPhoenixStatus::encodeStatus($this->list_special); 
 			$this->type=Article::ARTICLE_VIDEO;
 			$this->other=json_encode($this->list_other_attributes);
 			return true;
