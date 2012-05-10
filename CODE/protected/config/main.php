@@ -37,7 +37,10 @@ return array(
 			'allowAutoLogin'=>false,
 			'loginUrl'=>array('admin/default/login'),
 		),
-		'counter123' => array(
+		'counter' => array(
+            'class' => 'ext.UserCounter',
+		),
+		'counter' => array(
             'class' => 'ext.UserCounter',
 		),
 		/*
