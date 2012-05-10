@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name='AUTHOR' content='leehaira [at] Designer'>
-<meta name='COPYRIGHT' content='&copy; Lee Haira 2011'>
-<meta name="keywords" content= "Lee Haira, leehaira, leehaira@gmail.com, Donoithatgo">
-<meta name="desc" content="Donoithatgo INC">
+<meta name='AUTHOR' content='<?php echo Language::t(Setting::s('META_AUTHOR'));?>'>
+<meta name='COPYRIGHT' content='<?php echo Language::t(Setting::s('META_COPYRIGHT'));?>'>
+<meta name="keywords" content= "<?php echo Language::t(Setting::s('META_KEYWORD'));?>">
+<meta name="desc" content="<?php echo Language::t(Setting::s('META_DESCRIPTION'));?>">
 <link rel="shortcut icon" href="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/fav.png" type="image/x-icon" />
-<title>DNTG - Home page</title>
+<title><?php echo Language::t(Setting::s('FRONT_SITE_TITLE'));?></title>
 <!--css default-->
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->getBaseUrl(true)?>/css/front/reset.css">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->getBaseUrl(true)?>/css/front/common.css">
@@ -34,10 +34,10 @@ IMSlider.slide();
 <body>
 <div class="webtitle">
 	<div class="wrapper">
-    	<span class="email-label">Liên hệ qua Email:</span>
-        <a class="email-link">leehaira@gmail.com</a>
+    	<span class="email-label"><?php echo Language::t('Liên hệ qua Email');?>:</span>
+        <a class="email-link"><?php echo Setting::s('EMAIL_CONTACT');?></a>
         <div class="box-language">
-        	Ngôn ngữ:
+        	<?php echo Language::t('Ngôn ngữ');?>:
             <a href="#" class="active"><img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/vie.png" width="21" height="11" alt="vie" /></a>
             <a href="#"><img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/eng.png" width="21" height="11" alt="eng" /></a> 
         </div><!--box-language-->
@@ -47,8 +47,8 @@ IMSlider.slide();
 	<div class="wrapper">
     	<a class="logo"></a>
         <div class="fright" style="width:200px;">
-        	<div class="hotline">Hotline: <span>0983711587</span></div>
-        	<a class="btn-showcart">Giỏ hàng:<span>34</span></a>
+        	<div class="hotline"><?php echo Language::t('Hotline');?>: <span><?php echo Setting::s('HOTLINE');?></span></div>
+        	<a class="btn-showcart"><?php echo Language::t('Giỏ hàng');?>:<span>34</span></a>
         </div>
     </div><!--wrapper-->	
 </div><!--header-->
@@ -210,13 +210,13 @@ IMSlider.slide();
         </div><!--char-outer-->
          	
         <div class="footer-right">
-        	<h5>CÔNG TY CỔ PHẦN THƯƠNG MẠI VÀ XÂY DỰNG ĐỒ NỘI THẤT GỖ</h5>
-			<p>Showroom: 43 - Ngõ Văn Chương - Khâm Thiên - Hà Nội</p>
-			<p>Tel/Fax: 04.35565 863</p>
-			<p>Mobile: 0943 903 069</p>
-			<p>Email: contact@donoithatgo.vn</p>
+        	<h5><?php echo Language::t(Setting::s('COMPANY'));?></h5>
+			<p><?php echo Language::t('Showroom');?>: <?php echo Language::t(Setting::s('SHOWROOM'));?></p>
+			<p><?php echo Language::t('Tel/Fax');?>: <?php echo Language::t(Setting::s('TEL/FAX'));?></p>
+			<p><?php echo Language::t('Mobile');?>: <?php echo Language::t(Setting::s('MOBILE'));?></p>
+			<p><?php echo Language::t('Email');?>: <?php echo Language::t(Setting::s('EMAIL'));?></p>
         </div><!--footer-right-->
-        <div class="designer">Design by Lee Haira</div>  
+        <div class="designer"><?php echo Language::t(Setting::s('DESIGN_BY'));?></div>  
     </div><!--wrapper-->
 </div><!--footer-->
 </body>
