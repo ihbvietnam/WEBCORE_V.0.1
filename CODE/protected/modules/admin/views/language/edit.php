@@ -11,6 +11,10 @@
 		</div>
 		<!--end title-->	
 		<div class="folder-content form">
+			<input type="button" class="button" value="<?php echo Language::t('Tạo mới');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/create')?>'"/>
+			<input type="button" class="button" value="<?php echo Language::t('Xóa');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/delete')?>'"/>
+			<input type="button" class="button" value="<?php echo Language::t('Export');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/export')?>'"/>
+			<input type="button" class="button" value="<?php echo Language::t('Import');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/import')?>'"/>
 		<?php $form=$this->beginWidget('CActiveForm', array('method'=>'get','id'=>'form-edit-language')); ?>
 		<!--begin box search-->
             <div class="box-search">            
@@ -79,13 +83,13 @@
 	<!--end inside content-->
         	 <?php 
 				Yii::app()->clientScript->registerScript('update', "
-				$('#form-edit-language').find('select').change(function(){
+				$('#form-edit-language').find('select').live('change',function(){
 					jQuery.ajax({
 						data: $('#form-edit-language').serialize(),
 						success:function(data){
 							var \$data = $('<div>' + data + '</div>');
-							var updateId = '#language-list';
-							$(updateId).html($(updateId, \$data));
+							var updateId = '#form-edit-language';
+							$(updateId).replaceWith($(updateId, \$data));
 						},
 						type:'POST',
 						url:'".$this->createUrl('language/edit')."',

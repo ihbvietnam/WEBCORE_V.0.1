@@ -11,6 +11,10 @@
 		</div>
 		<!--end title-->	
 		<div class="folder-content form">
+			<input type="button" class="button" value="<?php echo Language::t('Chỉnh sửa');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/edit')?>'"/>
+			<input type="button" class="button" value="<?php echo Language::t('Xóa');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/delete')?>'"/>
+			<input type="button" class="button" value="<?php echo Language::t('Export');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/export')?>'"/>
+			<input type="button" class="button" value="<?php echo Language::t('Import');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/import')?>'"/>
 			<?php $form=$this->beginWidget('CActiveForm', array('method'=>'post','enableAjaxValidation'=>true)); ?>	
 			<!--begin left content-->
 			<div class="fl" style="width:480px;">

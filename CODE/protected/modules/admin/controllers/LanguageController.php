@@ -31,7 +31,7 @@ class LanguageController extends Controller
 				'roles'=>array('update'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('create','delete','import'),
+				'actions'=>array('create','delete','import','export'),
 				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -68,16 +68,22 @@ class LanguageController extends Controller
 			$model->lang=$_POST['LanguageForm']['lang'];
 			if(in_array($_POST['LanguageForm']['module'], $model->list_modules))
 				$model->module=$_POST['LanguageForm']['module'];
-			else 
-				$store->module=array_shift(array_keys($model->list_modules));
+			else {
+				$list_modules=array_keys($model->list_modules);
+				$model->module=array_shift($list_modules);
+			}
 			if(in_array($_POST['LanguageForm']['controller'], $model->list_controllers))
 				$model->controller=$_POST['LanguageForm']['controller'];
-			else 
-				$store->controller=array_shift(array_keys($model->list_controllers));	
+			else {
+				$list_controllers=array_keys($model->list_controllers);
+				$model->controller=array_shift($list_controllers);					
+			}
 			if(in_array($_POST['LanguageForm']['action'], $model->list_actions))
 				$model->action=$_POST['LanguageForm']['action'];
-			else 
-				$store->action=array_shift(array_keys($model->list_actions));	
+			else {
+				$list_actions=array_keys($model->list_actions);
+				$model->action=array_shift($list_actions);	
+			}	
 			//Store 
 			$store=new LanguageForm('edit');
 			$store->lang=$_POST['LanguageForm']['lang'];
@@ -87,9 +93,12 @@ class LanguageController extends Controller
 			if(isset($_POST['LanguageForm']['records']))
 				$store->saveLanguage($_POST['LanguageForm']['records']);
 		} else {
-			$model->module=array_shift(array_keys($model->list_modules));
-			$model->controller=array_shift(array_keys($model->list_controllers));
-			$model->action=array_shift(array_keys($model->list_actions));		
+			$list_modules=array_keys($model->list_modules);
+			$model->module=array_shift($list_modules);
+			$list_controllers=array_keys($model->list_controllers);
+			$model->controller=array_shift($list_controllers);
+			$list_actions=array_keys($model->list_actions);
+			$model->action=array_shift($list_actions);		
 		}
 		//Store language, module, controller and action
 		$model->store_lang=$model->lang;
@@ -147,6 +156,64 @@ class LanguageController extends Controller
             Yii::app()->user->setFlash('success', Language::t('Bạn đã nhập dữ liệu thành công'));
 		}
 		$this->render('import',array('model'=>$model));
+	}
+public function actionExport() {   
+		$model = new LanguageForm ( 'export' );
+		$model->lang=Yii::app()->language;
+		if (isset ( $_POST ['LanguageForm'] )) {
+			if($_POST ['LanguageForm']['lang'])
+				$language=$_POST ['LanguageForm']['lang'];
+			//Get data
+			$criteria = new CDbCriteria ();
+			$criteria->compare ( 'lang', $language );
+			$criteria->order = 'module,controller,action';
+			$list = Language::model ()->findAll ( $criteria );
+			
+			//Set header for file excel
+			$data [0] ['origin'] = 'ORIGIN';
+			$data [0] ['translation'] = 'TRANSLATION';
+			$data [0] ['module'] = 'MODULE';
+			$data [0] ['controller'] = 'CONTROLLER';
+			$data [0] ['action'] = 'ACTION';
+			//Set content for file excel
+			$index = 1;
+			foreach ( $list as $record ) {
+				$data [$index] ['origin'] = $record->origin;
+				$data [$index] ['translation'] = $record->translation;
+				$data [$index] ['module'] = $record->module;
+				$data [$index] ['controller'] = $record->controller;
+				$data [$index] ['action'] = $record->action;
+				$index ++;
+			}
+			
+			Yii::import ( 'admin.extensions.vendors.PHPExcel', true );
+			// Create new PHPExcel object
+			$objPHPExcel = new PHPExcel ();
+			
+			// Set properties
+			$objPHPExcel->getProperties ()->setCreator ( "IHB Việt Nam" )->setLastModifiedBy ( "IHB Việt Nam" )->setTitle ( "Cấu hình ngôn ngữ" )->setSubject ( "Ngôn ngữ" )->setDescription ( "Xuất dữ liệu ra file excel" )->setKeywords ( "language,excel,export" )->setCategory ( "Ngôn ngữ" );
+			foreach ( $data as $index => $item ) {
+				$j = $index + 1;
+				$objPHPExcel->setActiveSheetIndex ( 0 )->setCellValue ( 'A' . $j, isset ( $item ['origin'] ) ? $item ['origin'] : '' );
+				$objPHPExcel->setActiveSheetIndex ( 0 )->setCellValue ( 'B' . $j, isset ( $item ['translation'] ) ? $item ['translation'] : '' );
+				$objPHPExcel->setActiveSheetIndex ( 0 )->setCellValue ( 'C' . $j, isset ( $item ['module'] ) ? $item ['module'] : '' );
+				$objPHPExcel->setActiveSheetIndex ( 0 )->setCellValue ( 'D' . $j, isset ( $item ['controller'] ) ? $item ['controller'] : '' );
+				$objPHPExcel->setActiveSheetIndex ( 0 )->setCellValue ( 'E' . $j, isset ( $item ['action'] ) ? $item ['action'] : '' );
+			}
+			//Export file CSV
+			$objWriter = PHPExcel_IOFactory::createWriter ( $objPHPExcel, 'Excel2007' );
+			$file_path = Yii::getPathOfAlias ( 'webroot' ) . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . 'language-' . $language . '.xlsx';		
+			$objWriter->save ( $file_path );
+			// force to download a file
+			header ( "Pragma: public" );
+			header ( "Expires: 0" );
+			header ( "Cache-Control: must-revalidate, post-check=0, pre-check=0" );
+			header ( "Content-Type: application/force-download" );
+			header ( "Content-Disposition: attachment; filename=" . basename ( $file_path ) );
+			header ( "Content-Description: File Transfer" );
+			@readfile ( $file_path );
+		}
+		$this->render ( 'export', array ('model' => $model ) );
 	}
 }
 

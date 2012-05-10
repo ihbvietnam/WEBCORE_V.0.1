@@ -163,29 +163,33 @@ class SettingController extends Controller
 	 * Init checkbox
 	 */
 	public function initCheckbox($name_params){
-		if(!isset(Yii::app()->session[$name_params]))
-			Yii::app()->session[$name_params]=array();	
-		if(isset($_POST['list-checked'])){
-			$list_new=array_diff ( explode ( ',', $_POST['list-checked'] ), array ('' ));
-		 	$list_old=Yii::app()->session[$name_params];
-		 	$list=$list_old;
-          	foreach ($list_new as $id){
-          		if(!in_array($id, $list_old))
-               		$list[]=$id;
-          	}
-          	Yii::app()->session[$name_params]=$list;
-		 }
-		if(isset($_POST['list-unchecked'])){
-			$list_unchecked=array_diff ( explode ( ',', $_POST['list-unchecked'] ), array ('' ));
-		 	$list_old=Yii::app()->session[$name_params];
-		 	$list=array();
-          	foreach ($list_old as $id){
-          		if(!in_array($id, $list_unchecked)){
-               		$list[]=$id;
-          		}
-          	}
-          	Yii::app()->session[$name_params]=$list;
-		 }
+		if (! isset ( Yii::app ()->session [$name_params] ))
+			Yii::app ()->session [$name_params] = array ();
+		if (! Yii::app ()->getRequest ()->getIsAjaxRequest ())
+			Yii::app ()->session [$name_params] = array ();
+		else {
+			if (isset ( $_POST ['list-checked'] )) {
+				$list_new = array_diff ( explode ( ',', $_POST ['list-checked'] ), array ('' ) );
+				$list_old = Yii::app ()->session [$name_params];
+				$list = $list_old;
+				foreach ( $list_new as $id ) {
+					if (! in_array ( $id, $list_old ))
+						$list [] = $id;
+				}
+				Yii::app ()->session [$name_params] = $list;
+			}
+			if (isset ( $_POST ['list-unchecked'] )) {
+				$list_unchecked = array_diff ( explode ( ',', $_POST ['list-unchecked'] ), array ('' ) );
+				$list_old = Yii::app ()->session [$name_params];
+				$list = array ();
+				foreach ( $list_old as $id ) {
+					if (! in_array ( $id, $list_unchecked )) {
+						$list [] = $id;
+					}
+				}
+				Yii::app ()->session [$name_params] = $list;
+			}
+		}
 	}
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

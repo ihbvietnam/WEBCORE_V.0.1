@@ -11,6 +11,10 @@
 		</div>
 		<!--end title-->	
 		<div class="folder-content form">
+			<input type="button" class="button" value="<?php echo Language::t('Chỉnh sửa');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/edit')?>'"/>
+			<input type="button" class="button" value="<?php echo Language::t('Tạo mới');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/create')?>'"/>
+			<input type="button" class="button" value="<?php echo Language::t('Xóa');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/delete')?>'"/>
+			<input type="button" class="button" value="<?php echo Language::t('Export');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/export')?>'"/>
 			<?php
     			foreach(Yii::app()->user->getFlashes() as $key => $message) {
         			echo '<div class="flash-' . $key . '">' . $message . "</div>\n";

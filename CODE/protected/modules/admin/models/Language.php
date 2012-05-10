@@ -34,12 +34,21 @@ class Language extends CActiveRecord
 			}
 			else{
 				$model=new Language();
-				$model->lang=Yii::app()->language;
-				$model->origin=$origin;
-				$model->module=Yii::app()->controller->module->id;
-				$model->controller=Yii::app()->controller->id;
-				$model->action=Yii::app()->controller->action->id;
-				$model->save();
+				if(!in_array(Yii::app()->language,array_keys(LanguageForm::getList_languages_exist()))){
+					$list_all=LanguageForm::getList_all_languages();
+					$list_language=LanguageForm::getList_languages_exist()+array(Yii::app()->language=>$list_all[Yii::app()->language]);
+				}
+				else 
+					$list_language=LanguageForm::getList_languages_exist();
+				foreach ( $list_language as $code=>$language){
+					$model=new Language();
+					$model->lang=$code;
+					$model->origin=$origin;
+					$model->module=Yii::app()->controller->module->id;
+					$model->controller=Yii::app()->controller->id;
+					$model->action=Yii::app()->controller->action->id;
+					$model->save();
+				}
 				return $origin;
 			}
 	}

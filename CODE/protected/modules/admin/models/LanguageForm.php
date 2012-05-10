@@ -152,7 +152,7 @@ class LanguageForm extends CFormModel
 			'action'=>Language::t('Action'),
 		);
 	}
-	public function copyLanguage($origin_language,$language){
+	static function copyLanguage($origin_language,$language){
 		$criteria=new CDbCriteria;
 		$criteria->compare('lang', $origin_language);
     	$list=Language::model()->findAll($criteria);
@@ -169,7 +169,7 @@ class LanguageForm extends CFormModel
     	}	
     	return true;
  	}
-	public function deleteLanguage($language){
+	static function deleteLanguage($language){
 		if ($language == Language::DEFAULT_LANGUAGE)
 			return false;
 		$criteria = new CDbCriteria ();
@@ -199,7 +199,7 @@ class LanguageForm extends CFormModel
     	$list=Language::model()->findAll($criteria);
     	return $list;
  	}	
-	public function saveLanguage($list) {
+	static function saveLanguage($list) {
 		foreach ($list as $id=>$value){
 			$record=Language::model()->findByPk($id);
 			$record->translation=$value;

@@ -12,7 +12,7 @@
 		<!--end title-->
 		<div class="folder-content">
             <div>
-            	<input type="button" class="button" value="<?php echo Language::t('Thêm tin')?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/setting/create')?>'"/>
+            	<input type="button" class="button" value="<?php echo Language::t('Tạo tham số')?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/setting/create')?>'"/>
                 <div class="line top bottom"></div>	
             </div>
              <!--begin box search-->
