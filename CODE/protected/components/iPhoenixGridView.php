@@ -74,7 +74,7 @@ class iPhoenixGridView extends CGridView
 	
 	public function renderDisplaybox()
 	{
-		$cs = Yii::app()->getClientScript(); 
+		$cs = Yii::app()->getClientScript();
 		$cs->registerScript(
   			'js-displaybox',
   			"jQuery(function($) { $('body').on('change','.{$this->displayboxCssClass}',	

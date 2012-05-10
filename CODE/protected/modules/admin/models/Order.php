@@ -6,17 +6,6 @@ class Order extends CActiveRecord
 		return 'tbl_order';
 	}
 	/*
-	 * Config scope of news
-	 */
-	public function defaultScope(){
-		if(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'en')
-			return array(
-				'condition'=>'lang = '.Article::LANG_EN,
-			);
-		else
-			return array();
-	}
-	/*
 	 * Config status of contact
 	 */
 	const STATUS_PENDING=0;

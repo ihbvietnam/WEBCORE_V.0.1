@@ -93,20 +93,10 @@ class NewsController extends Controller
 	 */
 	public function actionCopy($id)
 	{
-		$origin=News::model()->findByPk($id);
-		$model=new News('write');		
-		$model->introimage=$origin->introimage;
-		$model->order_view=$origin->order_view;
-		$model->lang=$origin->lang;
-		$model->category=$origin->category;
-		$model->list_special=$origin->list_special;
-		$model->fulltext=$origin->fulltext;
-		$model->catid=$origin->catid;
-		$model->title=$origin->title.' - Copy ';		
-		if($model->save()){
-			$model->introimage=Image::copy($model->introimage,$model->id);
-			if($model->save())
-				$this->redirect(array('update','id'=>$model->id));
+		$copy=News::copy($id);
+		if(isset($copy))
+		{
+				$this->redirect(array('update','id'=>$copy->id));
 		}
 	}
 	/**
@@ -188,18 +178,18 @@ class NewsController extends Controller
 	{
 		$this->initCheckbox('checked-news-list');
 		$list_checked = Yii::app()->session["checked-news-list"];
+		Yii::app ()->session ["checked-news-list"] = array ();
 		switch ($action) {
 			case 'delete' :
 				if (Yii::app ()->user->checkAccess ( 'update')) {
 					foreach ( $list_checked as $id ) {
-						$item = News::model ()->findByPk ( $id );
+						$item = News::model ()->findByPk ( (int)$id );
 						if (isset ( $item ))
 							if (! $item->delete ()) {
 								echo 'false';
 								Yii::app ()->end ();
 							}
 					}
-					Yii::app ()->session ["checked-news-list"] = array ();
 				} else {
 					echo 'false';
 					Yii::app ()->end ();
@@ -207,23 +197,11 @@ class NewsController extends Controller
 				break;
 			case 'copy' :
 				foreach ( $list_checked as $id ) {
-					$origin = News::model ()->findByPk ( ( int ) $id );
-					if (isset ( $origin )) {
-						$model = new News ( 'write' );
-						$model->introimage = $origin->introimage;
-						$model->order_view = $origin->order_view;
-						$model->lang = $origin->lang;
-						$model->category = $origin->category;
-						$model->list_special = $origin->list_special;
-						$model->fulltext = $origin->fulltext;
-						$model->catid = $origin->catid;
-						$model->title = $origin->title . ' - Copy ';
-						if($model->save()){
-							$model->introimage=Image::copy($model->introimage,$model->id);
-							if(!$model->save())
-								echo 'false';
-								Yii::app ()->end ();
-						}
+					$copy=News::copy((int)$id);
+					if(!isset($copy))
+					{
+						echo 'false';
+						Yii::app ()->end ();
 					}
 				}
 				break;
@@ -306,29 +284,33 @@ class NewsController extends Controller
 	 * Init checkbox
 	 */
 	public function initCheckbox($name_params){
-		if(!isset(Yii::app()->session[$name_params]))
-			Yii::app()->session[$name_params]=array();	
-		if(isset($_POST['list-checked'])){
-			$list_new=array_diff ( explode ( ',', $_POST['list-checked'] ), array ('' ));
-		 	$list_old=Yii::app()->session[$name_params];
-		 	$list=$list_old;
-          	foreach ($list_new as $id){
-          		if(!in_array($id, $list_old))
-               		$list[]=$id;
-          	}
-          	Yii::app()->session[$name_params]=$list;
-		 }
-		if(isset($_POST['list-unchecked'])){
-			$list_unchecked=array_diff ( explode ( ',', $_POST['list-unchecked'] ), array ('' ));
-		 	$list_old=Yii::app()->session[$name_params];
-		 	$list=array();
-          	foreach ($list_old as $id){
-          		if(!in_array($id, $list_unchecked)){
-               		$list[]=$id;
-          		}
-          	}
-          	Yii::app()->session[$name_params]=$list;
-		 }
+		if (! isset ( Yii::app ()->session [$name_params] ))
+			Yii::app ()->session [$name_params] = array ();
+		if (! Yii::app ()->getRequest ()->getIsAjaxRequest ())
+			Yii::app ()->session [$name_params] = array ();
+		else {
+			if (isset ( $_POST ['list-checked'] )) {
+				$list_new = array_diff ( explode ( ',', $_POST ['list-checked'] ), array ('' ) );
+				$list_old = Yii::app ()->session [$name_params];
+				$list = $list_old;
+				foreach ( $list_new as $id ) {
+					if (! in_array ( $id, $list_old ))
+						$list [] = $id;
+				}
+				Yii::app ()->session [$name_params] = $list;
+			}
+			if (isset ( $_POST ['list-unchecked'] )) {
+				$list_unchecked = array_diff ( explode ( ',', $_POST ['list-unchecked'] ), array ('' ) );
+				$list_old = Yii::app ()->session [$name_params];
+				$list = array ();
+				foreach ( $list_old as $id ) {
+					if (! in_array ( $id, $list_unchecked )) {
+						$list [] = $id;
+					}
+				}
+				Yii::app ()->session [$name_params] = $list;
+			}
+		}
 	}
 	/*
 	 * List news suggest 

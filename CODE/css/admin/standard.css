@@ -319,6 +319,9 @@ border-bottom:1px solid #ccc;
 overflow:hidden;
 padding:15px 10px;
 }
+.folder-content .fl ul{
+	margin-left:15px;
+}
 .table-content {
 padding:10px !important;
 }
@@ -955,7 +958,7 @@ div.item-image:hover .close{
 	position:absolute;
 	background:#fff;
 	width:700px;
-	height:520px;
+	height:auto;
 	left:50%;
 	top:50%;
 	z-index:10002;
@@ -1117,17 +1120,15 @@ div.form span.required
 } 
 #tabContent{
 	position:relative;
-	height:300px;
+	height:auto;
 	font:12px Verdana, Arial, Helvetica, sans-serif;
-	color:#444444;
-	border:4px solid #9fb2d6;
-	overflow:auto;
+	border:1px solid #9fb2d6;
+	overflow:hidden;
 } 
 #tabContent .content{
 	display:none;
 } 
 #tabContent .active{
-	padding:5px 10px;
 	display:block;
 }
 /* Tab menu styles generated via the horitontal menu builder @ www.cssmenubuilder.com */ 
@@ -1154,6 +1155,8 @@ div.form span.required
 	font:12px Verdana, Arial, Helvetica, sans-serif;
 	cursor:pointer;
 	background:url(img/topMenuImages.png) 0px -30px no-repeat;
+	display:block;
+	line-height:30px;
 } 
 .menu li a span{
 	line-height:30px;
@@ -1174,6 +1177,8 @@ div.form span.required
 	font:12px Verdana, Arial, Helvetica, sans-serif;
 	background:url(img/topMenuImages.png) 0px -90px no-repeat;
 	color:rgb(82,82,82);
+	display:block;
+	line-height:30px;
 } 
 .menu li a.active span, .menu li a.active:hover span{
 	background:url(img/topMenuImages.png) 100% -90px no-repeat;
@@ -1203,3 +1208,28 @@ div.form span.required
 	background:#E5F1F4;
 }
 /*End of pop up form*/
+/*For Iphoenix gridview*/
+.list-action-checbox{
+	float:left;
+	margin-bottom: 5px;
+}
+.list-action-checbox img{
+	margin-bottom: -5px;
+}
+.grid-view .summary{
+	float:right;
+}
+.display-box{
+	float:right;
+	margin-left:10px;
+	margin-top:-2px;
+}
+#news-list-suggest table{
+	height:300px;
+	overflow-x:hidden;
+	overflow-y:scroll;
+	display: block;
+}
+.main-popup .grid-view{
+	padding:0px;
+}

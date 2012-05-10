@@ -20,28 +20,28 @@
 			<div class="fl">
 				<ul>
 				<div id="above_row">
-				<div id="left_row">
-					<div class="row">
-						<li>
-							<?php echo $form->labelEx($model,'name'); ?>
-							<?php echo $form->textField($model,'name',array('style'=>'width:280px;','maxlength'=>'256')); ?>	
-							<?php echo $form->error($model, 'name'); ?>		
-						</li>		
-					</div>	
-					<div class="row">
-						<li>
-							<?php echo $form->labelEx($model,'code'); ?>
-							<?php echo $form->textField($model,'code',array('style'=>'width:100px;','maxlength'=>'256')); ?>	
-							<?php echo $form->error($model, 'code'); ?>	
-						</li>			
-					</div>
-					<div class="row">
-					<li>
-                        	<?php echo $form->labelEx($model,'list_special'); ?>
-                        	<?php echo $form->dropDownList($model,'list_special',Product::getList_label_specials(),array('style'=>'width:250px','multiple' => 'multiple')); ?>
-                  			<?php echo $form->error($model, 'list_special'); ?>
-                    </li>
-                    </div>
+					<div id="left_row">
+						<div class="row">
+							<li>
+								<?php echo $form->labelEx($model,'name'); ?>
+								<?php echo $form->textField($model,'name',array('style'=>'width:280px;','maxlength'=>'256')); ?>	
+								<?php echo $form->error($model, 'name'); ?>		
+							</li>		
+						</div>	
+						<div class="row">
+							<li>
+								<?php echo $form->labelEx($model,'code'); ?>
+								<?php echo $form->textField($model,'code',array('style'=>'width:100px;','maxlength'=>'256')); ?>	
+								<?php echo $form->error($model, 'code'); ?>	
+							</li>			
+						</div>
+						<div class="row">
+							<li>
+	                        	<?php echo $form->labelEx($model,'list_special'); ?>
+	                        	<?php echo $form->dropDownList($model,'list_special',Product::getList_label_specials(),array('style'=>'width:250px','multiple' => 'multiple')); ?>
+	                  			<?php echo $form->error($model, 'list_special'); ?>
+	                    	</li>
+	                    </div>
 						<?php 
 						$list=array();
 						foreach ($list_category as $id=>$cat){
@@ -54,21 +54,21 @@
 						?>
 						<div class="row">
 							<li>
-							<?php echo $form->labelEx($model,'catid'); ?>
-							<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:200px')); ?>
-							<?php echo $form->error($model, 'catid'); ?>
+								<?php echo $form->labelEx($model,'catid'); ?>
+								<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:250px')); ?>
+								<?php echo $form->error($model, 'catid'); ?>
 							</li>
 						</div>				
-					<?php 
-						$list=array();
-						foreach ($list_manufacturer as $id=>$manufacturer){
-							$view = "";
-							for($i=1;$i<$manufacturer['level'];$i++){
-								$view .="---";
+						<?php 
+							$list=array();
+							foreach ($list_manufacturer as $id=>$manufacturer){
+								$view = "";
+								for($i=1;$i<$manufacturer['level'];$i++){
+									$view .="---";
+								}
+								$list[$id]=$view." ".$manufacturer['name']." ".$view;
 							}
-							$list[$id]=$view." ".$manufacturer['name']." ".$view;
-						}
-						?>
+							?>
 						<div class="row">
 							<li>
 							<?php echo $form->labelEx($model,'manufacturer_id'); ?>
@@ -80,72 +80,66 @@
 							<li>
 							<?php echo $form->labelEx($model,'price'); ?>
 							<?php echo $form->textField($model,'num_price',array('style'=>'width:100px;','maxlength'=>'256')); ?>
-							<?php echo $form->error($model, 'price'); ?>	
-							</li>	
-						</div>	
-							<div class="row">
-							<li>
-							<?php echo $form->labelEx($model,'unit_price'); ?>
-							<?php echo $form->dropDownList($model,'unit_price',Product::$config_unit_price,array('style'=>'width:60px')); ?>	
+							<?php echo $form->error($model, 'price'); ?>
+							<?php echo $form->dropDownList($model,'unit_price',Product::$config_unit_price,array('style'=>'width:58px;margin-top:-5px;height:22px;')); ?>	
 							<?php echo $form->error($model, 'unit_price'); ?>	
 							</li>	
 						</div>									
-					</div><!--end left above content-->	
-					<div id="right_row">
-					
+						</div><!--end left above content-->	
+						<div id="right_row">
+							<div class="row" style="min-height:100px;">
+								<li>
+									<?php echo $form->labelEx($model,'introimage'); ?>
+									<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_update')); ?>		
+									<?php echo $form->error($model, 'introimage'); ?>
+								</li>
+							</div>	
+							<div class="row" style="min-height:100px;">
+								<li>
+									<?php echo $form->labelEx($model,'otherimage'); ?>
+									<?php echo $this->renderPartial('/image/_multiupload', array('model'=>$model,'attribute'=>'otherimage','type_image'=>'thumb_update')); ?>		
+									<?php echo $form->error($model, 'otherimage'); ?>
+								</li>
+							</div>	
+							<div class="row">
+								<li>
+									<?php echo $form->labelEx($model,'list_suggest'); ?>
+									<?php echo $form->textField($model,'list_suggest',array('readonly'=>'readonly','style'=>'width:160px')); ?>				
+									<a title="Chọn sản phẩm" href="#" onclick="showPopUp();" id="btn-add-product" class="button" style="width: 100px;padding:1px;margin-top:-5px;text-decoration:none;">Chọn sản phẩm</a>								
+								</li>
+							</div>
+						</div><!--end right above content-->
+					</div><!--end above content-->
 					<div class="row">
-							<li>
-								<?php echo $form->labelEx($model,'introimage'); ?>
-								<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_update')); ?>		
-								<?php echo $form->error($model, 'introimage'); ?>
-							</li>
-					</div>	
-					<div class="row">
-							<li>
-								<?php echo $form->labelEx($model,'otherimage'); ?>
-								<?php echo $this->renderPartial('/image/_multiupload', array('model'=>$model,'attribute'=>'otherimage','type_image'=>'thumb_update')); ?>		
-								<?php echo $form->error($model, 'otherimage'); ?>
-							</li>
-					</div>	
-					<div class="row">
-							<li>
-								<?php echo $form->labelEx($model,'list_suggest'); ?>
-								<?php echo $form->textField($model,'list_suggest',array('readonly'=>'readonly','style'=>'width:200px')); ?>				
-								<input type="button" id="btn-add-product" class="button" value="Chọn tin tức"	style="width: 125px;" onclick="showPopUp();return false;"/>								
-							</li>
-					</div>
-					</div><!--end right above content-->							
-						</div><!--end above content-->
-						 <div class="row">
-                    		<li>
-                    		<div id="tabContainer">
-                        		<div id="tabMenu">
-                            		<ul class="menu">
-                                		<li><a id="select1" class="active">Mô tả sản phẩm</a></li>
-                                    	<li><a id="select2"><span>Thông số kĩ thuật</span></a></li>
-                                	</ul>
-                            	</div>
-                            	<div id="tabContent">
-                                	<div id="tab1" class="content active">
-                                    <div class="clear"></div>
+                    	<li>
+	                    	<div id="tabContainer">
+	                        	<div id="tabMenu">
+	                            	<ul class="menu">
+	                                	<li><a id="select1" class="active"><span>Mô tả sản phẩm</span></a></li>
+	                                    <li><a id="select2"><span>Thông số kĩ thuật</span></a></li>
+	                                </ul>
+	                            </div>
+	                            <div id="tabContent">
+	                                <div id="tab1" class="content active">
+	                                    <div class="clear"></div>
 										<?php  
-                        					$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'description','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:800px;height:550px'))); 
+                        					$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'description','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
                         				?>
                                 	</div>
                                 	<div id="tab2" class="content">
-                                    <div class="clear"></div>
-                                    <?php  
-                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'parameter','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:800px;height:550px'))); 
-                        			?>
+	                                    <div class="clear"></div>
+	                                    <?php  
+	                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'parameter','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
+	                        			?>
                                 	</div>
                             	</div>
                         	</div><!--end tabContainer-->
-                        	</li>
-                    	</div>
-						<li>						  						
-										<input type="reset" class="button" value="Hủy thao tác" style="margin-left:153px; width:125px;" />	
+                        </li>
+                    </div>
+					<li>						  						
+						<input type="reset" class="button" value="Hủy thao tác" style="margin-left:153px; width:125px;" />	
 						<input type="submit" class="button" value="Cập nhật" style="margin-left:20px; width:125px;" />	
-						</li>						
+					</li>						
 				</ul>
 			</div>	
 			<?php $this->endWidget(); ?>

@@ -54,7 +54,7 @@
 						<div class="row">
 							<li>
 							<?php echo $form->labelEx($model,'catid'); ?>
-							<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:200px')); ?>
+							<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:250px')); ?>
 							<?php echo $form->error($model, 'catid'); ?>
 							</li>
 						</div>				
@@ -71,34 +71,31 @@
 						<div class="row">
 							<li>
 							<?php echo $form->labelEx($model,'manufacturer_id'); ?>
-							<?php echo $form->dropDownList($model,'manufacturer_id',$list,array('style'=>'width:200px')); ?>
+							<?php echo $form->dropDownList($model,'manufacturer_id',$list,array('style'=>'width:250px')); ?>
 							<?php echo $form->error($model, 'manufacturer_id'); ?>
 							</li>
 						</div>	
 						<div class="row">
 							<li>
 							<?php echo $form->labelEx($model,'price'); ?>
-							<?php echo $form->textField($model,'num_price',array('style'=>'width:100px;','maxlength'=>'256')); ?>
-							<?php echo $form->error($model, 'price'); ?>	
-							</li>	
-						</div>	
-							<div class="row">
-							<li>
-							<?php echo $form->labelEx($model,'unit_price'); ?>
-							<?php echo $form->dropDownList($model,'unit_price',Product::$config_unit_price,array('style'=>'width:60px')); ?>	
+							<?php echo $form->textField($model,'num_price',array('style'=>'width:180px;','maxlength'=>'256')); ?>
+							<?php echo $form->error($model, 'price'); ?>
+							<?php echo $form->dropDownList($model,'unit_price',Product::$config_unit_price,array('style'=>'width:58px;margin-top:-5px;height:22px;')); ?>	
 							<?php echo $form->error($model, 'unit_price'); ?>	
+							</li>
+							<li>
 							</li>	
 						</div>									
 					</div><!--end left above content-->	
 					<div id="right_row">
-					<div class="row">
+					<div class="row" style="min-height:100px;">
 							<li>
 								<?php echo $form->labelEx($model,'introimage'); ?>
 								<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_update')); ?>		
 								<?php echo $form->error($model, 'introimage'); ?>
 							</li>
 					</div>	
-					<div class="row">
+					<div class="row" style="min-height:100px;">
 							<li>
 								<?php echo $form->labelEx($model,'otherimage'); ?>
 								<?php echo $this->renderPartial('/image/_multiupload', array('model'=>$model,'attribute'=>'otherimage','type_image'=>'thumb_update')); ?>		
@@ -108,8 +105,8 @@
 					<div class="row">
 							<li>
 								<?php echo $form->labelEx($model,'list_suggest'); ?>
-								<?php echo $form->textField($model,'list_suggest',array('readonly'=>'readonly','style'=>'width:200px')); ?>
-								<input type="button" id="btn-add-product" class="button" value="Chọn tin tức"	style="width: 125px;" onclick="showPopUp();return false;"/>				
+								<?php echo $form->textField($model,'list_suggest',array('readonly'=>'readonly','style'=>'width:160px')); ?>
+								<a title="Chọn sản phẩm" href="#" onclick="showPopUp();" id="btn-add-product" class="button" style="width: 100px;padding:1px;margin-top:-5px;text-decoration:none;">Chọn sản phẩm</a>				
 							</li>
 					</div>
 					</div><!--end right above content-->							
@@ -119,7 +116,7 @@
                     		<div id="tabContainer">
                         		<div id="tabMenu">
                             		<ul class="menu">
-                                		<li><a id="select1" class="active">Mô tả sản phẩm</a></li>
+                                		<li><a id="select1" class="active"><span>Mô tả sản phẩm</span></a></li>
                                     	<li><a id="select2"><span>Thông số kĩ thuật</span></a></li>
                                 	</ul>
                             	</div>
@@ -127,13 +124,13 @@
                                 	<div id="tab1" class="content active">
                                     <div class="clear"></div>
 										<?php  
-                        					$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'description','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:800px;height:550px'))); 
+                        					$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'description','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
                         				?>
                                 	</div>
                                 	<div id="tab2" class="content">
                                     <div class="clear"></div>
                                     <?php  
-                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'parameter','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:800px;height:550px'))); 
+                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'parameter','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
                         			?>
                                 	</div>
                             	</div>
@@ -141,7 +138,7 @@
                         	</li>
                     	</div>
 						<li>						  						
-						<input type="reset" class="button" value="Hủy thao tác" style="margin-left:153px; width:125px;" />	
+						<input type="reset" class="button" value="Hủy thao tác" style="margin-left:15px; width:125px;" />	
 						<input type="submit" class="button" value="Thêm mới" style="margin-left:20px; width:125px;" />	
 						</li>						
 				</ul>

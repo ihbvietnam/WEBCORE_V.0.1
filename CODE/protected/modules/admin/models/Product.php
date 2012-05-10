@@ -6,25 +6,6 @@ class Product extends CActiveRecord
 		return 'tbl_product';
 	}
 	/*
-	 * Get scope of Product
-	 */
-	public function defaultScope(){
-		if(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'en')
-			return array(
-			'condition'=>'lang = '.Article::LANG_EN,
-		);
-		elseif(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'vi')
-			return array(
-			'condition'=>'lang = '.Article::LANG_VI,
-		);
-		elseif(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'all')
-			return array();
-		else 
-			return array(
-			'condition'=>'lang = '.Article::LANG_VI,
-		);	
-	}
-	/*
 	 * Config status of product
 	*/
 	const STATUS_PENDING=0;
@@ -223,8 +204,8 @@ class Product extends CActiveRecord
 			'unit'=>'Đơn vị tính',
 			'price'=>'Giá',
 			'year'=>'Năm sản xuất',
-			'created_by' => 'Người tạo sản phẩm',
-			'created_date'=>'Thời điểm tạo sản phẩm',
+			'created_by' => 'Người tạo',
+			'created_date'=>'Ngày tạo',
 			'list_special'=>'Hiển thị',
 			'model'=>'Kiểu dáng',
 			'description'=>'Miêu tả',
@@ -232,7 +213,7 @@ class Product extends CActiveRecord
 			'special'=>'Trạng thái hiển thị',
 			'introimage'=>'Ảnh giới thiệu',
 			'otherimage'=>'Các ảnh khác',
-			'amount_status'=>'Trạng thái hàng trong kho',
+			'amount_status'=>'Trạng thái',
 			'list_suggest'=>'Sản phẩm liên quan'
 		);
 	}
