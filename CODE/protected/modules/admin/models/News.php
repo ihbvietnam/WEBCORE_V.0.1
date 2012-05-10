@@ -189,7 +189,6 @@ class News extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('title,catid,fulltext', 'required','message'=>'Dữ liệu bắt buộc','on'=>'write,copy'),
-			array('title', 'validatorTitle','on'=>'write,copy'),
 			array('catid,order_view', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write,copy'),
 			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'write,copy'),
 			array('introimage', 'length', 'max'=>8,'on'=>'write,copy'),
@@ -200,23 +199,11 @@ class News extends CActiveRecord
 			array('status','safe','on'=>'reverse_status')
 		);
 	}
-	//Function validator title
-	public function validatorTitle($attributes,$params){
-		if($this->title==""){
-			$this->addError('title', 'Dữ liệu bắt buộc');
-		}
-		else {
-			if(!$this->validateUniqueTitle()){
-				$this->addError('title', 'Tên bài viết này đã được sử dụng');
-			}
-		}
-	}
 	
 	//Function validate unique title
-	public function validateUniqueTitle() {
+	public function validateUniqueAlias() {
 		$criteria = new CDbCriteria ();
-		$criteria->compare ( 'catid', $this->catid );
-		$criteria->compare ( 'lower(title)', strtolower ( $this->title ) );
+		$criteria->compare ( 'lower(alias)', strtolower ( $this->alias) );
 		if ($this->id > 0)
 			$criteria->addCondition ( 'id <> ' . $this->id );
 		$list = News::model ()->findAll ( $criteria );
@@ -311,12 +298,20 @@ class News extends CActiveRecord
 				$this->status=News::STATUS_ACTIVE;
 				//Set alias
 				$this->alias=iPhoenixString::createAlias($this->title);	
-			}	
+				while(!$this->validateUniqueAlias()){
+					$pre=rand(1,100);
+					$this->alias=$pre.'-'.$this->alias;
+					}
+				}	
 			else {
 				$modified=$this->modified;
 				$modified[time()]=Yii::app()->user->id;
 				$this->modified=json_encode($modified);	
 				if($this->title != $this->old_title) $this->alias=iPhoenixString::createAlias($this->title);
+				while(!$this->validateUniqueAlias()){
+					$pre=rand(1,100);
+					$this->alias=$pre.'-'.$this->alias;
+				}
 				//Handler list suggest news
 				$list_clear=array_diff(explode(',',$this->list_suggest),array(''));
 				$list_filter=array_diff($list_clear,array($this->id));
@@ -486,8 +481,11 @@ class News extends CActiveRecord
 			$copy_id = Yii::app ()->db->getLastInsertID ();
 			$model = News::model ()->findByPk ( $copy_id );
 			$model->scenario = 'copy';
-			while(!$model->validateUniqueTitle()){
-				$model->title = $model->title . ' - Copy ';
+			$model->title = $model->title . ' - Copy ';
+			$model->alias=$model->alias . '-copy';
+			while(!$model->validateUniqueAlias()){
+				$pre=rand(1,100);
+				$model->alias=$pre.'-'.$model->alias;
 			}
 			$model->created_date = time ();
 			$model->introimage=Image::copy($model->introimage,$model->id);			
