@@ -6,25 +6,6 @@ class Product extends CActiveRecord
 		return 'tbl_product';
 	}
 	/*
-	 * Get scope of Product
-	 */
-	public function defaultScope(){
-		if(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'en')
-			return array(
-			'condition'=>'lang = '.Article::LANG_EN,
-		);
-		elseif(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'vi')
-			return array(
-			'condition'=>'lang = '.Article::LANG_VI,
-		);
-		elseif(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'all')
-			return array();
-		else 
-			return array(
-			'condition'=>'lang = '.Article::LANG_VI,
-		);	
-	}
-	/*
 	 * Config status of product
 	*/
 	const STATUS_PENDING=0;

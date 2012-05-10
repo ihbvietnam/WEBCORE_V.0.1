@@ -554,7 +554,7 @@ class Category extends CActiveRecord
 		switch ($type) {
 			case 'controller': 
 				if($this->group == Category::GROUP_ADMIN_MENU)
-					return array('news'=>'Tin tức','manufacturer'=>'Nhà sản xuất','product'=>'Sản phẩm','order'=>'Đơn hàng','user'=>'Người dùng','config'=>'Quản lý hệ thống','qa'=>'Hỏi đáp','album'=>'Album','galleryVideo'=>'Video','banner'=>'Banner quảng cáo','register'=>'Đăng kí học','contact'=>'Liên hệ');
+					return array('config'=>'Quản lý hệ thống','language'=>'Quản lý ngôn ngữ','setting'=>'Quản lý cấu hình','news'=>'Tin tức','manufacturer'=>'Nhà sản xuất','product'=>'Sản phẩm','order'=>'Đơn hàng','user'=>'Người dùng','qa'=>'Hỏi đáp','album'=>'Album','galleryVideo'=>'Video','banner'=>'Banner quảng cáo','register'=>'Đăng kí học','contact'=>'Liên hệ');
 				else 
 					return array('news'=>'Tin tức','product'=>'Sản phẩm','qa'=>'Hỏi đáp','album'=>'Album','galleryVideo'=>'Video','register'=>'Đăng kí học','contact'=>'Liên hệ');
 				break;
@@ -616,6 +616,12 @@ class Category extends CActiveRecord
 						break;
 					case 'config':								
 						return array('menu'=>'Quản lý menu','clear_image'=>'Dọn dẹp ảnh rác');
+						break;
+					case 'setting':	
+							return array('index'=>'Quản lý  danh sách tham số cấu hình','create'=>'Thêm cấu hình mới');
+						break;
+					case 'language':
+						return array('create'=>'Tạo ngôn ngữ mới','edit'=>'Cập nhật ngôn ngữ','delete'=>'Xóa ngôn ngữ','import'=>'Nhập dữ liệu từ file excel','export'=>'Xuất dữ liệu ra file excel');
 						break;
 					default:
 						return array('index'=>'Danh sách','create'=>'Thêm');
@@ -771,7 +777,23 @@ class Category extends CActiveRecord
 				'create'=>'/admin/galleryVideo/create',
 				'view_video'=>'site/video'
 			), 
-			'config' => array ('menu' => '/admin/category', 'clear_image' => '/admin/image/clear') );
+			'setting'=>array(
+				'index'=>'/admin/setting/index',
+				'create'=>'/admin/setting/create',
+			), 
+			'language'=>array(
+				'edit'=>'/admin/language/edit',
+				'create'=>'/admin/language/create',
+				'delete'=>'/admin/language/delete',
+				'export'=>'/admin/language/export',
+				'import'=>'/admin/language/import',
+			),
+			'config' => array (
+				'menu' => '/admin/category', 
+				'clear_image' => '/admin/image/clear',
+				'setting'=>'admin/setting'
+			) 
+		);
 		return $config [$this->controller] [$this->action];
 	}
 	/*

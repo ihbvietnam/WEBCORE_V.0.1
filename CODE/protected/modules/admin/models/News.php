@@ -13,22 +13,9 @@ class News extends CActiveRecord
 	 * Config scope of news
 	 */
 	public function defaultScope(){
-		if(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'en')
-			return array(
-			'condition'=>'type = '.Article::ARTICLE_NEWS.' AND lang = '.Article::LANG_EN,
-			);
-		elseif(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'vi')
-			return array(
-			'condition'=>'type = '.Article::ARTICLE_NEWS.' AND lang = '.Article::LANG_VI,
-			);
-		elseif(isset(Yii::app()->session['lang'])  && Yii::app()->session['lang'] == 'all')
-			return array(
+		return array(
 			'condition'=>'type = '.Article::ARTICLE_NEWS,
-			);
-		else 
-			return array(
-			'condition'=>'type = '.Article::ARTICLE_NEWS.' AND lang = '.Article::LANG_VI,
-			);	
+		);	
 	}
 	/*
 	 * Config status of album
@@ -201,12 +188,13 @@ class News extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title,catid,fulltext', 'required','message'=>'Dữ liệu bắt buộc','on'=>'write'),
-			array('title', 'validatorTitle','on'=>'write'),
-			array('catid,lang,order_view', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
-			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'write'),
-			array('introimage', 'length', 'max'=>8,'on'=>'write'),
-			array('fulltext,list_special,lang,list_suggest', 'safe', 'on'=>'write'),
+			array('title,catid,fulltext', 'required','message'=>'Dữ liệu bắt buộc','on'=>'write,copy'),
+			array('title', 'validatorTitle','on'=>'write,copy'),
+			array('catid,lang,order_view', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write,copy'),
+			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'write,copy'),
+			array('introimage', 'length', 'max'=>8,'on'=>'write,copy'),
+			array('fulltext,list_special,lang,list_suggest', 'safe', 'on'=>'write,copy'),
+			array('created_date,created_by', 'safe', 'on'=>'copy'),
 			array('introimage','safe','on'=>'upload_image'),
 			array('title,catid,special,lang','safe','on'=>'search'),
 			array('status','safe','on'=>'reverse_status')
@@ -218,17 +206,26 @@ class News extends CActiveRecord
 			$this->addError('title', 'Dữ liệu bắt buộc');
 		}
 		else {
-			$criteria=new CDbCriteria;
-			$criteria->compare('catid',$this->catid);
-			$criteria->compare('lower(title)',strtolower($this->title));
-			if($this->id>0) $criteria->addCondition('id <> '.$this->id);
-			$list=News::model()->findAll($criteria);
-			if(sizeof($list)>0){
+			if(!$this->validateUniqueTitle()){
 				$this->addError('title', 'Tên bài viết này đã được sử dụng');
 			}
 		}
 	}
-
+	
+	//Function validate unique title
+	public function validateUniqueTitle() {
+		$criteria = new CDbCriteria ();
+		$criteria->compare ( 'catid', $this->catid );
+		$criteria->compare ( 'lower(title)', strtolower ( $this->title ) );
+		if ($this->id > 0)
+			$criteria->addCondition ( 'id <> ' . $this->id );
+		$list = News::model ()->findAll ( $criteria );
+		if (sizeof ( $list ) > 0)
+			return false;
+		else
+			return true;
+	}
+	
 	/**
 	 * @return array relational rules.
 	 */
@@ -478,5 +475,27 @@ class News extends CActiveRecord
 			return $src;
 		}
 		else return false;
+	}
+		/*
+	 * Copy news
+	 */
+	static function copy($id) {
+		$sql = 'insert into ' . self::model ()->tableName () . ' (catid,type,lang,status,special,order_view,title,alias,keywords,other,created_date,created_by) select catid,type,lang,status,special,order_view,title,alias,keywords,other,created_date,created_by from ' . self::model ()->tableName () . ' where id=' . $id;
+		$command = Yii::app ()->db->createCommand ( $sql );
+		if ($command->execute ()) {
+			$copy_id = Yii::app ()->db->getLastInsertID ();
+			$model = News::model ()->findByPk ( $copy_id );
+			$model->scenario = 'copy';
+			while(!$model->validateUniqueTitle()){
+				$model->title = $model->title . ' - Copy ';
+			}
+			$model->created_date = time ();
+			$model->introimage=Image::copy($model->introimage,$model->id);			
+			$model->created_by = Yii::app ()->user->id;
+			if ($model->save ()) {
+				return $model;
+			}
+		} else
+			return null;
 	}
 }

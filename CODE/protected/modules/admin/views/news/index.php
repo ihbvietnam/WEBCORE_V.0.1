@@ -2,17 +2,17 @@
 	<div class="folder top">
 		<!--begin title-->
 		<div class="folder-header">
-			<h1>quản trị tin tức</h1>
+			<h1><?php echo Language::t('quản trị tin tức')?></h1>
 			<div class="header-menu">
 				<ul>
-					<li class="ex-show"><a class="activities-icon" href=""><span>Danh sách tin tức</span></a></li>
+					<li class="ex-show"><a class="activities-icon" href=""><span><?php echo Language::t('Danh sách tin tức')?></span></a></li>
 				</ul>
 			</div>
 		</div>
 		<!--end title-->
 		<div class="folder-content">
             <div>
-            	<input type="button" class="button" value="Thêm tin" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/news/create')?>'"/>
+            	<input type="button" class="button" value="<?php echo Language::t('Thêm tin')?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/news/create')?>'"/>
                 <div class="line top bottom"></div>	
             </div>
              <!--begin box search-->
@@ -25,7 +25,7 @@
 				});");
 		?>
             <div class="box-search">            
-                <h2>Tìm kiếm</h2>
+                <h2><?php echo Language::t('Tìm kiếm')?></h2>
                 <?php $form=$this->beginWidget('CActiveForm', array('method'=>'get','id'=>'news-search')); ?>
                 <!--begin left content-->
                 <div class="fl" style="width:480px;">
@@ -47,7 +47,7 @@
                     	</li> 
                         <li>
                         <?php 
-							echo CHtml::submitButton('Lọc kết quả',
+							echo CHtml::submitButton(Language::t('Lọc kết quả'),
     						array(
     							'class'=>'button',
     							'style'=>'margin-left:153px; width:95px;',
@@ -62,7 +62,7 @@
                 <div class="fl" style="width:480px;">
                     <ul>
                     <?php 
-					$list=array(''=>'Tất cả các thư mục');
+					$list=array(''=>Language::t('Tất cả các thư mục'));
 					foreach ($list_category as $id=>$cat){
 						$view = "";
 						for($i=1;$i<$cat['level'];$i++){
@@ -72,11 +72,11 @@
 					}
 					?>
 					<li>
-						<label>Thuộc danh mục:</label>
+						<?php echo $form->labelEx($model,'catid'); ?>
 						<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:200px')); ?>
 					</li>
 					  <?php 
-					$list=array(''=>'Không lọc');
+					$list=array(''=>Language::t('Không lọc'));
 					$list +=News::getList_label_specials();
 					?>
 					<li>
@@ -134,14 +134,14 @@
 						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
 					), 		
 					array(
-						'header'=>'Trạng thái',
+						'header'=>Language::t('Trạng thái'),
 						'class'=>'iPhoenixButtonColumn',
     					'template'=>'{reverse}',
     					'buttons'=>array
     					(
         					'reverse' => array
     						(
-            					'label'=>'Đổi trạng thái bài viết',
+            					'label'=>Language::t('Đổi trạng thái bài viết'),
             					'imageUrl'=>'$data->imageStatus',
             					'url'=>'Yii::app()->createUrl("admin/news/reverseStatus", array("id"=>$data->id))',
     							'click'=>'function(){
@@ -162,22 +162,22 @@
 						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),
 					),    											   	   
 					array(
-						'header'=>'Công cụ',
+						'header'=>Language::t('Công cụ'),
 						'class'=>'CButtonColumn',
     					'template'=>'{copy}{update}{delete}',
-						'deleteConfirmation'=>'Bạn muốn xóa bài viết này?',
-						'afterDelete'=>'function(link,success,data){ if(success) jAlert("Bạn đã xóa thành công"); }',
+						'deleteConfirmation'=>Language::t('Bạn muốn xóa bài viết này?'),
+						'afterDelete'=>'function(link,success,data){ if(success) jAlert("'.Language::t('Bạn đã xóa thành công').'"); }',
     					'buttons'=>array
     					(
     						'update' => array(
-    							'label'=>'Chỉnh sửa bài viết',
+    							'label'=>Language::t('Chỉnh sửa bài viết'),
     						),
         					'delete' => array(
-    							'label'=>'Xóa bài viết',
+    							'label'=>Language::t('Xóa bài viết'),
     						),
     						'copy' => array
     						(
-            					'label'=>'Copy bài viết',
+            					'label'=>Language::t('Copy bài viết'),
             					'imageUrl'=>Yii::app()->request->getBaseUrl(true).'/images/admin/copy.gif',
             					'url'=>'Yii::app()->createUrl("admin/news/copy", array("id"=>$data->id))',
         					),
@@ -186,18 +186,18 @@
 					),    				
  	 			),
  	 			'template'=>'{displaybox}{checkbox}{summary}{items}{pager}',
-  				'summaryText'=>'Có {count} tin',
- 	 			'pager'=>array('class'=>'CLinkPager','header'=>'','prevPageLabel'=>'< Trước','nextPageLabel'=>'Sau >','htmlOptions'=>array('class'=>'pages fr')),
+  				'summaryText'=>Language::t('Có').' {count} '.Language::t('tin'),
+ 	 			'pager'=>array('class'=>'CLinkPager','header'=>'','prevPageLabel'=>'< '.Language::t('Trước'),'nextPageLabel'=>Language::t('Sau').' >','htmlOptions'=>array('class'=>'pages fr')),
 				'actions'=>array(
 					'delete'=>array(
 						'action'=>'delete',
-						'label'=>'Delete all',
+						'label'=>Language::t('Xóa'),
 						'imageUrl' => '/images/admin/delete.png',
 						'url'=>'admin/news/checkbox'
 					),
 					'copy'=>array(
 						'action'=>'copy',
-						'label'=>'Copy all',
+						'label'=>Language::t('Copy'),
 						'imageUrl' => '/images/admin/copy.gif',
 						'url'=>'admin/news/checkbox'
 					)
