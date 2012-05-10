@@ -69,7 +69,7 @@ class GalleryVideo extends CActiveRecord
 		else {			
 			//return '<img class="img" src="'.Image::getDefaultThumb('GalleryVideo', $type).'" alt=""';
 					//Get thumb youtube
-		return '<img class="img" src="'.$this->link.'/1.jpg" alt="'.$image->title.'">';
+		return '<img class="img" src="'.$this->link.'/1.jpg">';
 		}
 	}
 /*
