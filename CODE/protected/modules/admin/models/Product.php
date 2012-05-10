@@ -463,7 +463,7 @@ class Product extends CActiveRecord
 			//var_dump($manufacturer['parent_id']);
 			//exit;
 			$tmp = Category::model()->findByPk($id);
-			if(($manufacturer['lang']==Article::LANG_VI)&&($tmp['parent_id']==Category::GROUP_MANUFACTURER)) 
+			if($tmp['parent_id']==Category::GROUP_MANUFACTURER) 
 				$list_manufacturer[$id]=$manufacturer['name'];
 		}
 		
@@ -484,8 +484,7 @@ class Product extends CActiveRecord
 			//var_dump($manufacturer['parent_id']);
 			//exit;
 			$tmp = Category::model()->findByPk($id);
-			if(($manufacturer['lang']==Article::LANG_VI)) 
-				$list_manufacturer[$id]=$manufacturer['name'];
+			$list_manufacturer[$id]=$manufacturer['name'];
 		}
 		
 		return $list_manufacturer;
@@ -501,8 +500,7 @@ class Product extends CActiveRecord
 		$list_manufacturer=array();
 		foreach ($list as $id=>$manufacturer){			
 			$tmp = Category::model()->findByPk($id);
-			if(($manufacturer['lang']==Article::LANG_VI)) 
-				$list_manufacturer[$id]=$manufacturer['name'];
+			$list_manufacturer[$id]=$manufacturer['name'];
 		}
 		
 		return $list_manufacturer;

@@ -218,12 +218,7 @@ class NewsController extends Controller
 		$group=new Category();		
 		$group->group=Category::GROUP_NEWS;
 		$list=$group->list_categories;
-		$list_category=$list;
-		/*
-		foreach ($list as $id=>$cat){
-			if($cat['lang']==Article::LANG_VI) $list_category[$id]=$cat;
-		}
-		*/		
+		$list_category=$list;	
 		$this->render('index',array(
 			'model'=>$model,
 			'list_category'=>$list_category

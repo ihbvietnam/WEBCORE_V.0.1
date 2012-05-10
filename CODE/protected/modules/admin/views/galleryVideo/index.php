@@ -67,7 +67,7 @@
 					</li>   
                     <li>
 							<?php echo $form->labelEx($model,'lang'); ?>
-							<?php echo $form->dropDownList($model,'lang',array(''=>'Tất cả',Article::LANG_EN=>'English',Article::LANG_VI=>'Tiếng Việt'),array('style'=>'width:200px')); ?>
+							<?php echo $form->dropDownList($model,'lang',LanguageForm::getList_languages_exist(),array('style'=>'width:200px')); ?>
                     	</li> 
                   	
                     </ul>

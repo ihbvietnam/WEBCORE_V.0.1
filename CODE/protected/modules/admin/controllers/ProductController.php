@@ -68,7 +68,7 @@ class ProductController extends Controller
 		$list=$group->list_categories;
 		$list_category=array();
 		foreach ($list as $id=>$cat){
-			if($cat['lang']==Article::LANG_VI) $list_category[$id]=$cat;
+			$list_category[$id]=$cat;
 		}
 		
 		//List manufacturer
@@ -77,7 +77,7 @@ class ProductController extends Controller
 		$list=$group->list_categories;
 		$list_manufacturer=array();
 		foreach ($list as $id=>$manufacturer){
-			if($manufacturer['lang']==Article::LANG_VI) $list_manufacturer[$id]=$manufacturer;
+			$list_manufacturer[$id]=$manufacturer;
 		}
 		
 		//Handler list suggest product
@@ -122,7 +122,7 @@ class ProductController extends Controller
 		$list=$group->list_categories;
 		$list_category=array();
 		foreach ($list as $id=>$cat){
-			if($cat['lang']==Article::LANG_VI) $list_category[$id]=$cat;
+			$list_category[$id]=$cat;
 		}
 		
 		//List manufacturer
@@ -131,7 +131,7 @@ class ProductController extends Controller
 		$list=$group->list_categories;
 		$list_manufacturer=array();
 		foreach ($list as $id=>$manufacturer){
-			if($manufacturer['lang']==Article::LANG_VI) $list_manufacturer[$id]=$manufacturer;
+			$list_manufacturer[$id]=$manufacturer;
 		}
 			
 		//Handler list suggest Product

@@ -102,7 +102,6 @@ class QAController extends Controller
 		$model=new QA('search');
 		$model->unsetAttributes();  // clear any default values
 		$model->status=QA::STATUS_NOT_ANSWER;
-		$model->lang=Article::LANG_VI;
 		if(isset($_GET['QA']))
 			$model->attributes=$_GET['QA'];
 		$this->render('index',array(
