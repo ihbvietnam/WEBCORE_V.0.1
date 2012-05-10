@@ -847,5 +847,21 @@ class Category extends CActiveRecord
 		}
 		return $result;
 	}
-	
+	/**
+	 * Get active menu
+	 */
+	static function findActiveUserMenu(){
+		$model=new Category();
+		$model->group=Category::GROUP_USER_MENU;
+		$list=$model->list_Categories;	
+		$result=array();
+		foreach ($list as $id=>$menu){
+			if($menu['url']== Yii::app()->request->requestUri)
+			{
+				$current=Category::model()->findByPk($id);
+				$result[]=(int)$current->root;
+			}
+		}
+		return $result;
+	}
 }

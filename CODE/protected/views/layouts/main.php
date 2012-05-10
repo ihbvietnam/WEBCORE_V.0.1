@@ -54,15 +54,7 @@ IMSlider.slide();
 </div><!--header-->
 <div class="menu">
 	<div class="wrapper">
-        <ul>
-            <li class="active"><a href="#">Trang chủ</a></li>
-            <li><a href="#">Giới thiệu</a></li>
-            <li><a href="#">Tin tức</a></li>
-            <li><a href="#">Sản phẩm</a></li>
-            <li><a href="#">Hỗ trợ</a></li>
-            <li><a href="#">Liên hệ</a></li>
-            <li><a href="#">Hỏi đáp</a></li>
-        </ul>
+         	<?php $this->widget('FrontEndMenu')?>
         <div class="box-search">
             <input name="" type="text" class="text" onfocus="javascript:if(this.value=='Tìm kiếm...'){this.value='';};" onblur="javascript:if(this.value==''){this.value='Tìm kiếm...';};" value="Tìm kiếm..." />
             <input name="" type="submit" class="btn-search" />
@@ -81,20 +73,15 @@ IMSlider.slide();
       	</div><!--slider-wrapper-->
       	<div class="slider-right">
         	<div class="box">
-            	<div class="box-title"><label>Video</label></div>
-                <div class="box-content">
-                	<div class="box-video">
-                        <iframe width="190" height="160" src="http://www.youtube.com/embed/g9lXpn5Q99M" frameborder="0" allowfullscreen></iframe>
-                    </div><!--box-video-->
-                </div><!--box-content-->
+       			<?php $this->widget('wVideo');?> 
             </div><!--box-->
             <div class="box">
-            	<div class="box-title"><label>Hướng dẫn</label></div>
+            	<div class="box-title"><label><?php echo Language::t('Hướng dẫn');?></label></div>
                 <div class="box-content">
                 	<div class="box-intro">
                         <ul>
-                            <li><a href="#">Hướng dẫn mua hàng</a></li>
-                            <li><a href="#">Cách giao dịch thanh toán</a></li>
+                            <li><a href="#"><?php echo Language::t('Hướng dẫn mua hàng');?></a></li>
+                            <li><a href="#"><?php echo Language::t('Cách giao dịch thanh toán');?></a></li>
                         </ul>
                     </div><!--box-intro-->
                 </div><!--box-content-->
@@ -189,15 +176,7 @@ IMSlider.slide();
 </div><!--wrapper-->
 <div class="menu-bottom">
 	<div class="wrapper">
-    	<ul>
-        	<li><a href="#">Trang chủ</a></li>
-            <li><a href="#">Giới thiệu</a></li>
-            <li><a href="#">Tin tức</a></li>
-            <li><a href="#">Sản phẩm</a></li>
-            <li><a href="#">Hỗ trợ</a></li>
-            <li><a href="#">Liên hệ</a></li>
-            <li><a href="#">Hỏi đáp</a></li>
-        </ul>
+    <?php $this->widget('FrontEndMenu')?>
 	</div><!--wrapper-->
 </div><!--menu-bottom-->
 <div class="footer">
