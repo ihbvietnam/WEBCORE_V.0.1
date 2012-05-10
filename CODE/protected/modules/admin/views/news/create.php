@@ -34,14 +34,8 @@
 								<?php echo $form->dropDownList(
 										$model,
 										'lang',
-										array(Article::LANG_EN=>'English',Article::LANG_VI=>'Tiếng Việt'),
-										array(
-											'ajax' => array(
-												'type'=>'POST', 
-												'url'=>CController::createUrl('news/dynamicCat'), 
-												'data'=>'js:{lang:$(this).val()}',
-												'update'=>'#News_catid', 
-											),
+										LanguageForm::getList_languages_exist(),
+										array(				
 											'style'=>'width:200px'
 										)
 									); ?>

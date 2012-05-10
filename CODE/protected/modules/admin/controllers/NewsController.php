@@ -66,11 +66,7 @@ class NewsController extends Controller
 		//Group categories that contains news
 		$group=new Category();		
 		$group->group=Category::GROUP_NEWS;
-		$list=$group->list_categories;
-		$list_category=array();
-		foreach ($list as $id=>$cat){
-			if($cat['lang']==Article::LANG_VI) $list_category[$id]=$cat;
-		}
+		$list_category=$group->list_categories;
 		//Handler list suggest news
 		if(!Yii::app()->getRequest()->getIsAjaxRequest())
 			Yii::app ()->session ["checked-suggest-list"]=array();
@@ -259,26 +255,6 @@ class NewsController extends Controller
 			if($titles!==array())
 				echo implode("\n",$titles);
 		}
-	}
-	/**
-	 * Suggests title of news.
-	 */
-	public function actionDynamicCat()
-	{
-		$group=new Category();		
-		$group->group=Category::GROUP_NEWS;
-		$list=$group->list_categories;
-		$list_category=array();
-		foreach ($list as $id=>$cat){
-			$view = "";
-							for($i=1;$i<$cat['level'];$i++){
-								$view .="---";
-							}
-			$name=$view." ".$cat['name']." ".$view;
-			if($cat['lang']==$_POST['lang']) {
-				echo CHtml::tag('option',array('value'=>$id),CHtml::encode($name),true);
-			}
-		}		
 	}
 	/*
 	 * Init checkbox
