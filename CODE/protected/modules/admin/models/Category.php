@@ -554,15 +554,15 @@ class Category extends CActiveRecord
 		switch ($type) {
 			case 'controller': 
 				if($this->group == Category::GROUP_ADMIN_MENU)
-					return array('config'=>'Quản lý hệ thống','language'=>'Quản lý ngôn ngữ','setting'=>'Quản lý cấu hình','news'=>'Tin tức','manufacturer'=>'Nhà sản xuất','product'=>'Sản phẩm','order'=>'Đơn hàng','user'=>'Người dùng','qa'=>'Hỏi đáp','album'=>'Album','galleryVideo'=>'Video','banner'=>'Banner quảng cáo','register'=>'Đăng kí học','contact'=>'Liên hệ');
+					return array('config'=>'Quản lý hệ thống','language'=>'Quản lý ngôn ngữ','setting'=>'Quản lý cấu hình','news'=>'Tin tức','manufacturer'=>'Nhà sản xuất','product'=>'Sản phẩm','order'=>'Đơn hàng','user'=>'Người dùng','qa'=>'Hỏi đáp','album'=>'Album','galleryVideo'=>'Video','banner'=>'Banner quảng cáo','contact'=>'Liên hệ');
 				else 
-					return array('news'=>'Tin tức','product'=>'Sản phẩm','qa'=>'Hỏi đáp','album'=>'Album','galleryVideo'=>'Video','register'=>'Đăng kí học','contact'=>'Liên hệ');
+					return array('news'=>'Tin tức','product'=>'Sản phẩm','qa'=>'Hỏi đáp','album'=>'Album','galleryVideo'=>'Video','contact'=>'Liên hệ');
 				break;
 			case 'action':
 				switch ($value['controller']) {					
 					case 'news':
 						if($this->group == Category::GROUP_ADMIN_MENU)							
-							return array('present'=>'Các trang giới thiệu','index'=>'Quản lý danh sách tin tức','create'=>'Tạo tin mới','manager_category_vi'=>'Quản lý danh mục tiếng việt','manager_category_en'=>'Quản lý danh mục tiếng anh','manager_present'=>'Quản lý trang giới thiệu','view_category'=>'Hiển thị danh mục tin');
+							return array('present'=>'Các trang giới thiệu','index'=>'Quản lý danh sách tin tức','create'=>'Tạo tin mới','manager_category'=>'Quản lý danh mục','manager_present'=>'Quản lý trang giới thiệu','view_category'=>'Hiển thị danh mục tin');
 						else 
 							return array('present'=>'Các trang giới thiệu','view_category'=>'Hiển thị danh mục tin');
 						break;
@@ -589,12 +589,6 @@ class Category extends CActiveRecord
 							return array('index'=>'Quản lý liên hệ','view_contact'=>'Trang liên hệ');
 						else 
 							return array('view_contact'=>'Trang liên hệ');
-						break;
-					case 'register':
-						if($this->group == Category::GROUP_ADMIN_MENU)								
-							return array('index'=>'Quản lý đăng kí học','view_register'=>'Trang đăng kí');
-						else 	
-							return array('view_register'=>'Trang đăng kí');
 						break;
 					case 'user':								
 						return array('index'=>'Quản lý danh sách người dùng','create'=>'Thêm người dùng mới');
@@ -725,8 +719,7 @@ class Category extends CActiveRecord
 			'news'=>array(
 				'index'=>'/admin/news/index',
 				'create'=>'/admin/news/create',
-				'manager_category_en'=>'/admin/category',
-				'manager_category_vi'=>'/admin/category',
+				'manager_category'=>'/admin/category',
 				'view_category'=>'/site/news',
 				'present'=>'/site/news',
 				'manager_present'=>'/admin/news/index'
@@ -754,10 +747,6 @@ class Category extends CActiveRecord
 			'contact'=>array(
 				'index'=>'/admin/contact/index',
 				'view_contact'=>'site/contact'
-			),
-			'register'=>array(
-				'index'=>'/admin/register/index',
-				'view_register'=>'site/register'
 			),
 			'user'=>array(
 				'index'=>'/admin/user/index',
@@ -803,8 +792,7 @@ class Category extends CActiveRecord
 		if ($this->group == Category::GROUP_ADMIN_MENU || $this->group == Category::GROUP_USER_MENU) {
 			$config = array (
 					'news' => array (
-						'manager_category_en' => array ('group' => Category::GROUP_NEWS, 'lang'=> 'en' ),
-						'manager_category_vi' => array ('group' => Category::GROUP_NEWS, 'lang'=>'vi' ),
+						'manager_category' => array ('group' => Category::GROUP_NEWS),
 						'manager_present' => array ('catid' => News::PRESENT_CATEGORY)
 					),
 					'product' => array (

@@ -36,7 +36,7 @@
                     </div>
                    		<li>
                    		<input type="reset" class="button" value="<?php echo Language::t('Hủy thao tác')?>" style="margin-left:153px; width:125px;" />
-                    	<input type="submit" class="button" value="<?php echo Language::t('Tạo')?>" style="margin-left:20px; width:125px;" />					 
+                    	<input type="submit" class="button" value="<?php echo Language::t('Cập nhật')?>" style="margin-left:20px; width:125px;" />					 
                     	</li>
 				</ul>
 			</div>

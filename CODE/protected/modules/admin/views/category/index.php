@@ -34,7 +34,7 @@ $cs->registerCssFile(Yii::app()->request->getBaseUrl(true).'/css/admin/sprite.cs
 			switch ($group){
 				case Category::GROUP_ADMIN_MENU: echo "Menu trang quản trị";
 				break;
-				case Category::GROUP_USER_MENU: echo 'Menu trang tiếng Việt';
+				case Category::GROUP_USER_MENU: echo 'Menu trang frontend';
 				break;
 				case Category::GROUP_ROOT: echo "Danh mục gốc";
 				break;

@@ -8,8 +8,5 @@ class Article extends CActiveRecord
 	const ARTICLE_BANNER=5;
 	const ARTICLE_CONTACT=6;
 	const ARTICLE_REGISTER=7;
-	
-	const LANG_VI=0;
-	const LANG_EN=1;
 }
 ?>

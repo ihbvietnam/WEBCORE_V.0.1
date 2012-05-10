@@ -17,24 +17,7 @@
                         	<?php echo $form->textField($model,'name',array('style'=>'width:300px;','maxlength'=>'256')); ?>
                    			<?php echo $form->error($model, 'name'); ?>
                     	</li>
-                    </div> 
-                     <li>
-                     		<?php 
-                     		$list_lang=array(Article::LANG_VI=>'Tiếng Việt',Article::LANG_EN=>'English');	
-                     		if(isset($_GET['lang'])){
-								switch ($_GET['lang']){
-									case 'en': 
-										$list_lang=array(Article::LANG_EN=>'English');
-										break;
-									case 'vi':
-										$list_lang=array(Article::LANG_VI=>'Tiếng Việt');
-										break;													
-								}
-                     		}	
-                     		?>
-							<?php echo $form->labelEx($model,'lang'); ?>
-							<?php echo $form->dropDownList($model,'lang',$list_lang,array('style'=>'width:200px')); ?>
-                    	</li>                 
+                    </div>                                   
                     <div class="row">
                     <li>
                         <?php echo $form->labelEx($model,'parent_id'); ?>

@@ -190,7 +190,7 @@ class News extends CActiveRecord
 		return array(
 			array('title,catid,fulltext', 'required','message'=>'Dữ liệu bắt buộc','on'=>'write,copy'),
 			array('title', 'validatorTitle','on'=>'write,copy'),
-			array('catid,lang,order_view', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write,copy'),
+			array('catid,order_view', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write,copy'),
 			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'write,copy'),
 			array('introimage', 'length', 'max'=>8,'on'=>'write,copy'),
 			array('fulltext,list_special,lang,list_suggest', 'safe', 'on'=>'write,copy'),
