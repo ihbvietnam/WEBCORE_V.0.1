@@ -40,9 +40,6 @@ return array(
 		'counter' => array(
             'class' => 'ext.UserCounter',
 		),
-		'counter' => array(
-            'class' => 'ext.UserCounter',
-		),
 		/*
 		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
