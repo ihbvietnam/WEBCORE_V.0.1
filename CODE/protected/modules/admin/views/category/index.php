@@ -141,7 +141,7 @@ $cs->registerScript(
   			'.i16-statustext',	
   			function(){
   				jQuery.ajax({
-  					'data':{id : this.id, group: $(\"#group\").val(), lang: '".$lang."'},
+  					'data':{id : this.id, group: $(\"#group\").val()},
   					'success':function(data){
 						$(\".folder-content\").html(data);
 						$(\".folder-content\").append('<div class=\"clear\"></div>');
