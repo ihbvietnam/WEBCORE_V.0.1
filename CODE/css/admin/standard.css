@@ -1120,17 +1120,15 @@ div.form span.required
 } 
 #tabContent{
 	position:relative;
-	height:300px;
+	height:auto;
 	font:12px Verdana, Arial, Helvetica, sans-serif;
-	color:#444444;
-	border:2px solid #9fb2d6;
+	border:1px solid #9fb2d6;
 	overflow:hidden;
 } 
 #tabContent .content{
 	display:none;
 } 
 #tabContent .active{
-	padding:5px 10px;
 	display:block;
 }
 /* Tab menu styles generated via the horitontal menu builder @ www.cssmenubuilder.com */ 
@@ -1157,6 +1155,8 @@ div.form span.required
 	font:12px Verdana, Arial, Helvetica, sans-serif;
 	cursor:pointer;
 	background:url(img/topMenuImages.png) 0px -30px no-repeat;
+	display:block;
+	line-height:30px;
 } 
 .menu li a span{
 	line-height:30px;

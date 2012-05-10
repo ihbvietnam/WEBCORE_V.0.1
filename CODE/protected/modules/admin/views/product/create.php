@@ -116,7 +116,7 @@
                     		<div id="tabContainer">
                         		<div id="tabMenu">
                             		<ul class="menu">
-                                		<li><a id="select1" class="active">Mô tả sản phẩm</a></li>
+                                		<li><a id="select1" class="active"><span>Mô tả sản phẩm</span></a></li>
                                     	<li><a id="select2"><span>Thông số kĩ thuật</span></a></li>
                                 	</ul>
                             	</div>
@@ -124,13 +124,13 @@
                                 	<div id="tab1" class="content active">
                                     <div class="clear"></div>
 										<?php  
-                        					$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'description','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:800px;height:550px'))); 
+                        					$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'description','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
                         				?>
                                 	</div>
                                 	<div id="tab2" class="content">
                                     <div class="clear"></div>
                                     <?php  
-                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'parameter','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:800px;height:550px'))); 
+                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'parameter','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
                         			?>
                                 	</div>
                             	</div>
@@ -138,7 +138,7 @@
                         	</li>
                     	</div>
 						<li>						  						
-						<input type="reset" class="button" value="Hủy thao tác" style="margin-left:153px; width:125px;" />	
+						<input type="reset" class="button" value="Hủy thao tác" style="margin-left:15px; width:125px;" />	
 						<input type="submit" class="button" value="Thêm mới" style="margin-left:20px; width:125px;" />	
 						</li>						
 				</ul>
