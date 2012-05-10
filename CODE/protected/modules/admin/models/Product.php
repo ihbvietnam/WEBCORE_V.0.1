@@ -171,7 +171,6 @@ class Product extends CActiveRecord
 			array('name,catid,manufacturer_id,code,introimage','required','message'=>'Dữ liệu bắt buộc','on'=>'write'),
 			array('description,parameter', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'write'),
 			array('list_special,lang,num_price,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
-			array('lang', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
 			array('name,lang, manufacturer_id, catid,special, amount_status','safe','on'=>'search'),
 			array('introimage','safe','on'=>'upload_image'),		
 		);
