@@ -82,7 +82,7 @@ class ProductController extends Controller
 		
 		//Handler list suggest product
 		if(!Yii::app()->getRequest()->getIsAjaxRequest())
-			Yii::app ()->session ["checked-suggest-list"]=array();
+			Yii::app ()->session ["checked-suggest-list"]=array_diff ( explode ( ',', $model->list_suggest ), array ('' ) );
 		$this->initCheckbox('checked-suggest-list');
 		$suggest=new Product('search');
 		$suggest->unsetAttributes();  // clear any default values
@@ -299,7 +299,7 @@ public function actionCheckbox($action)
 	public function initCheckbox($name_params){
 		if (! isset ( Yii::app ()->session [$name_params] ))
 			Yii::app ()->session [$name_params] = array ();
-		if (! Yii::app ()->getRequest ()->getIsAjaxRequest ())
+		if (! Yii::app ()->getRequest ()->getIsAjaxRequest () && $name_params != 'checked-suggest-list')
 			Yii::app ()->session [$name_params] = array ();
 		else {
 			if (isset ( $_POST ['list-checked'] )) {

@@ -14,8 +14,9 @@ class wVideo extends CPortlet
 		$criteria->order='id desc';
 		$criteria->limit=1;
 		$gallery_video=GalleryVideo::model()->find($criteria);
+		parse_str( parse_url( $gallery_video->link, PHP_URL_QUERY ), $vars );
 		$this->render('video',array(
-			'gallery_video'=>$gallery_video
+			'video_id'=>$vars['v']
 		));
 	}
 }

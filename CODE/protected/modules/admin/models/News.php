@@ -37,8 +37,10 @@ class News extends CActiveRecord
 	const OTHER_NEWS=5;
 	const LIST_NEWS=10;
 	const LIST_SEARCH=10;
-	const PRESENT_CATEGORY=31;
-	const PRESENT_CATEGORY_EN=71;
+	const PRESENT_CATEGORY=30;
+	const GUIDE_CATEGORY=59;
+	const ALIAS_PRESENT_CATEGORY='gioi-thieu';
+	const ALIAS_GUIDE_CATEGORY='huong-dan';
 	
 	public $old_fulltext;
 	public $old_introimage;

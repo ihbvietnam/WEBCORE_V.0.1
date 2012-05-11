@@ -17,6 +17,7 @@ return array(
 	'import'=>array(
 		'application.modules.admin.models.*',
 		'application.components.*',
+		'application.models.*',
 	),
 	'defaultController'=>'site',
 	'modules'=>array(

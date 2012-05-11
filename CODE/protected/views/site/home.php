@@ -1,30 +1,4 @@
-<div class="search-product">
-            	<label>Tùy chọn</label>
-                <input name="" type="text" class="text" />
-                <select style="width:160px;">
-                    <option>Mặt hàng</option>
-                    <option>TBE</option>
-                    <option>TCE</option>
-                    <option>TME</option>
-                </select>
-                <select style="width:140px;">
-                    <option>Giá từ</option>
-                    <option>0</option>
-                    <option>500.000</option>
-                    <option>1.000.000</option>
-                    <option>2.000.000</option>
-                    <option>5.000.000</option>
-                </select>
-                <select style="width:140px;">
-                    <option>Đến giá</option>
-                    <option>500.000</option>
-                    <option>1.000.000</option>
-                    <option>2.000.000</option>
-                    <option>5.000.000</option>
-                    <option>Lớn nhất</option>
-                </select>
-                <input name="" type="submit" value="Tìm kiếm" class="btn-filter" />
-            </div><!--search-product-->
+<?php $this->widget('wSearch');?> 
             <div class="big-title"><label>Sản phẩm mới</label></div>
             <div class="product-list">
             	<div class="box-item">

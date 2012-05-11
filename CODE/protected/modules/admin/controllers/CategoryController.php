@@ -375,13 +375,12 @@ class CategoryController extends Controller
 			if(!isset($_POST['Category']['params']) &&  $model->scenario=="menu"){
 				$model->params="";
 			}
-			if(!isset($_POST['Category']['list_special']) && $model->scenario=="news") $model->list_special=array();
-			
+			if(!isset($_POST['Category']['list_special']) && ($model->scenario=="news" || $model->scenario=="product")) $model->list_special=array();
 			if(!isset($model->parent_id)){
 					$model->parent_id=$group;
 			}
 			if($model->save()){
-				if(($model->scenario == "menu" || $model->scenario == 'news') && $action!="create")
+				if(($model->scenario == "menu" || $model->scenario == 'news' || $model->scenario == 'product') && $action!="create")
 				{	
 					$model->changeOrderView();
 				}

@@ -15,6 +15,7 @@ class Product extends CActiveRecord
 	 * SPECIAL_REMARK product is viewed at homepage
 	 */
 	const SPECIAL_REMARK=0;
+	const SPECIAL_BESTSELLER=1;
 	
 	const LIST_PRODUCT=1;
 	const LIST_SEARCH=1;
@@ -23,7 +24,7 @@ class Product extends CActiveRecord
 	const LIST_ADMIN=10;
 	const PRESENT_CATEGORY=31;
 	
-	static $config_unit_price = array('USA'=>'USA','VND'=>'VND');
+	static $config_unit_price = array('VND'=>'VND');
 	
 	public $num_price;
 	public $unit_price;
@@ -31,7 +32,7 @@ class Product extends CActiveRecord
 	public $old_introimage;
 	public $old_name;
 	public $list_special;
-	private $config_other_attributes=array('list_suggest','modified','unit','year','warranty','parameter','price','description','introimage','otherimage','metakey','metadesc');	
+	private $config_other_attributes=array('list_suggest','modified','unit','year','warranty','parameter','description','showroom','store','comment','unit_price','introimage','otherimage','metakey','metadesc');	
 	private $list_other_attributes;
 	
 	/*
@@ -66,7 +67,9 @@ class Product extends CActiveRecord
  	 * Get url
  	 */
  	public function getUrl(){
-		$url=Yii::app()->createUrl("site/video",array('video_alias'=>$this->alias)); 
+		$cat_alias=$this->category->alias;
+ 		$alias=$this->alias;
+		$url=Yii::app()->createUrl("site/product",array('cat_alias'=>$cat_alias,'product_alias'=>$alias)); 
 		return $url;
 	}
  	
@@ -77,7 +80,7 @@ class Product extends CActiveRecord
 		if($this->introimage>0){
 			$image=Image::model()->findByPk($this->introimage);
 			$src=$image->getThumb('Product',$type);
-			return '<img class="img" src="'.$src.'" alt="'.$image->name.'">';
+			return '<img class="img" src="'.$src.'" alt="'.$image->title.'">';
 		}
 		else {
 			
@@ -92,6 +95,7 @@ class Product extends CActiveRecord
  	{
 		return array(
 			self::SPECIAL_REMARK=>'Hiển thị trong phần sản phẩm nổi bật',
+			self::SPECIAL_BESTSELLER=>'Hiển thị trong phần sản phẩm bán chạy',
 		);
  	}
  	/*
@@ -168,9 +172,10 @@ class Product extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name,catid,manufacturer_id,code,introimage','required','message'=>'Dữ liệu bắt buộc','on'=>'write'),
-			array('description,parameter', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'write'),
-			array('list_special,lang,num_price,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
+			array('name,catid,code,introimage','required','message'=>'Dữ liệu bắt buộc','on'=>'write'),
+			array('description,parameter,showroom,store,comment', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'write'),
+			array('manufacturer_id,list_special,lang,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
+			array('num_price', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
 			array('name,lang, manufacturer_id, catid,special, amount_status','safe','on'=>'search'),
 			array('introimage','safe','on'=>'upload_image'),		
 		);
@@ -232,10 +237,6 @@ class Product extends CActiveRecord
 		$this->list_special=iPhoenixStatus::decodeStatus($this->special);
 		//Store old name
 		$this->old_name=$this->name;
-		//Decode price
-		$tmp=(array)json_decode($this->price);
-		$this->num_price=$tmp['num_price'];
-		$this->unit_price=$tmp['unit_price'];
 		
 		if(isset($this->list_other_attributes['modified']))
 			$this->list_other_attributes['modified']=(array)json_decode($this->list_other_attributes['modified']);
@@ -277,7 +278,6 @@ class Product extends CActiveRecord
 			}	
 			//Encode special
 			$this->special=iPhoenixStatus::encodeStatus($this->list_special);
-			$this->price=json_encode(array('num_price'=>$this->num_price,'unit_price'=>$this->unit_price));
 			$this->other=json_encode($this->list_other_attributes);
 			return true;
 		}

@@ -1,23 +1,11 @@
 <?php 
 							switch ($model->id){
-								case Banner::CODE_TOP:
-									$type_image="thumb_top";
-									break;
-								case Banner::CODE_MAIN:
-									$type_image="thumb_main";
-									break;
-								case Banner::CODE_RIGHT: 
-									$type_image="thumb_right";
-									break;
 								case Banner::CODE_LEFT:
-									$type_image="thumb_left";
-									break;
-								case Banner::CODE_FOOTER:
-									$type_image="thumb_footer";
-									break;
-								case Banner::CODE_LINK_PARTNER:
-									$type_image="link_partner";
-									break;
+									$type_image="left";
+									break;	
+								case Banner::CODE_HEADLINE:
+									$type_image="thumb_headline";
+									break;							
 							}
 ?>
 <!--begin inside content-->

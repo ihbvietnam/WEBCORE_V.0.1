@@ -27,7 +27,6 @@ $(document).ready(function(){
 <?php if(Yii::app()->controller->id != "site" || Yii::app()->controller->action->id != "index"):?>
 $(window).scrollTop($(".main").offset().top); 
 <?php endif;?>
-IMSlider.slide();
 });
 </script>
 </head>
@@ -63,13 +62,8 @@ IMSlider.slide();
 </div><!--menu-->
 <div class="slider-outer">
     <div class="wrapper">
-    	<div class="slider-wrapper theme-default">
-            <div id="slider" class="nivoSlider">					
-                <img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/slider1.jpg" alt="slider1" />
-                <img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/slider2.jpg" alt="slider2" />
-                <img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/slider3.jpg" alt="slider2" />
-                <img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/slider4.jpg" alt="slider2" />
-            </div>
+    	<div class="slider-wrapper theme-default">				
+            <?php $this->widget('wHeadline')?>
       	</div><!--slider-wrapper-->
       	<div class="slider-right">
         	<div class="box">
@@ -81,7 +75,7 @@ IMSlider.slide();
                 	<div class="box-intro">
                         <ul>
                             <li><a href="#"><?php echo Language::t('Hướng dẫn mua hàng');?></a></li>
-                            <li><a href="#"><?php echo Language::t('Cách giao dịch thanh toán');?></a></li>
+                            <li><a href="#"><?php echo Language::t('Phương thức thanh toán');?></a></li>
                         </ul>
                     </div><!--box-intro-->
                 </div><!--box-content-->
@@ -94,78 +88,18 @@ IMSlider.slide();
     	<div class="tree-view">
         	<a href="#">Trang chủ</a><span></span><a href="#">Sản phẩm</a><span></span><label>Bàn ghế Minh</label>
         </div><!--tree-view-->
-        <span class="update-time">Thứ 4 ngày 30/3/2012</span>
+        <span class="update-time"><?php echo date("d/m/Y"); ?></span>
     </div><!--tree-outer-->
     <div class="bground">
     	<div class="sidebar">
         	<div class="box">
-            	<div class="box-title"><label>Đặt hàng online</label></div>
-                <div class="box-content">
-                	<div class="menuleft">
-                        <ul>
-                            <li><a href="#">Bàn ăn</a></li>
-                            <li><a href="#">Tủ bày phòng khách</a>
-                            	<ul>
-                                    <li><a href="#">Tủ đứng</a></li>
-                                    <li><a href="#">Tủ nằm</a></li>
-                                    <li><a href="#">Tủ 3 buồng</a></li>
-                                    <li><a href="#">Tủ 2 buồng</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Bàn ghế phòng khách</a></li>
-                            <li><a href="#">Kệ bày</a></li>
-                            <li><a href="#">Tủ rượu</a></li>
-                            <li><a href="#">Giường ngủ</a></li>
-                            <li><a href="#">Tủ quần áo</a></li>
-                            <li><a href="#">Tủ ngăn kéo</a></li>
-                        </ul>
-                    </div><!--menuleft-->
-                </div><!--box-content-->
+            	<?php $this->widget('wMenuLeft');?> 
             </div><!--box-->
             <div class="box">
-            	<div class="box-title"><label>Sản phẩm nổi bật</label></div>
-                <div class="box-content">
-                	<div class="box-featured">
-                        <div class="grid">
-                            <a href="#"><img class="img" src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/view1.jpg" alt="image" /></a>
-                            <div class="g-content">
-                                <div class="g-row"><a class="g-title" href="#">TBE-03</a></div>
-                                <div class="g-row">1.200.000 VND</div>
-                            </div>
-                        </div><!--grid-->
-                        <div class="grid">
-                            <a href="#"><img class="img" src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/view2.jpg" alt="image" /></a>
-                            <div class="g-content">
-                                <div class="g-row"><a class="g-title" href="#">TBE-03</a></div>
-                                <div class="g-row">1.200.000 VND</div>
-                            </div>
-                        </div><!--grid-->
-                        <div class="grid">
-                            <a href="#"><img class="img" src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/view3.jpg" alt="image" /></a>
-                            <div class="g-content">
-                                <div class="g-row"><a class="g-title" href="#">TBE-03</a></div>
-                                <div class="g-row">1.200.000 VND</div>
-                            </div>
-                        </div><!--grid-->
-                        <div class="grid">
-                            <a href="#"><img class="img" src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/view4.jpg" alt="image" /></a>
-                            <div class="g-content">
-                                <div class="g-row"><a class="g-title" href="#">TBE-03</a></div>
-                                <div class="g-row">1.200.000 VND</div>
-                            </div>
-                        </div><!--grid-->
-                        <div class="grid">
-                            <a href="#"><img class="img" src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/view1.jpg" alt="image" /></a>
-                            <div class="g-content">
-                                <div class="g-row"><a class="g-title" href="#">TBE-03</a></div>
-                                <div class="g-row">1.200.000 VND</div>
-                            </div>
-                        </div><!--grid-->
-                    </div><!--box-featured-->
-                </div><!--box-content-->
+            	<?php $this->widget('wRemark');?> 
             </div><!--box-->
             <div class="box-ad">
-            	<a href="#"><img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/ad1.jpg" /></a>
+            	<?php $this->widget('wBanner');?> 
             </div><!--box-ad-->
         </div><!--sidebar-->
         <div class="main">

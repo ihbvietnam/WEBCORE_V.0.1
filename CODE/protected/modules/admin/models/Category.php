@@ -239,8 +239,8 @@ class Category extends CActiveRecord
 			if($this->group==Category::GROUP_ADMIN_MENU || $this->group==Category::GROUP_USER_MENU){
 				$this->tmp_list[$category->id]=array('level'=>$new_level,'name'=>$category->name,'url'=>$category->url,'root'=>$category->root);
 			}
-			elseif($this->group==Category::GROUP_NEWS){
-				$this->tmp_list[$category->id]=array('level'=>$new_level,'name'=>$category->name,'special'=>$category->special,'lang'=>$category->lang);
+			elseif($this->group==Category::GROUP_NEWS || $this->group==Category::GROUP_PRODUCT){
+				$this->tmp_list[$category->id]=array('level'=>$new_level,'name'=>$category->name,'url'=>$category->url,'special'=>$category->special);
 			}
 			else {
 				$this->tmp_list[$category->id]=array('level'=>$new_level,'name'=>$category->name);
@@ -317,10 +317,10 @@ class Category extends CActiveRecord
 			array('name', 'length', 'max'=>256,'message'=>'Tối đa 32 kí tự'),
 			array('description, name', 'length', 'max'=>512,'message'=>'Tối đa 32 kí tự'),
 			array('order_view','required','message'=>'Dữ liệu bắt buộc','on'=>'menu,news'),
-			array('order_view','numerical','on'=>'menu,news'),
+			array('order_view','numerical','on'=>'menu,news,product'),
 			array('controller,action','required','on'=>'menu','message'=>'Dữ liệu bắt buộc'),
 			array('params','safe','on'=>'menu'),
-			array('list_special,lang','safe','on'=>'news')
+			array('list_special,lang','safe','on'=>'news,product')
 		);
 	}
 	//Function validator role
@@ -419,7 +419,7 @@ class Category extends CActiveRecord
 				$this->created_by=Yii::app()->user->id;
 				//Set order view
 				$this->order_view=sizeof($this->list_order_view)+1;
-				if($this->parent_id == Category::GROUP_NEWS) 
+				if($this->parent_id == Category::GROUP_NEWS || $this->parent_id == Category::GROUP_PRODUCT) 
 					$this->list_special=array(Category::SPECIAL_REMARK);
 				//Set alias
 				/*
@@ -450,7 +450,7 @@ class Category extends CActiveRecord
 				}
 			}
 			//Encode special
-			if($this->group == self::GROUP_NEWS)
+			if($this->group == self::GROUP_NEWS || $this->group == self::GROUP_PRODUCT)
 				$this->special=iPhoenixStatus::encodeStatus($this->list_special);
 			//Encode other attributes  		
 			$this->other = json_encode ( $this->list_other_attributes );
@@ -553,24 +553,15 @@ class Category extends CActiveRecord
 	public function codeUrl($type,$value=array()){
 		switch ($type) {
 			case 'controller': 
-				if($this->group == Category::GROUP_ADMIN_MENU)
-					return array('config'=>'Quản lý hệ thống','language'=>'Quản lý ngôn ngữ','setting'=>'Quản lý cấu hình','news'=>'Tin tức','manufacturer'=>'Nhà sản xuất','product'=>'Sản phẩm','order'=>'Đơn hàng','user'=>'Người dùng','qa'=>'Hỏi đáp','album'=>'Album','galleryVideo'=>'Video','banner'=>'Banner quảng cáo','contact'=>'Liên hệ');
-				else 
-					return array('news'=>'Tin tức','product'=>'Sản phẩm','qa'=>'Hỏi đáp','album'=>'Album','galleryVideo'=>'Video','contact'=>'Liên hệ');
+					return array('config'=>'Quản lý hệ thống','language'=>'Quản lý ngôn ngữ','setting'=>'Quản lý cấu hình','news'=>'Tin tức','manufacturer'=>'Nhà sản xuất','product'=>'Sản phẩm','order'=>'Đơn hàng','user'=>'Người dùng','qa'=>'Hỏi đáp','album'=>'Album','galleryVideo'=>'Video','banner'=>'Banner quảng cáo','contact'=>'Liên hệ');				
 				break;
 			case 'action':
 				switch ($value['controller']) {					
-					case 'news':
-						if($this->group == Category::GROUP_ADMIN_MENU)							
-							return array('present'=>'Các trang giới thiệu','index'=>'Quản lý danh sách tin tức','create'=>'Tạo tin mới','manager_category'=>'Quản lý danh mục','manager_present'=>'Quản lý trang giới thiệu','view_category'=>'Hiển thị danh mục tin');
-						else 
-							return array('present'=>'Các trang giới thiệu','view_category'=>'Hiển thị danh mục tin');
+					case 'news':						
+							return array('guide'=>'Các trang hướng dẫn mua hàng','present'=>'Các trang giới thiệu','index'=>'Quản lý danh sách tin tức','create'=>'Tạo tin mới','manager_category'=>'Quản lý danh mục','manager_present'=>'Quản lý trang giới thiệu','view_category'=>'Hiển thị danh mục tin');					
 						break;
-					case 'product':								
-						if($this->group == Category::GROUP_ADMIN_MENU)							
+					case 'product':													
 							return array('index'=>'Quản lý danh sách sản phẩm','create'=>'Thêm sản phẩm mới','manager_category'=>'Quản lý danh mục sản phẩm');
-						else 
-							return array('present'=>'Hiển thị các danh mục','view_category'=>'Hiển thị sản phẩm trong danh mục');
 						break;
 					case 'order':							
 						return array('index'=>'Quản lý đơn hàng');
@@ -578,41 +569,29 @@ class Category extends CActiveRecord
 					case 'manufacturer':								
 						return array('manager_category'=>'Quản lý danh sách nhà sản xuất');
 						break;
-					case 'qa':	
-						if($this->group == Category::GROUP_ADMIN_MENU)						
-							return array('index'=>'Quản lý hỏi đáp','view_qa'=>'Trang danh sách hỏi đáp');
-						else 
-							return array('view_qa'=>'Trang danh sách hỏi đáp');
+					case 'qa':						
+						return array('index'=>'Quản lý hỏi đáp','view_qa'=>'Trang danh sách hỏi đáp');
 						break;
-					case 'contact':	
-						if($this->group == Category::GROUP_ADMIN_MENU)							
-							return array('index'=>'Quản lý liên hệ','view_contact'=>'Trang liên hệ');
-						else 
-							return array('view_contact'=>'Trang liên hệ');
+					case 'contact':							
+						return array('index'=>'Quản lý liên hệ','view_contact'=>'Trang liên hệ');
 						break;
 					case 'user':								
 						return array('index'=>'Quản lý danh sách người dùng','create'=>'Thêm người dùng mới');
 						break;
-					case 'album':	
-						if($this->group == Category::GROUP_ADMIN_MENU)								
-							return array('index'=>'Quản lý  danh sách album','create'=>'Thêm album mới','view_album'=>'Trang danh sách album');
-						else 	
-							return array('view_album'=>'Trang danh sách album');
+					case 'album':								
+						return array('index'=>'Quản lý  danh sách album','create'=>'Thêm album mới','view_album'=>'Trang danh sách album');
 						break;
 					case 'banner':								
 						return array('index'=>'Quản lý danh sách banner','create'=>'Thêm banner mới');
 						break;
-					case 'galleryVideo':
-						if($this->group == Category::GROUP_ADMIN_MENU)								
-							return array('index'=>'Quản lý danh sách video','create'=>'Thêm video mới','view_video'=>'Trang danh sách video');
-						else 
-							return array('view_video'=>'Trang danh sách video');
+					case 'galleryVideo':							
+						return array('index'=>'Quản lý danh sách video','create'=>'Thêm video mới','view_video'=>'Trang danh sách video');
 						break;
 					case 'config':								
 						return array('menu'=>'Quản lý menu','clear_image'=>'Dọn dẹp ảnh rác');
 						break;
 					case 'setting':	
-							return array('index'=>'Quản lý  danh sách tham số cấu hình','create'=>'Thêm cấu hình mới');
+						return array('index'=>'Quản lý  danh sách tham số cấu hình','create'=>'Thêm cấu hình mới');
 						break;
 					case 'language':
 						return array('create'=>'Tạo ngôn ngữ mới','edit'=>'Cập nhật ngôn ngữ','delete'=>'Xóa ngôn ngữ','import'=>'Nhập dữ liệu từ file excel','export'=>'Xuất dữ liệu ra file excel');
@@ -646,17 +625,7 @@ class Category extends CActiveRecord
 							$label=$view." ".$info_cat['name']." ".$view;
 							$result[$index]=$label;
 						}
-						return $result;
-					case 'present': 
-						$criteria=new CDbCriteria;
-						$criteria->addInCondition('catid',array(News::PRESENT_CATEGORY,News::PRESENT_CATEGORY_EN));
-						$criteria->compare('status',News::STATUS_ACTIVE);
-						$list_news=News::model()->findAll($criteria);
-						foreach ($list_news as $news){
-							$index=json_encode(array('cat_alias'=>$news->category->alias,'news_alias'=>$news->alias));
-							$result[$index]=$news->title;
-						}
-						return $result;
+						return $result;					
 					default:
 						return $result;
 				}
@@ -722,7 +691,9 @@ class Category extends CActiveRecord
 				'manager_category'=>'/admin/category',
 				'view_category'=>'/site/news',
 				'present'=>'/site/news',
-				'manager_present'=>'/admin/news/index'
+				'guide'=>'/site/news',
+				'manager_present'=>'/admin/news/index',
+				'manager_guide'=>'/admin/news/index'
 			),
 			'product'=>array(
 				'index'=>'/admin/product/index',
@@ -793,7 +764,10 @@ class Category extends CActiveRecord
 			$config = array (
 					'news' => array (
 						'manager_category' => array ('group' => Category::GROUP_NEWS),
-						'manager_present' => array ('catid' => News::PRESENT_CATEGORY)
+						'manager_present' => array ('catid' => News::PRESENT_CATEGORY),
+						'manager_guide' => array ('catid' => News::GUIDE_CATEGORY),
+						'present' => array('cat_alias'=>News::ALIAS_PRESENT_CATEGORY),
+						'guide' => array('cat_alias'=>News::ALIAS_GUIDE_CATEGORY)
 					),
 					'product' => array (
 						'manager_category' => array ('group' => Category::GROUP_PRODUCT ),

@@ -46,7 +46,7 @@
 					   <div class="row">
 							<li>
 								<?php echo $form->labelEx($model,'introimage'); ?>
-								<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_update')); ?>		
+								<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'introimage')); ?>		
 								<?php echo $form->error($model, 'introimage'); ?>
 							</li>
 						</div>
