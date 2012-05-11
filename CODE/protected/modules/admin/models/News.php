@@ -33,7 +33,7 @@ class News extends CActiveRecord
 	const SPECIAL_MARQUEE=2;
 	
 	const INTRO_LENGTH=100; 	
-	const INTRO_HOMEPAGE_LENGTH=40;	
+	const INTRO_HOMEPAGE_LENGTH=20;	
 	const OTHER_NEWS=5;
 	const LIST_NEWS=10;
 	const LIST_SEARCH=10;
@@ -69,6 +69,20 @@ class News extends CActiveRecord
  		$url=Yii::app()->createUrl("/site/news",array('cat_alias'=>$cat_alias,'news_alias'=>$alias));
 		return $url;
  	}
+	/*
+	 * Get thumb of video
+	 */
+	public function getThumb_url($type){
+		if($this->introimage>0){
+			$image=Image::model()->findByPk($this->introimage);
+			$src=$image->getThumb('News',$type);
+			return '<img class="img" src="'.$src.'" alt="'.$image->title.'">';
+		}
+		else {
+			
+			return '<img class="img" src="'.Image::getDefaultThumb('Product', $type).'" alt=""';
+		}
+	}
 	/*
 	 * Get image url which view status of news
 	 */

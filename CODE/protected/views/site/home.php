@@ -1,129 +1,29 @@
 <?php $this->widget('wSearch');?> 
-            <div class="big-title"><label>Sản phẩm mới</label></div>
+            <div class="big-title"><label><?php echo Language::t('Sản phẩm mới')?></label></div>
             <div class="product-list">
-            	<div class="box-item">
-                	<div class="b-title">TBE-03</div>
-                	<a class="b-image" href="#">
-                   		<img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/image1.jpg" alt="image" />
+            	<?php foreach ($list_product as $data):?>
+          			<div class="box-item">
+                	<div class="b-title"><?php echo $data->name?></div>
+                	<a class="b-image" href="<?php echo $data->url?>">
+                   		<?php echo $data->getThumb_url('introimage');?>
                     </a>
                     <div class="b-detail">
-                      	<h5>Giá: 1.000.000 VND</h5>
-                        <a class="b-viewmore" href="#">Chi tiết</a>
+                      	<h5><?php echo Language::t('Giá')?>: <?php if($data->num_price!='') echo number_format($data->num_price, 0, ',', '.').' '.$data->unit_price?></h5>
+                        <a class="b-viewmore" href="<?php echo $data->url?>">Chi tiết</a>
                   	</div>
-                </div><!--box-item-->
-                <div class="box-item">
-                	<div class="b-title">TBE-03</div>
-                	<a class="b-image" href="#">
-                   		<img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/image1.jpg" alt="image" />
-                    </a>
-                    <div class="b-detail">
-                      	<h5>Giá: 1.000.000 VND</h5>
-                        <a class="b-viewmore" href="#">Chi tiết</a>
-                  	</div>
-                </div><!--box-item-->
-                <div class="box-item">
-                	<div class="b-title">TBE-03</div>
-                	<a class="b-image" href="#">
-                   		<img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/image1.jpg" alt="image" />
-                    </a>
-                    <div class="b-detail">
-                      	<h5>Giá: 1.000.000 VND</h5>
-                        <a class="b-viewmore" href="#">Chi tiết</a>
-                  	</div>
-                </div><!--box-item-->
-                <div class="box-item">
-                	<div class="b-title">TBE-03</div>
-                	<a class="b-image" href="#">
-                   		<img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/image1.jpg" alt="image" />
-                    </a>
-                    <div class="b-detail">
-                      	<h5>Giá: 1.000.000 VND</h5>
-                        <a class="b-viewmore" href="#">Chi tiết</a>
-                  	</div>
-                </div><!--box-item-->
-                <div class="box-item">
-                	<div class="b-title">TBE-03</div>
-                	<a class="b-image" href="#">
-                   		<img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/image1.jpg" alt="image" />
-                    </a>
-                    <div class="b-detail">
-                      	<h5>Giá: 1.000.000 VND</h5>
-                        <a class="b-viewmore" href="#">Chi tiết</a>
-                  	</div>
-                </div><!--box-item-->
-                <div class="box-item">
-                	<div class="b-title">TBE-03</div>
-                	<a class="b-image" href="#">
-                   		<img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/image1.jpg" alt="image" />
-                    </a>
-                    <div class="b-detail">
-                      	<h5>Giá: 1.000.000 VND</h5>
-                        <a class="b-viewmore" href="#">Chi tiết</a>
-                  	</div>
-                </div><!--box-item-->
-                <div class="box-item">
-                	<div class="b-title">TBE-03</div>
-                	<a class="b-image" href="#">
-                   		<img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/image1.jpg" alt="image" />
-                    </a>
-                    <div class="b-detail">
-                      	<h5>Giá: 1.000.000 VND</h5>
-                        <a class="b-viewmore" href="#">Chi tiết</a>
-                  	</div>
-                </div><!--box-item-->
-                <div class="box-item">
-                	<div class="b-title">TBE-03</div>
-                	<a class="b-image" href="#">
-                   		<img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/image1.jpg" alt="image" />
-                    </a>
-                    <div class="b-detail">
-                      	<h5>Giá: 1.000.000 VND</h5>
-                        <a class="b-viewmore" href="#">Chi tiết</a>
-                  	</div>
-                </div><!--box-item-->
-                <div class="box-item">
-                	<div class="b-title">TBE-03</div>
-                	<a class="b-image" href="#">
-                   		<img src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/image1.jpg" alt="image" />
-                    </a>
-                    <div class="b-detail">
-                      	<h5>Giá: 1.000.000 VND</h5>
-                        <a class="b-viewmore" href="#">Chi tiết</a>
-                  	</div>
-                </div><!--box-item-->
+                </div><!--box-item-->    
+                <?php endforeach;?>       
             </div><!--product-list-->
-             <div class="big-title"><label>Tin tức mới</label></div>
+             <div class="big-title"><label><?php echo Language::t('Tin tức mới')?></label></div>
              <div class="product-new">
+             <?php foreach ($list_news as $data):?>
              	<div class="grid">
-                	<a href="#"><img class="img" src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/view2.jpg" alt="image" /></a>
-                    <a class="viewmore">Chi tiết</a>
+                	<a href="<?php echo $data->url?>"><?php echo $data->getThumb_url('introimage');?></a>
+                    <a class="viewmore" href="<?php echo $data->url?>"><?php echo Language::t('Chi tiết')?></a>
                 	<div class="g-content">
-                    	<div class="g-row"><a class="g-title" href="#">Giới thiệu về thương hiệu sàn gỗ mã Newsky</a><span>(14/5/2012)</span></div>
-                        <div class="g-row">Nhà máy ván sàn Newsky đặt tại Khu công nghiệp Phố Nối A, Huyện Văn Lâm, Tỉnh Hưng Yên.</div>
+                    	<div class="g-row"><a class="g-title" href="<?php echo $data->url?>"><?php echo $data->title?></a><span>(14/5/2012)</span></div>
+                        <div class="g-row"><?php echo iPhoenixString::createIntrotext($data->introtext,Setting::s('HOME_INTRO_LENGTH'));?></div>
                     </div>
                 </div><!--grid-->
-                <div class="grid">
-                	<a href="#"><img class="img" src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/view2.jpg" alt="image" /></a>
-                    <a class="viewmore">Chi tiết</a>
-                	<div class="g-content">
-                    	<div class="g-row"><a class="g-title" href="#">Giới thiệu về thương hiệu sàn gỗ mã Newsky</a><span>(14/5/2012)</span></div>
-                        <div class="g-row">Nhà máy ván sàn Newsky đặt tại Khu công nghiệp Phố Nối A, Huyện Văn Lâm, Tỉnh Hưng Yên.</div>
-                    </div>
-                </div><!--grid-->
-                <div class="grid">
-                	<a href="#"><img class="img" src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/view2.jpg" alt="image" /></a>
-                    <a class="viewmore">Chi tiết</a>
-                	<div class="g-content">
-                    	<div class="g-row"><a class="g-title" href="#">Giới thiệu về thương hiệu sàn gỗ mã Newsky</a><span>(14/5/2012)</span></div>
-                        <div class="g-row">Nhà máy ván sàn Newsky đặt tại Khu công nghiệp Phố Nối A, Huyện Văn Lâm, Tỉnh Hưng Yên.</div>
-                    </div>
-                </div><!--grid-->
-                <div class="grid">
-                	<a href="#"><img class="img" src="<?php Yii::app()->request->getBaseUrl(true)?>/images/front/data/view2.jpg" alt="image" /></a>
-                    <a class="viewmore">Chi tiết</a>
-                	<div class="g-content">
-                    	<div class="g-row"><a class="g-title" href="#">Giới thiệu về thương hiệu sàn gỗ mã Newsky</a><span>(14/5/2012)</span></div>
-                        <div class="g-row">Nhà máy ván sàn Newsky đặt tại Khu công nghiệp Phố Nối A, Huyện Văn Lâm, Tỉnh Hưng Yên.</div>
-                    </div>
-                </div><!--grid-->
+                <?php endforeach;?>              
              </div><!--product-new-->

@@ -121,7 +121,7 @@ class NewsController extends Controller
 		$list=$group->list_categories;
 		$list_category=array();
 		foreach ($list as $id=>$cat){
-			if($cat['lang']==$model->lang) $list_category[$id]=$cat;
+			$list_category[$id]=$cat;
 		}
 		if (! Yii::app ()->getRequest ()->getIsAjaxRequest ())
 				Yii::app ()->session ['checked-suggest-list'] = array_diff ( explode ( ',', $model->list_suggest ), array ('' ) );
