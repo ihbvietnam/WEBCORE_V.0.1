@@ -66,7 +66,9 @@ class Product extends CActiveRecord
  	 * Get url
  	 */
  	public function getUrl(){
-		$url=Yii::app()->createUrl("site/video",array('video_alias'=>$this->alias)); 
+ 		$cat_alias=$this->category->alias;
+ 		$alias=$this->alias;
+		$url=Yii::app()->createUrl("site/product",array('cat_alias'=>$cat_alias,'product_alias'=>$alias)); 
 		return $url;
 	}
  	
@@ -77,7 +79,7 @@ class Product extends CActiveRecord
 		if($this->introimage>0){
 			$image=Image::model()->findByPk($this->introimage);
 			$src=$image->getThumb('Product',$type);
-			return '<img class="img" src="'.$src.'" alt="'.$image->name.'">';
+			return '<img class="img" src="'.$src.'" alt="'.$image->title.'">';
 		}
 		else {
 			
@@ -170,7 +172,8 @@ class Product extends CActiveRecord
 		return array(
 			array('name,catid,manufacturer_id,code,introimage','required','message'=>'Dữ liệu bắt buộc','on'=>'write'),
 			array('description,parameter', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'write'),
-			array('list_special,lang,num_price,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
+			array('list_special,lang,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
+			array('num_price', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
 			array('name,lang, manufacturer_id, catid,special, amount_status','safe','on'=>'search'),
 			array('introimage','safe','on'=>'upload_image'),		
 		);

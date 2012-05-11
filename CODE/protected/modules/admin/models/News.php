@@ -38,7 +38,7 @@ class News extends CActiveRecord
 	const LIST_NEWS=10;
 	const LIST_SEARCH=10;
 	const PRESENT_CATEGORY=31;
-	const PRESENT_CATEGORY_EN=71;
+	const GUIDE_CATEGORY=71;
 	
 	public $old_fulltext;
 	public $old_introimage;

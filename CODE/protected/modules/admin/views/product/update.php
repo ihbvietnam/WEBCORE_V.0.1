@@ -80,7 +80,7 @@
 							<li>
 							<?php echo $form->labelEx($model,'price'); ?>
 							<?php echo $form->textField($model,'num_price',array('style'=>'width:100px;','maxlength'=>'256')); ?>
-							<?php echo $form->error($model, 'price'); ?>
+							<?php echo $form->error($model, 'num_price'); ?>
 							<?php echo $form->dropDownList($model,'unit_price',Product::$config_unit_price,array('style'=>'width:58px;margin-top:-5px;height:22px;')); ?>	
 							<?php echo $form->error($model, 'unit_price'); ?>	
 							</li>	

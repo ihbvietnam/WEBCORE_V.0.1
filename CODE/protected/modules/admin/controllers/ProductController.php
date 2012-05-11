@@ -299,7 +299,7 @@ public function actionCheckbox($action)
 	public function initCheckbox($name_params){
 		if (! isset ( Yii::app ()->session [$name_params] ))
 			Yii::app ()->session [$name_params] = array ();
-		if (! Yii::app ()->getRequest ()->getIsAjaxRequest ())
+		if (! Yii::app ()->getRequest ()->getIsAjaxRequest () && $name_params != 'checked-suggest-list')
 			Yii::app ()->session [$name_params] = array ();
 		else {
 			if (isset ( $_POST ['list-checked'] )) {
