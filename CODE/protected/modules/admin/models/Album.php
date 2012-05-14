@@ -1,20 +1,29 @@
 <?php
+
 class Album extends CActiveRecord
 {
+	/**
+	 * @return string the associated database table name - tbl_article
+	 */
 	public function tableName()
 	{
 		return 'tbl_article';
 	}
+	
 	/*
-	 * Get scope of album
+	 * Get scope of album for filter in the whole Article table
+	 * Article::ARTICLE_ALBUM - constant for type of Album in article table
 	 */
 	public function defaultScope(){
 		return array(
 			'condition'=>'type = '.Article::ARTICLE_ALBUM,
 		);
 	}
+	
 	/*
 	 * Config status of album
+	 * pending: 0
+	 * active: 1
 	 */
 	const STATUS_PENDING=0;
 	const STATUS_ACTIVE=1;	
@@ -23,17 +32,34 @@ class Album extends CActiveRecord
 	 * SPECIAL_REMARK album is viewed at homepage
 	 */
 	const SPECIAL_REMARK=0;	
+	/*
+	 * Config number of items display in CListView for the Album list, Admin list, and other album list.  
+	 */
 	const LIST_ADMIN=10;
 	const LIST_ALBUM=10;
 	const OTHER_ALBUM=5;
+	
 	
 	public $old_images;
 	public $old_title;
 	public $list_special;
 	private $list_other_attributes;
-	private $config_other_attributes=array('modified','images','description','metakey','metadesc');	
 	/*
-	 * Get image url which view status of album 
+	 * Config other new attributes for album.
+	 * @var modified: modified time
+	 * @var images: Album's Logo
+	 * @var description: Album's description 
+	 * @var metakey
+	 * @var metadesc
+	 */
+	private $config_other_attributes=array('modified','images','description','metakey','metadesc');	
+	
+	/*
+	 * Get image url which represents status of album
+	 * @param boolean $this->status
+	 * @return url definitive path of status image
+	 * enable.png if $this->status is STATUS_ACTIVE
+	 * disable.png if $this->status is STATUS_PENDING
 	 */
  	public function getImageStatus()
  	{
@@ -48,25 +74,30 @@ class Album extends CActiveRecord
  	}
 	/*
 	 * Get url of album
+	 * @return album's url
 	 */
 	public function getUrl()
  	{
  		$url=Yii::app()->createUrl("site/album",array('album_alias'=>$this->alias));
 		return $url;
  	}
+ 	
 	/*
-	 * Get all specials of class Album
-	 * Use in drop select when create, update album
+	 * Get all special view options of class Album
+	 * Used in dropDownList on create or update album
+	 * @return array represent the display option
 	 */
 	static function getList_label_specials()
  	{
 	return array(
-			self::SPECIAL_REMARK=>'Hiển thị ở trang chủ',
+			self::SPECIAL_REMARK=>'Hi?n th? ? trang ch?',
 		);
  	}
+ 	
  	/*
- 	 * Get specials of a object album
- 	 * Use in page lit admin
+ 	 * Get specials of an album object
+ 	 * Used in admin page list
+ 	 * @return array
  	 */
 	public function getLabel_specials()
  	{
@@ -78,8 +109,9 @@ class Album extends CActiveRecord
 		return $label_specials;
  	}
  	/*
- 	 * Special is encoded before save in database
- 	 * Function get all code of the special
+ 	 * Special attributes are encoded before saved in database
+ 	 * Function get all code of the special attributes
+ 	 * @return array encoded status of Album's special display options 
  	 */
 	static function getCode_special($index=null)
  	{
@@ -97,8 +129,11 @@ class Album extends CActiveRecord
  		}
  		return $result;
  	}
+ 	
 	/*
 	 * Get quantity images of a album
+	 * @param $this->images
+	 * @return list quality images of this album 
 	 */
 	public function getQuantity_images(){
 		$list=array_diff ( explode ( ',', $this->images ), array ('' ) );	
@@ -106,6 +141,7 @@ class Album extends CActiveRecord
 	}
 	/*
 	 * Get id of first image in album
+	 * @return int id of first image in this album
 	 */
 	public function getThumb_id(){
 		$list=array_diff ( explode ( ',', $this->images ), array ('' ) );	
@@ -114,6 +150,7 @@ class Album extends CActiveRecord
 	}
 	/*
 	 * Get url of first image
+	 * @return url of the first image in this album
 	 */
 	public function getThumb_url($type){
 		if($this->thumb_id>0){
@@ -127,6 +164,9 @@ class Album extends CActiveRecord
 	}
 	/*
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -138,6 +178,8 @@ class Album extends CActiveRecord
 	
 	/*
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -151,7 +193,7 @@ class Album extends CActiveRecord
 	}
 
 	/*
-	 * Returns the static model of the specified AR class.
+	 * @returns the static model of the specified AR class.
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -192,9 +234,9 @@ class Album extends CActiveRecord
 	{
 		return array(
 			'title' => 'Tên album',
-			'created_by' => 'Người đăng',
-			'created_date'=>'Thời điểm đăng',
-			'description'=>'Mô tả album',
+			'created_by' => 'Người tạo',
+			'created_date'=>'Thời gian tạo',
+			'description'=>'Mô tả Album',
 			'quantity_images'=>'Số lượng ảnh',
 			'thumb_album'=>'Ảnh đại diện',
 			'list_special' => 'Nhóm hiển thị',
@@ -269,6 +311,13 @@ class Album extends CActiveRecord
 			return false;
 	}
 	
+	/**
+	 * This method is invoked after saving a record (after validation, if any).
+	 * The default implementation raises the {@link onAfterSave} event.
+	 * You may override this method to do any preparation work for record saving.	 
+	 * Make sure you call the parent implementation so that the event is raised properly.
+	 * @return boolean whether the saving is successed or not. Defaults to true.
+	 */	
 	public function afterSave(){
 		if ($this->old_images != $this->images) {
 			foreach ( array_diff ( explode ( ',', $this->images ), array ('' ) ) as $image_id ) {
@@ -286,6 +335,7 @@ class Album extends CActiveRecord
 	
 	/**
 	 * This method is invoked before delete a record 
+	 * @return boolean whether the deleting is successed or not. Defaults to true. 
 	 */
 	public function beforeDelete() {
 		if (parent::beforeDelete ()) {
@@ -326,8 +376,10 @@ class Album extends CActiveRecord
     		),
 		));
 	}
+	
 	/*
 	 * Suggests a list banner which matching the specified keyword.
+	 * @return array list of titles similar to input keyword
 	 */
 	public function suggestTitle($keyword,$limit=20)
 	{
@@ -346,6 +398,7 @@ class Album extends CActiveRecord
 	}
 	/*
 	 * Reverse status (enable & disbale)of album
+	 * @return boolean wheather the reverse status activities is success or not; default value is false
 	 */
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
