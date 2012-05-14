@@ -48,12 +48,7 @@ $this->bread_crumbs=array(
                         <?php echo $language->description?>
                     </div><!--pd-intro-->
                     <div class="pd-share">
-                        <a class="icon-zing"></a>
-                        <span class="pd-cloud">34</span>
-                        <a class="icon-facebook"></a>
-                        <span class="pd-cloud">12</span>
-                        <a class="icon-google"></a>
-                        <span class="pd-cloud">1</span>
+                       <g:plusone size="medium"></g:plusone>
                     </div><!--pd-share--> 
                 </div><!--pd-right-->	
             </div><!--product-detail-->
