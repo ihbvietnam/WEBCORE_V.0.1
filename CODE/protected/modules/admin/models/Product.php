@@ -86,7 +86,29 @@ class Product extends CActiveRecord
 			return '<img class="img" src="'.Image::getDefaultThumb('Product', $type).'" alt=""';
 		}
 	}
-/*
+	/*
+	 * Get similar product
+	 */
+	public function getList_similar(){
+		if($this->list_suggest != ''){
+			$list = array_diff ( explode ( ',', $this->list_suggest ), array ('' ) );
+			$result=array();
+			foreach ($list as $id){
+				$result[]=Product::model()->findByPk($id);
+			}
+		}
+		else {
+			$criteria=new CDbCriteria;
+			$criteria->compare('status', Product::STATUS_ACTIVE);
+			$criteria->order='id desc';
+			$criteria->compare('catid',$this->catid);
+			$criteria->compare('manufacturer_id',$this->manufacturer_id);
+			$criteria->limit=Setting::s('LIMIT_SIMILAR_PRODUCT');
+			$result=Product::model()->findAll($criteria);		
+		}
+		return $result;
+	}
+	/*
 	 * Get all specials of class Album
 	 * Use in drop select when create, update album
 	 */
@@ -95,7 +117,7 @@ class Product extends CActiveRecord
 		return array(
 			self::SPECIAL_REMARK=>'Hiển thị trong phần sản phẩm nổi bật',
 		);
- 	}
+ 	}	
  	/*
  	 * Get specials of a object album
  	 * Use in page lit admin

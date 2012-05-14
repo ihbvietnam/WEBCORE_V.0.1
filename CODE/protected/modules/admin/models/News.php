@@ -39,6 +39,8 @@ class News extends CActiveRecord
 	const LIST_SEARCH=10;
 	const PRESENT_CATEGORY=31;
 	const GUIDE_CATEGORY=71;
+	const ALIAS_PRESENT_CATEGORY='gioi-thieu';
+	const ALIAS_GUIDE_CATEGORY='huong-dan';
 	
 	public $old_fulltext;
 	public $old_introimage;
@@ -87,6 +89,27 @@ class News extends CActiveRecord
 		$cat=$this->category;
 		return $cat->name;
  	}	
+	/*
+	 * Get similar news
+	 */
+	public function getList_similar(){
+		if($this->list_suggest != ''){
+			$list = array_diff ( explode ( ',', $this->list_suggest ), array ('' ) );
+			$result=array();
+			foreach ($list as $id){
+				$result[]=News::model()->findByPk($id);
+			}
+		}
+		else {
+			$criteria=new CDbCriteria;
+			$criteria->compare('status', News::STATUS_ACTIVE);
+			$criteria->order='id desc';
+			$criteria->compare('catid',$this->catid);
+			$criteria->limit=Setting::s('LIMIT_SIMILAR_NEWS');
+			$result=News::model()->findAll($criteria);		
+		}
+		return $result;
+	}
  	/*
 	 * Get all specials of class News
 	 * Use in drop select when create, update news
