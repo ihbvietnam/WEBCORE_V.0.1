@@ -83,10 +83,6 @@
 						'headerHtmlOptions'=>array('width'=>'2%','class'=>'table-title'),
 						'checked'=>'in_array($data->id,Yii::app()->session["checked-qa-list"])'
     				),	
-    				array(
-						'name'=>'title',
-						'headerHtmlOptions'=>array('width'=>'15%','class'=>'table-title'),		
-					), 
 					array(
 						'name'=>'question',
 						'value'=>'iPhoenixString::createIntrotext($data->question,QA::SIZE_INTRO_QUESTION)',

@@ -24,7 +24,7 @@ class Contact extends CActiveRecord
 
 	
 	public $old_answer;
-	private $config_other_attributes=array('modified','content','phone','email','fullname','metakey','metadesc');	
+	private $config_other_attributes=array('modified','address','content','phone','email','fullname','metakey','metadesc');	
 	private $list_other_attributes;
 	/*
 	 * Get image url which view status of contact
@@ -110,11 +110,12 @@ class Contact extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'content' => Yii::t('header','Nội dung'),
-			'phone' => Yii::t('header','Số điện thoại'),
-			'email'=> Yii::t('header','Email'),
-			'fullname' => Yii::t('header','Người hỏi'),
-			'created_date'=> Yii::t('header','Thời điểm tạo liên hệ'),
+			'content' => Language::t('Nội dung'), 
+			'phone' => Language::t('Điện thoại'),
+			'email'=> Language::t('Email'),
+			'fullname' => Language::t('Họ và tên'), 
+			'address'=>Language::t('Địa chỉ'), 
+			'created_date'=> Language::t('Ngày tạo'),
 		);
 	}
 /**

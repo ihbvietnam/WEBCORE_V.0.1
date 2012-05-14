@@ -62,6 +62,7 @@ class QAController extends Controller
 		if(isset($_POST['QA']))
 		{
 			$model->attributes=$_POST['QA'];
+			$model->title=$model->question;
 			if($model->save())
 				$this->redirect(array('update','id'=>$model->id));
 		}		

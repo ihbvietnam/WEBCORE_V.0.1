@@ -1,3 +1,8 @@
+<?php 
+$this->bread_crumbs=array(
+	array('url'=>'','title'=>Language::t('Trang chủ')),
+)
+?>
 <?php $this->widget('wSearch');?> 
             <div class="big-title"><label><?php echo Language::t('Sản phẩm mới')?></label></div>
             <div class="product-list">
@@ -21,7 +26,7 @@
                 	<a href="<?php echo $data->url?>"><?php echo $data->getThumb_url('introimage');?></a>
                     <a class="viewmore" href="<?php echo $data->url?>"><?php echo Language::t('Chi tiết')?></a>
                 	<div class="g-content">
-                    	<div class="g-row"><a class="g-title" href="<?php echo $data->url?>"><?php echo $data->title?></a><span>(14/5/2012)</span></div>
+                    	<div class="g-row"><a class="g-title" href="<?php echo $data->url?>"><?php echo $data->title?></a><span><?php echo date("(d/m/Y)"); ?></span></div>
                         <div class="g-row"><?php echo iPhoenixString::createIntrotext($data->introtext,Setting::s('HOME_INTRO_LENGTH'));?></div>
                     </div>
                 </div><!--grid-->

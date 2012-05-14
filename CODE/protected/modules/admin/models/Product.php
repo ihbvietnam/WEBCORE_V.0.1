@@ -87,6 +87,32 @@ class Product extends CActiveRecord
 			return '<img class="img" src="'.Image::getDefaultThumb('Product', $type).'" alt=""';
 		}
 	}
+	/*
+	 * Get similar product
+	 */
+	public function getList_similar(){
+		if($this->list_suggest != ''){
+			$list = array_diff ( explode ( ',', $this->list_suggest ), array ('' ) );
+			$result=array();
+			$index=0;
+			foreach ($list as $id){
+				$index++;
+				if($index <= Setting::s('LIMIT_SIMILAR_PRODUCT'))
+					$result[]=Product::model()->findByPk($id);
+			}
+		}
+		else {
+			$criteria=new CDbCriteria;
+			$criteria->compare('status', Product::STATUS_ACTIVE);
+			$criteria->order='id desc';
+			$criteria->compare('catid',$this->catid);
+			$criteria->compare('manufacturer_id',$this->manufacturer_id);
+			$criteria->limit=Setting::s('LIMIT_SIMILAR_PRODUCT');
+			$criteria->addCondition('id <>'. $this->id);
+			$result=Product::model()->findAll($criteria);		
+		}
+		return $result;
+	}
 /*
 	 * Get all specials of class Album
 	 * Use in drop select when create, update album

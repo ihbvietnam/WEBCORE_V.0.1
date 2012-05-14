@@ -28,7 +28,7 @@ class QA extends CActiveRecord
 	
 	public $old_answer;
 	public $old_title;
-	private $config_other_attributes=array('modified','question','answer','phone','email','fullname','metakey','metadesc');	
+	private $config_other_attributes=array('modified','question','answer','address','phone','email','fullname','metakey','metadesc');	
 	private $list_other_attributes;
 	/*
 	 * Get url
@@ -37,7 +37,19 @@ class QA extends CActiveRecord
  	{		
  		$url=Yii::app()->createUrl("site/qa",array('qa_alias'=>$this->alias));
 		return $url;
- 	}	
+ 	}
+		/*
+	 * Get similar news
+	 */
+	public function getList_similar() {
+		$criteria = new CDbCriteria ();
+		$criteria->compare ( 'status', News::STATUS_ACTIVE );
+		$criteria->addCondition('id <>'. $this->id);
+		$criteria->order = 'id desc';
+		$criteria->limit = Setting::s ( 'LIMIT_SIMILAR_QA' );
+		$result = QA::model ()->findAll ( $criteria );
+		return $result;
+	}		
 	/*
 	 * Get link answer in list admin
 	 */
@@ -110,12 +122,13 @@ class QA extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fullname,title,question,email','required','message'=>'Dữ liệu bắt buộc','on'=>'question',),
-			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'question'),
-			array('question', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'question'),
-			array('email','email','message'=>'Sai dịnh dạng mail','on'=>'question'),
-			array('phone', 'length', 'max'=>13,'message'=>'Tối đa 13 kí tự','on'=>'question'),
-			array('answer,lang','safe','on'=>'answer'),
+			array('fullname,title,question,email','required','message'=>'Dữ liệu bắt buộc','on'=>'question,answer',),
+			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'question,answer'),
+			array('question', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'question,answer'),
+			array('email','email','message'=>'Sai dịnh dạng mail','on'=>'question,answer'),
+			array('phone', 'length', 'max'=>13,'message'=>'Tối đa 13 kí tự','on'=>'question,answer'),
+			array('address', 'safe', 'on'=>'question,answer'),
+			array('answer', 'safe', 'on'=>'answer'),
 			array('title,status,lang','safe','on'=>'search'),
 		);
 	}

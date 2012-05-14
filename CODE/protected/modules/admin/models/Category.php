@@ -316,7 +316,7 @@ class Category extends CActiveRecord
 			array('parent_id','validatorParent'),
 			array('name', 'length', 'max'=>256,'message'=>'Tối đa 32 kí tự'),
 			array('description, name', 'length', 'max'=>512,'message'=>'Tối đa 32 kí tự'),
-			array('order_view','required','message'=>'Dữ liệu bắt buộc','on'=>'menu,news'),
+			array('order_view','required','message'=>'Dữ liệu bắt buộc','on'=>'menu,news,product'),
 			array('order_view','numerical','on'=>'menu,news,product'),
 			array('controller,action','required','on'=>'menu','message'=>'Dữ liệu bắt buộc'),
 			array('params','safe','on'=>'menu'),
@@ -558,10 +558,10 @@ class Category extends CActiveRecord
 			case 'action':
 				switch ($value['controller']) {					
 					case 'news':						
-							return array('guide'=>'Các trang hướng dẫn mua hàng','present'=>'Các trang giới thiệu','index'=>'Quản lý danh sách tin tức','create'=>'Tạo tin mới','manager_category'=>'Quản lý danh mục','manager_present'=>'Quản lý trang giới thiệu','view_category'=>'Hiển thị danh mục tin');					
+							return array('guide'=>'Các trang hướng dẫn mua hàng','present'=>'Các trang giới thiệu','index'=>'Quản lý danh sách tin tức','create'=>'Tạo tin mới','manager_category'=>'Quản lý danh mục','manager_present'=>'Quản lý trang giới thiệu','view_category'=>'Danh mục tin');					
 						break;
 					case 'product':													
-							return array('index'=>'Quản lý danh sách sản phẩm','create'=>'Thêm sản phẩm mới','manager_category'=>'Quản lý danh mục sản phẩm');
+							return array('index'=>'Quản lý danh sách sản phẩm','create'=>'Thêm sản phẩm mới','manager_category'=>'Quản lý danh mục sản phẩm','view_product'=>'Trang sản phẩm');
 						break;
 					case 'order':							
 						return array('index'=>'Quản lý đơn hàng');
@@ -693,7 +693,7 @@ class Category extends CActiveRecord
 				'present'=>'/site/news',
 				'guide'=>'/site/news',
 				'manager_present'=>'/admin/news/index',
-				'manager_guide'=>'/admin/news/index'
+				'manager_guide'=>'/admin/news/index',
 			),
 			'product'=>array(
 				'index'=>'/admin/product/index',
@@ -702,7 +702,8 @@ class Category extends CActiveRecord
 				'view_category'=>'/site/product',
 				'present'=>'/site/product',
 				'manager_present'=>'/admin/product/index',
-				'upload'=>'admin/product/import'
+				'upload'=>'admin/product/import',
+				'view_product'=>'site/product'
 			),
 			'manufacturer'=>array(
 				'manager_category'=>'/admin/category',

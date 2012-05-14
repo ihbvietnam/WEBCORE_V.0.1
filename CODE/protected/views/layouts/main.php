@@ -1,4 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -47,17 +46,14 @@ $(window).scrollTop($(".main").offset().top);
     	<a class="logo"></a>
         <div class="fright" style="width:200px;">
         	<div class="hotline"><?php echo Language::t('Hotline');?>: <span><?php echo Setting::s('HOTLINE');?></span></div>
-        	<a class="btn-showcart"><?php echo Language::t('Giỏ hàng');?>:<span>34</span></a>
+        	<a href="<?php echo Yii::app()->createUrl('site/cart')?>" class="btn-showcart"><?php echo Language::t('Giỏ hàng');?>:<span> <?php if(isset(Yii::app()->session['cart']))echo sizeof(Yii::app()->session['cart']); else echo '0';?></span></a>
         </div>
     </div><!--wrapper-->	
 </div><!--header-->
 <div class="menu">
 	<div class="wrapper">
          	<?php $this->widget('FrontEndMenu')?>
-        <div class="box-search">
-            <input name="" type="text" class="text" onfocus="javascript:if(this.value=='Tìm kiếm...'){this.value='';};" onblur="javascript:if(this.value==''){this.value='Tìm kiếm...';};" value="Tìm kiếm..." />
-            <input name="" type="submit" class="btn-search" />
-        </div>
+         	<?php $this->widget('wQuickSearch')?>
     </div><!--wrapper-->
 </div><!--menu-->
 <div class="slider-outer">
@@ -86,7 +82,9 @@ $(window).scrollTop($(".main").offset().top);
 <div class="wrapper">
     <div class="tree-outer">
     	<div class="tree-view">
-        	<a href="#">Trang chủ</a><span></span><a href="#">Sản phẩm</a><span></span><label>Bàn ghế Minh</label>
+    		<?php 
+    			$this->widget('iPhoenixBreadCrumbs',array('data'=>$this->bread_crumbs));
+    		?>        	
         </div><!--tree-view-->
         <span class="update-time"><?php echo date("d/m/Y"); ?></span>
     </div><!--tree-outer-->
@@ -99,7 +97,7 @@ $(window).scrollTop($(".main").offset().top);
             	<?php $this->widget('wRemark');?> 
             </div><!--box-->
             <div class="box-ad">
-            	<?php $this->widget('wBanner');?> 
+            	<?php $this->widget('wBannerLeft');?> 
             </div><!--box-ad-->
         </div><!--sidebar-->
         <div class="main">
@@ -118,13 +116,12 @@ $(window).scrollTop($(".main").offset().top);
 	<div class="wrapper">
     	<div class="char-outer">
             <h5>Thống kê</h5>
-                <div class="row"><label>Đang online:</label><span>12</span></div>
-                <div class="row"><label>Lượt truy cập:</label><span>34562</span></div>
+                <div class="row"><label><?php echo Language::t('Đang online');?>:</label><span><?php echo rand(13,14);?></span></div>
         </div><!--char-outer-->
          	
         <div class="footer-right">
         	<h5><?php echo Language::t(Setting::s('COMPANY'));?></h5>
-			<p><?php echo Language::t('Showroom');?>: <?php echo Language::t(Setting::s('SHOWROOM'));?></p>
+			<p><?php echo Language::t('Showroom');?>: <?php echo Language::t(Setting::s('ADDRESS_SHOWROOM'));?></p>
 			<p><?php echo Language::t('Tel/Fax');?>: <?php echo Language::t(Setting::s('TEL/FAX'));?></p>
 			<p><?php echo Language::t('Mobile');?>: <?php echo Language::t(Setting::s('MOBILE'));?></p>
 			<p><?php echo Language::t('Email');?>: <?php echo Language::t(Setting::s('EMAIL'));?></p>

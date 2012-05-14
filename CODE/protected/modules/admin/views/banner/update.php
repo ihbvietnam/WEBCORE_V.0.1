@@ -5,6 +5,9 @@
 									break;	
 								case Banner::CODE_HEADLINE:
 									$type_image="thumb_headline";
+									break;	
+								case Banner::CODE_RIGHT:
+									$type_image="right";
 									break;							
 							}
 ?>

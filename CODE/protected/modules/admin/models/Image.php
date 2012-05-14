@@ -36,6 +36,7 @@ class Image extends CActiveRecord
 		),
 		'Product'=>array(
 			'introimage'=>array('h'=>144,'w'=>137),
+			'detail_introimage'=>array('h'=>234,'w'=>382),
 			'otherimage'=>array('h'=>234,'w'=>382),
 			'thumb_otherimage'=>array('h'=>117,'w'=>191),
 		),
@@ -44,7 +45,8 @@ class Image extends CActiveRecord
 		'Banner'=>array(
 			'left'=>array('h'=>252,'w'=>210),
 			'thumb_headline'=>array('h'=>100,'w'=>260),
-			'headline'=>array('h'=>295,'w'=>780)
+			'headline'=>array('h'=>295,'w'=>780),
+			'right'=>array('h'=>150,'w'=>300),
 		),
 		'GalleryVideo'=>array(
 		),

@@ -18,39 +18,32 @@
 		<?php $form=$this->beginWidget('CActiveForm', array('method'=>'post','enableAjaxValidation'=>true)); ?>	
 			<!--begin left content-->
 			<div class="fl">
-				<ul>
-					<div class="row">
-						<li>
-							<?php echo $form->labelEx($model,'title'); ?>
-							<?php echo $form->textField($model,'title',array('style'=>'width:280px;','maxlength'=>'256','readonly'=>'readonly')); ?>	
-							<?php echo $form->error($model, 'title'); ?>				
-						</li>
-					</div>	
+				<ul>	
 					<div class="row">
 					<li>
 						<?php echo $form->labelEx($model,'fullname'); ?>
-						<?php echo $form->textField($model,'fullname',array('style'=>'width:280px;','maxlength'=>'128','readonly'=>'readonly'))?>
+						<?php echo $form->textField($model,'fullname',array('style'=>'width:280px;','maxlength'=>'128'))?>
 						<?php echo $form->error($model,'fullname'); ?>
 					</li>	
 					</div>
 					<div class="row">
 					<li>
 						<?php echo $form->labelEx($model,'phone'); ?>
-						<?php echo $form->textField($model,'phone',array('style'=>'width:280px;','maxlength'=>'13','readonly'=>'readonly'))?>
+						<?php echo $form->textField($model,'phone',array('style'=>'width:280px;','maxlength'=>'13'))?>
 						<?php echo $form->error($model,'phone'); ?>
 					</li>	
 					</div>
 					<div class="row">
 					<li>
 						<?php echo $form->labelEx($model,'email'); ?>
-						<?php echo $form->textField($model,'email',array('style'=>'width:280px;','readonly'=>'readonly'))?>
+						<?php echo $form->textField($model,'email',array('style'=>'width:280px;'))?>
 						<?php echo $form->error($model,'email'); ?>
 					</li>	
 					</div>
            			<div class="row">
 					<li>
 						<?php echo $form->labelEx($model,'question'); ?>
-						<?php echo $form->textArea($model,'question',array('style'=>'width:280px;','rows'=>6,'readonly'=>'readonly'))?>
+						<?php echo $form->textArea($model,'question',array('style'=>'width:280px;','rows'=>6))?>
 						<?php echo $form->error($model,'question'); ?>
 					</li>	
 					</div>	

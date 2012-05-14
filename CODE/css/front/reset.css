@@ -268,7 +268,7 @@ input[type=reset].button, input[type=button].button{
 }
 .big-button{
 	display:inline-block;
-	background: url(../../images/front/front/big-button.png) no-repeat;
+	background: url(../../images/front/big-button.png) no-repeat;
 	border:none;
 	cursor:pointer;
 	text-align:center;

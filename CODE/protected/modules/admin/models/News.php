@@ -37,6 +37,7 @@ class News extends CActiveRecord
 	const OTHER_NEWS=5;
 	const LIST_NEWS=10;
 	const LIST_SEARCH=10;
+	
 	const PRESENT_CATEGORY=30;
 	const GUIDE_CATEGORY=59;
 	const ALIAS_PRESENT_CATEGORY='gioi-thieu';
@@ -80,7 +81,7 @@ class News extends CActiveRecord
 		}
 		else {
 			
-			return '<img class="img" src="'.Image::getDefaultThumb('Product', $type).'" alt=""';
+			return '<img class="img" src="'.Image::getDefaultThumb('News', $type).'" alt=""';
 		}
 	}
 	/*
@@ -102,7 +103,32 @@ class News extends CActiveRecord
  	{
 		$cat=$this->category;
 		return $cat->name;
- 	}	
+ 	}
+	/*
+	 * Get similar news
+	 */
+	public function getList_similar(){
+		if($this->list_suggest != ''){
+			$list = array_diff ( explode ( ',', $this->list_suggest ), array ('' ) );
+			$result=array();
+			$index=0;
+			foreach ($list as $id){
+				$index++;
+				if($index <= Setting::s('LIMIT_SIMILAR_NEWS'))
+					$result[]=News::model()->findByPk($id);
+			}
+		}
+		else {
+			$criteria=new CDbCriteria;
+			$criteria->compare('status', News::STATUS_ACTIVE);
+			$criteria->addCondition('id <>'. $this->id);
+			$criteria->order='id desc';
+			$criteria->compare('catid',$this->catid);
+			$criteria->limit=Setting::s('LIMIT_SIMILAR_NEWS');
+			$result=News::model()->findAll($criteria);		
+		}
+		return $result;
+	}	
  	/*
 	 * Get all specials of class News
 	 * Use in drop select when create, update news
