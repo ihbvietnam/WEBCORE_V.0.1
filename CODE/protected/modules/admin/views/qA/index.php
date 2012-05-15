@@ -11,6 +11,10 @@
 		</div>
 		<!--end title-->
 		<div class="folder-content">
+		 <div>
+            	<input type="button" class="button" value="Thêm câu hỏi" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/qA/create')?>'"/>
+                <div class="line top bottom"></div>	
+            </div>
              <!--begin box search-->
          <?php 
 			Yii::app()->clientScript->registerScript('search', "
@@ -57,13 +61,6 @@
 							<?php echo $form->labelEx($model,'lang'); ?>
 							<?php echo $form->dropDownList($model,'lang',array(''=>'Tất cả')+LanguageForm::getList_languages_exist(),array('style'=>'width:200px')); ?>
                     	</li> 
-                  	 <?php 
-					$list=array(''=>'Tất cả',QA::STATUS_NOT_ANSWER=>'Chưa trả lời',QA::STATUS_ANSWER=>'Đã trả lời');
-					?>
-					<li>
-						<label>Thuộc nhóm:</label>
-						<?php echo $form->dropDownList($model,'status',$list,array('style'=>'width:200px')); ?>
-					</li>
                     </ul>
                 </div>
                 <!--end right content-->            
@@ -83,10 +80,6 @@
 						'headerHtmlOptions'=>array('width'=>'2%','class'=>'table-title'),
 						'checked'=>'in_array($data->id,Yii::app()->session["checked-qa-list"])'
     				),	
-    				array(
-						'name'=>'title',
-						'headerHtmlOptions'=>array('width'=>'15%','class'=>'table-title'),		
-					), 
 					array(
 						'name'=>'question',
 						'value'=>'iPhoenixString::createIntrotext($data->question,QA::SIZE_INTRO_QUESTION)',

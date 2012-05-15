@@ -121,7 +121,7 @@ class NewsController extends Controller
 		$list=$group->list_categories;
 		$list_category=array();
 		foreach ($list as $id=>$cat){
-			if($cat['lang']==$model->lang) $list_category[$id]=$cat;
+			$list_category[$id]=$cat;
 		}
 		if (! Yii::app ()->getRequest ()->getIsAjaxRequest ())
 				Yii::app ()->session ['checked-suggest-list'] = array_diff ( explode ( ',', $model->list_suggest ), array ('' ) );
@@ -210,7 +210,7 @@ class NewsController extends Controller
 		$this->initCheckbox('checked-news-list');
 		$model=new News('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['catid'])) $model->catid=News::PRESENT_CATEGORY;
+		if(isset($_GET['catid'])) $model->catid=$_GET['catid'];
 		$model->lang=Language::DEFAULT_LANGUAGE;
 		if(isset($_GET['News']))
 			$model->attributes=$_GET['News'];	

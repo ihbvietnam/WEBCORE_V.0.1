@@ -45,7 +45,7 @@
 					   <div class="row">
 							<li>
 								<?php echo $form->labelEx($model,'introimage'); ?>
-								<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_update')); ?>		
+								<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'introimage')); ?>		
 								<?php echo $form->error($model, 'introimage'); ?>
 							</li>
 						</div>
@@ -83,13 +83,6 @@
 							<?php echo $form->error($model, 'catid'); ?>
 						</li>
 						</div>
-						<div class="row">
-                    	<li>
-                        	<?php echo $form->labelEx($model,'list_special'); ?>
-                        	<?php echo $form->dropDownList($model,'list_special',News::getList_label_specials(),array('style'=>'width:250px','multiple' => 'multiple')); ?>
-                  			<?php echo $form->error($model, 'list_special'); ?>
-                    	</li>
-                    	</div>
                     	<div class="row">
 							<li>
 								<?php echo $form->labelEx($model,'list_suggest'); ?>

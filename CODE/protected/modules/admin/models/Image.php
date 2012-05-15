@@ -32,57 +32,34 @@ class Image extends CActiveRecord
 	 */
 	static $config_thumb_size=array(
 		'News'=>array(
-			'thumb_list_admin'=>array('h'=>45,'w'=>45),
-			'thumb_update'=>array('h'=>45,'w'=>45),
-			'headline'=>array('h'=>258,'w'=>425),
-			'thumb_headline'=>array('h'=>50,'w'=>60),
-			'thumb_homepage'=>array('h'=>90,'w'=>90),
-			'thumb_detailpage'=>array('h'=>90, 'w'=>125),
-			'thumb_listpage'=>array('h'=>90,'w'=>90)
+			'introimage'=>array('h'=>100,'w'=>130)
 		),
 		'Product'=>array(
-			'thumb_update'=>array('h'=>45,'w'=>45),
+			'introimage'=>array('h'=>144,'w'=>137),
+			'detail_introimage'=>array('h'=>234,'w'=>382),
+			'otherimage'=>array('h'=>234,'w'=>382),
+			'thumb_otherimage'=>array('h'=>117,'w'=>191),
 		),
 		'Album'=>array(
-			'thumb_update'=>array('h'=>70,'w'=>100),
-			'thumb_list_admin'=>array('h'=>45,'w'=>60),
-			'first_image_homepage'=>array('h'=>132,'w'=>182),
-			'other_image_homepage'=>array('h'=>55,'w'=>72),
-			'thumb_list_page'=>array('h'=>100,'w'=>125),
-			'thumb_image_big'=>array('h'=>378,'w'=>620),
-			'thumb_image_small'=>array('h'=>35,'w'=>35),
 		),
 		'Banner'=>array(
-			'thumb_update'=>array('h'=>70,'w'=>100),
-			'right'=>array('h'=>124,'w'=>300),
-			'thumb_right'=>array('h'=>62,'w'=>150),
-			'thumb_list_admin'=>array('h'=>45,'w'=>60),
-			'footer'=>array('h'=>130,'w'=>185),
-			'thumb_footer'=>array('h'=>65,'w'=>'92'),
-			'link_partner'=>array('h'=>50,'w'=>50),
-			'thumb_top'=>array('h'=>43,'w'=>327),
-			'top'=>array('h'=>129,'w'=>980),
-			'main'=>array('h'=>185,'w'=>630),
-			'thumb_main'=>array('h'=>92,'w'=>315)
+			'left'=>array('h'=>252,'w'=>210),
+			'thumb_headline'=>array('h'=>100,'w'=>260),
+			'headline'=>array('h'=>295,'w'=>780),
+			'right'=>array('h'=>150,'w'=>300),
 		),
 		'GalleryVideo'=>array(
-			'thumb_list_admin'=>array('h'=>45,'w'=>60),
-			'thumb_update'=>array('h'=>45,'w'=>60),
-			'thumb_detail_video'=>array('h'=>100,'w'=>125),
 		),
 		'Image'=>array(
-			'thumb_image_update'=>array('h'=>300,'w'=>450),
 		),
 		'Category'=>array(
-			'logo'=>array('h'=>60,'w'=>60),
-			'thumb_category'=>array('h'=>155,'w'=>229)
 		)	
 	);	
 	/*
 	 * Config thumb_type 
 	 * Use remove image
 	 */
-	static $config_thumb_type=array('thumb_auto','thumb_right','thumb_update','thumb_detail_video','thumb_list_page','thumb_image_big','thumb_image_small','thumb_listpage','thumb_detailpage','link_partner','footer','right','other_image_homepage','first_image_homepage','thumb_update','thumb_list_admin','headline','thumb_headline');
+	static $config_thumb_type=array('left');
 	private $config_other_attributes=array();	
 	private $list_other_attributes;
 	

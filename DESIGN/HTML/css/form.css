@@ -1,0 +1,135 @@
+/*input*/
+input[type=text],input[type=password], textarea{
+	border:1px solid #ccc;
+	background:#fff;
+	padding:4px;
+	font-size:12px;
+	color:#112233;
+	outline:none;
+}
+textarea, .textarea { 
+	overflow: auto;  
+	resize: none;
+}
+input[type=button], input[type=submit], button {
+	padding:4px;
+	cursor:pointer;
+}
+select {
+	height:23px;
+	padding:2px 2px 2px 0;
+	border:1px solid #7f9db9;
+	background:#fff;
+	font-size:12px;
+	color:#666;
+	outline:none;
+}
+option {
+	border-bottom:solid 1px #3b2313;
+	padding:4px 2px;
+}
+/*end input*/
+/*form*/
+.form .row {	
+	padding:0 0 10px 0;
+}
+.form .rowright {	
+	padding:0 0 10px 0;
+	text-align:right;
+}
+.form label {
+	font-size:13px;
+	color:#666;
+	display:block;
+	margin:0 0 7px 0;
+}
+.form .text-outer {
+	background:#fff;
+	border:1px solid #7f9db9;
+	padding:0;
+	margin-right: -2px;
+}
+.form .text-outer div, .form .smalltext-outer div{
+	padding:0 4px;
+}
+.form .smalltext-outer {
+	background:#fff;
+	border:1px solid #0c428a;
+	padding:0;
+	width:90px;
+	margin:0 3px 0 0;
+	display:inline-block;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+}
+.form .text-outer .text, .form .smalltext-outer .text{
+	border:none;
+	background:none;
+	width:100%;
+	padding:4px 0 4px 0;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+}
+.form .text-outer .textarea, .form .smalltext-outer .textarea{
+	border:none;
+	background:none;
+	width:100%;
+	min-height:100px;
+	padding:4px 0;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+}
+.form input[type=radio], .form input[type=checkbox] {
+	vertical-align:middle;
+	margin:0 0 2px;
+}
+.form .row .file-path {
+	display:inline-block;
+}
+.form .select-outer {
+	background:#fff;
+	border:1px solid #0c428a;
+	padding:0;
+	margin: 0 3px 0 0;
+	position:relative;
+	display:inline-block;
+	min-width:90px;
+	vertical-align:top;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+}
+.form .select-outer select{
+	background:none;
+	border:none;
+	width:100%;
+}
+.form button, .form input[type=submit], .form input[type=button] {
+	vertical-align:top;
+}
+.form .fix-inline label {
+	float:left;
+	width:120px;
+	margin:2px 30px 0 0;
+	text-align:left;
+}
+.form .fix-inline .text-outer{
+	margin-left:150px;
+}
+.form .text-outer div.label{
+	float:left;
+}
+.form .red{
+	vertical-align:top;
+}
+.form h3{
+	color:#333;
+}
+.form h6{
+	margin:3px 0 0 150px;
+	font-weight:normal;
+	color:#3b5998;
+}

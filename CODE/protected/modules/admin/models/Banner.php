@@ -23,12 +23,9 @@ class Banner extends CActiveRecord
 	/*
 	 * Config code of banner (id)
 	 */
-	const CODE_TOP=1;
-	const CODE_MAIN=2;
-	const CODE_RIGHT=3;
-	const CODE_LEFT=4;
-	const CODE_FOOTER=5;
-	const CODE_LINK_PARTNER=6;
+	const CODE_RIGHT=9;
+	const CODE_HEADLINE=3;
+	const CODE_LEFT=2;
 	
 	public $old_images;
 	public $old_title;

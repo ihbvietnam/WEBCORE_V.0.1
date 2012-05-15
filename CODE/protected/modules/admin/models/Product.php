@@ -15,6 +15,7 @@ class Product extends CActiveRecord
 	 * SPECIAL_REMARK product is viewed at homepage
 	 */
 	const SPECIAL_REMARK=0;
+	const SPECIAL_BESTSELLER=1;
 	
 	const LIST_PRODUCT=1;
 	const LIST_SEARCH=1;
@@ -23,15 +24,12 @@ class Product extends CActiveRecord
 	const LIST_ADMIN=10;
 	const PRESENT_CATEGORY=31;
 	
-	static $config_unit_price = array('USA'=>'USA','VND'=>'VND');
-	
-	public $num_price;
-	public $unit_price;
+	static $config_unit_price = array('VND'=>'VND');
 	public $old_video;
 	public $old_introimage;
 	public $old_name;
 	public $list_special;
-	private $config_other_attributes=array('list_suggest','modified','unit','year','warranty','parameter','price','description','introimage','otherimage','metakey','metadesc');	
+	private $config_other_attributes=array('list_suggest','modified','unit','year','warranty','parameter','description','showroom','store','comment','unit_price','introimage','otherimage','metakey','metadesc');	
 	private $list_other_attributes;
 	
 	/*
@@ -66,7 +64,7 @@ class Product extends CActiveRecord
  	 * Get url
  	 */
  	public function getUrl(){
- 		$cat_alias=$this->category->alias;
+		$cat_alias=$this->category->alias;
  		$alias=$this->alias;
 		$url=Yii::app()->createUrl("site/product",array('cat_alias'=>$cat_alias,'product_alias'=>$alias)); 
 		return $url;
@@ -93,8 +91,11 @@ class Product extends CActiveRecord
 		if($this->list_suggest != ''){
 			$list = array_diff ( explode ( ',', $this->list_suggest ), array ('' ) );
 			$result=array();
+			$index=0;
 			foreach ($list as $id){
-				$result[]=Product::model()->findByPk($id);
+				$index++;
+				if($index <= Setting::s('LIMIT_SIMILAR_PRODUCT'))
+					$result[]=Product::model()->findByPk($id);
 			}
 		}
 		else {
@@ -102,8 +103,8 @@ class Product extends CActiveRecord
 			$criteria->compare('status', Product::STATUS_ACTIVE);
 			$criteria->order='id desc';
 			$criteria->compare('catid',$this->catid);
-			$criteria->compare('manufacturer_id',$this->manufacturer_id);
 			$criteria->limit=Setting::s('LIMIT_SIMILAR_PRODUCT');
+			$criteria->addCondition('id <>'. $this->id);
 			$result=Product::model()->findAll($criteria);		
 		}
 		return $result;
@@ -116,6 +117,7 @@ class Product extends CActiveRecord
  	{
 		return array(
 			self::SPECIAL_REMARK=>'Hiển thị trong phần sản phẩm nổi bật',
+			self::SPECIAL_BESTSELLER=>'Hiển thị trong phần sản phẩm bán chạy',
 		);
  	}	
  	/*
@@ -210,7 +212,6 @@ class Product extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'category'=>array(self::BELONGS_TO,'Category','catid'),
-			'manufacturer'=>array(self::BELONGS_TO,'Category','manufacturer_id'),
 			'author'=>array(self::BELONGS_TO,'User','created_by')
 		);
 	}
@@ -223,7 +224,6 @@ class Product extends CActiveRecord
 		return array(
 			'name' => 'Tên sản phẩm',
 			'catid'=>'Nhóm sản phẩm',
-			'manufacturer_id'=>'Nhà sản xuất',
 			'code'=>'Mã sản phẩm',
 			'unit'=>'Đơn vị tính',
 			'price'=>'Giá',
@@ -257,10 +257,6 @@ class Product extends CActiveRecord
 		$this->list_special=iPhoenixStatus::decodeStatus($this->special);
 		//Store old name
 		$this->old_name=$this->name;
-		//Decode price
-		$tmp=(array)json_decode($this->price);
-		$this->num_price=$tmp['num_price'];
-		$this->unit_price=$tmp['unit_price'];
 		
 		if(isset($this->list_other_attributes['modified']))
 			$this->list_other_attributes['modified']=(array)json_decode($this->list_other_attributes['modified']);
@@ -302,7 +298,6 @@ class Product extends CActiveRecord
 			}	
 			//Encode special
 			$this->special=iPhoenixStatus::encodeStatus($this->list_special);
-			$this->price=json_encode(array('num_price'=>$this->num_price,'unit_price'=>$this->unit_price));
 			$this->other=json_encode($this->list_other_attributes);
 			return true;
 		}
@@ -353,20 +348,7 @@ class Product extends CActiveRecord
 		$criteria = new CDbCriteria ();
 		$criteria->compare ( 'lang', $this->lang );
 		$criteria->compare ( 'name', $this->name, true );
-		$criteria->compare ('amount_status',$this->amount_status);
-		//Filter manufacturer_id
-		$cat = Category::model ()->findByPk ( $this->manufacturer_id );
-		if ($cat != null) {
-			$child_categories = $cat->child_categories;
-			$list_child_id = array ();
-			//Set itself
-			$list_child_id [] = $cat->id;
-			if ($child_categories != null)
-				foreach ( $child_categories as $id => $child_cat ) {
-					$list_child_id [] = $id;
-				}
-			$criteria->addInCondition ( 'manufacturer_id', $list_child_id );
-		}
+		$criteria->compare ('amount_status',$this->amount_status);		
 		//Filter catid
 		$cat = Category::model ()->findByPk ( $this->catid );
 		if ($cat != null) {

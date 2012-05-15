@@ -1,5 +1,6 @@
 <?php
 return array(
+'vi' => 'Vietnamese ',
 'af' => 'Afrikaans ',
 'sq' => 'Albanian',
 'ar-dz' => 'Arabic (Algeria) ',
@@ -119,7 +120,6 @@ return array(
 'uk' => 'Ukrainian',
 'ur' => 'Urdu ',
 've' => 'Venda',
-'vi' => 'Vietnamese ',
 'xh' => 'Xhosa',
 'ji' => 'Yiddish ',
 'zu' => 'Zulu ',

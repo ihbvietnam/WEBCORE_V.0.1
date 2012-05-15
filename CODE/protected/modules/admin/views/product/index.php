@@ -54,21 +54,7 @@
                    	<li>
 						<?php echo $form->labelEx($model,'catid'); ?>
                         <?php echo $form->dropDownList($model,'catid', $list );?>
-                    </li>
-                       <?php 
-					$list=array(''=>'Tất cả các nhà sản xuất');
-					foreach ($list_manufacturer as $id=>$cat){
-						$view = "";
-						for($i=1;$i<$cat['level'];$i++){
-							$view .="---";
-						}
-						$list[$id]=$view." ".$cat['name']." ".$view;
-					}
-					?>  
-                    <li>
-						<?php echo $form->labelEx($model,'manufacturer_id'); ?>
-                        <?php echo $form->dropDownList($model,'manufacturer_id', $list);?>														
-                    </li>  										
+                    </li> 										
 						<li>
                         <?php 
 							echo CHtml::submitButton('Lọc kết quả',
@@ -129,11 +115,6 @@
 						'value'=>'$data->category->name',
 						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
 					), 	
-					array(
-						'name'=>'manufacturer_id',
-						'value'=>'$data->manufacturer->name',
-						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
-					), 
 					array(
 						'header'=>'Trạng thái',
 						'class'=>'iPhoenixButtonColumn',

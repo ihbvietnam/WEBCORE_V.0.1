@@ -58,31 +58,14 @@
 								<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:250px')); ?>
 								<?php echo $form->error($model, 'catid'); ?>
 							</li>
-						</div>				
-						<?php 
-							$list=array();
-							foreach ($list_manufacturer as $id=>$manufacturer){
-								$view = "";
-								for($i=1;$i<$manufacturer['level'];$i++){
-									$view .="---";
-								}
-								$list[$id]=$view." ".$manufacturer['name']." ".$view;
-							}
-							?>
-						<div class="row">
-							<li>
-							<?php echo $form->labelEx($model,'manufacturer_id'); ?>
-							<?php echo $form->dropDownList($model,'manufacturer_id',$list,array('style'=>'width:200px')); ?>
-							<?php echo $form->error($model, 'manufacturer_id'); ?>
-							</li>
-						</div>	
+						</div>						
 						<div class="row">
 							<li>
 							<?php echo $form->labelEx($model,'price'); ?>
 							<?php echo $form->textField($model,'num_price',array('style'=>'width:100px;','maxlength'=>'256')); ?>
-							<?php echo $form->error($model, 'num_price'); ?>
 							<?php echo $form->dropDownList($model,'unit_price',Product::$config_unit_price,array('style'=>'width:58px;margin-top:-5px;height:22px;')); ?>	
 							<?php echo $form->error($model, 'unit_price'); ?>	
+							<?php echo $form->error($model, 'num_price'); ?>
 							</li>	
 						</div>									
 						</div><!--end left above content-->	
@@ -90,14 +73,14 @@
 							<div class="row" style="min-height:100px;">
 								<li>
 									<?php echo $form->labelEx($model,'introimage'); ?>
-									<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_update')); ?>		
+									<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'introimage')); ?>		
 									<?php echo $form->error($model, 'introimage'); ?>
 								</li>
 							</div>	
 							<div class="row" style="min-height:100px;">
 								<li>
 									<?php echo $form->labelEx($model,'otherimage'); ?>
-									<?php echo $this->renderPartial('/image/_multiupload', array('model'=>$model,'attribute'=>'otherimage','type_image'=>'thumb_update')); ?>		
+									<?php echo $this->renderPartial('/image/_multiupload', array('model'=>$model,'attribute'=>'otherimage','type_image'=>'thumb_otherimage')); ?>		
 									<?php echo $form->error($model, 'otherimage'); ?>
 								</li>
 							</div>	
@@ -113,24 +96,45 @@
 					<div class="row">
                     	<li>
 	                    	<div id="tabContainer">
-	                        	<div id="tabMenu">
-	                            	<ul class="menu">
-	                                	<li><a id="select1" class="active"><span>Mô tả sản phẩm</span></a></li>
-	                                    <li><a id="select2"><span>Thông số kĩ thuật</span></a></li>
-	                                </ul>
-	                            </div>
-	                            <div id="tabContent">
-	                                <div id="tab1" class="content active">
-	                                    <div class="clear"></div>
+                        		<div id="tabMenu">
+                            		<ul class="menu">
+                                		<li><a id="select1" class="active"><span>Tính năng nổi bật</span></a></li>
+                                		<li><a id="select2"><span>Thông số kĩ thuật</span></a></li>
+                                    	<li><a id="select3"><span>Showroom bán hàng</span></a></li>
+                                    	<li><a id="select4"><span>Văn phòng giao dịch</span></a></li>
+                                    	<li><a id="select5"><span>Nhận xét</span></a></li>
+                                	</ul>
+                            	</div>
+                            	<div id="tabContent">
+                            		<div id="tab1" class="content active">
+                                    <div class="clear"></div>
 										<?php  
                         					$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'description','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
                         				?>
                                 	</div>
                                 	<div id="tab2" class="content">
-	                                    <div class="clear"></div>
-	                                    <?php  
-	                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'parameter','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
-	                        			?>
+                                    <div class="clear"></div>
+										<?php  
+                        					$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'parameter','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
+                        				?>
+                                	</div>
+                                	<div id="tab3" class="content">
+                                    <div class="clear"></div>
+                                    <?php  
+                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'showroom','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
+                        			?>
+                                	</div>
+                                	<div id="tab4" class="content">
+                                    <div class="clear"></div>
+                                    <?php  
+                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'store','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
+                        			?>
+                                	</div>
+                                	<div id="tab5" class="content">
+                                    <div class="clear"></div>
+                                    <?php  
+                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'comment','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
+                        			?>
                                 	</div>
                             	</div>
                         	</div><!--end tabContainer-->
@@ -152,17 +156,61 @@ $('#select1').click(function () {
 	$("#select1").attr("class","active");	
 	$("#select2").attr("class","");	
 	$("#select3").attr("class","");	
+	$("#select4").attr("class","");
+	$("#select5").attr("class","");
     $('#tab1').attr("class","content active");	
     $('#tab2').attr("class","content");	
     $('#tab3').attr("class","content");	
+    $('#tab4').attr("class","content");
+    $('#tab5').attr("class","content");	
 });
 $('#select2').click(function () {
 	$("#select2").attr("class","active");	
 	$("#select1").attr("class","");	
 	$("#select3").attr("class","");	
+	$("#select4").attr("class","");
+	$("#select5").attr("class","");
     $('#tab2').attr("class","content active");	
     $('#tab1').attr("class","content");	
     $('#tab3').attr("class","content");	
+    $('#tab4').attr("class","content");	
+    $('#tab5').attr("class","content");	
+});
+$('#select3').click(function () {
+	$("#select3").attr("class","active");	
+	$("#select1").attr("class","");	
+	$("#select2").attr("class","");	
+	$("#select4").attr("class","");
+	$("#select5").attr("class","");
+    $('#tab3').attr("class","content active");	
+    $('#tab1').attr("class","content");	
+    $('#tab2').attr("class","content");	
+    $('#tab4').attr("class","content");	
+    $('#tab5').attr("class","content");	
+});
+$('#select4').click(function () {
+	$("#select4").attr("class","active");	
+	$("#select1").attr("class","");	
+	$("#select2").attr("class","");	
+	$("#select3").attr("class","");
+    $("#select5").attr("class","");
+    $('#tab4').attr("class","content active");	
+    $('#tab1').attr("class","content");	
+    $('#tab2').attr("class","content");	
+    $('#tab3').attr("class","content");	
+    $('#tab5').attr("class","content");	
+});
+$('#select5').click(function () {
+	$("#select5").attr("class","active");	
+	$("#select1").attr("class","");	
+	$("#select2").attr("class","");	
+	$("#select3").attr("class","");
+    $("#select4").attr("class","");
+    $('#tab5').attr("class","content active");	
+    $('#tab1').attr("class","content");	
+    $('#tab2').attr("class","content");	
+    $('#tab3').attr("class","content");	
+    $('#tab4').attr("class","content");	
 });
 </script>
 <?php  
@@ -192,6 +240,7 @@ $cs->registerScriptFile('js/admin/popup.js');
 							'url'=>array('product/suggestName'),
 							'htmlOptions'=>array(
 								'style'=>'width:230px;',
+                         		'name'=>'SuggestProduct[name]'
 								),
 						)); ?>
 						</li>
@@ -207,22 +256,8 @@ $cs->registerScriptFile('js/admin/popup.js');
 					?>            
                    	<li>
 						<?php echo $form->labelEx($suggest,'catid'); ?>
-                        <?php echo $form->dropDownList($suggest,'catid', $list );?>
-                    </li>
-                       <?php 
-					$list=array(''=>'Tất cả các nhà sản xuất');
-					foreach ($list_manufacturer as $id=>$cat){
-						$view = "";
-						for($i=1;$i<$cat['level'];$i++){
-							$view .="---";
-						}
-						$list[$id]=$view." ".$cat['name']." ".$view;
-					}
-					?>  
-                    <li>
-						<?php echo $form->labelEx($suggest,'manufacturer_id'); ?>
-                        <?php echo $form->dropDownList($suggest,'manufacturer_id', $list);?>														
-                    </li>  		  
+                        <?php echo $form->dropDownList($suggest,'catid', $list ,array('style'=>'width:200px','name'=>'SuggestProduct[catid]'));?>
+                    </li>	  
 	<li>
 	<label>&nbsp;</label> 
 	<input type="submit" class="button" value="Lọc bài viết">
@@ -248,12 +283,7 @@ $cs->registerScriptFile('js/admin/popup.js');
 						'name'=>'catid',
 						'value'=>'$data->category->name',
 						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
-					), 	
-					array(
-						'name'=>'manufacturer_id',
-						'value'=>'$data->manufacturer->name',
-						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
-					), 	
+					), 		
 					array(
 						'name'=>'created_date',
 						'value'=>'date("H:i d/m/Y",$data->created_date)',

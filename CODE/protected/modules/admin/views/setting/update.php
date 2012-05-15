@@ -2,18 +2,18 @@
 	<div class="folder top">
 		<!--begin title-->
 		<div class="folder-header">
-			<h1><?php echo Language::t('quản trị các tham số cấu hình');?></h1>
+			<h1>quản trị các tham số cấu hình</h1>
 			<div class="header-menu">
 				<ul>
-					<li><a class="header-menu-active new-icon" href=""><span><?php echo Language::t('Chỉnh sửa các tham số cấu hình');?></span></a></li>					
+					<li><a class="header-menu-active new-icon" href=""><span>Chỉnh sửa các tham số cấu hình</span></a></li>					
 				</ul>
 			</div>
 		</div>
 		<!--end title-->	
 		<div class="folder-content form">
 			<div>
-                <input type="button" class="button" value="<?php echo Language::t('Thêm tham số cấu hình');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/setting/create')?>'"/>
-                <input type="button" class="button" value="<?php echo Language::t('Danh sách tham số cấu hình');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/setting')?>'"/>
+                <input type="button" class="button" value="Thêm tham số cấu hình" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/setting/create')?>'"/>
+                <input type="button" class="button" value="Danh sách tham số cấu hình" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/setting')?>'"/>
                 <div class="line top bottom"></div>	
             </div>
 			<?php $form=$this->beginWidget('CActiveForm', array('method'=>'post','enableAjaxValidation'=>true)); ?>	
@@ -35,8 +35,8 @@
                     </li>
                     </div>
                    		<li>
-                   		<input type="reset" class="button" value="<?php echo Language::t('Hủy thao tác')?>" style="margin-left:153px; width:125px;" />
-                    	<input type="submit" class="button" value="<?php echo Language::t('Cập nhật')?>" style="margin-left:20px; width:125px;" />					 
+                   		<input type="reset" class="button" value="Hủy thao tác" style="margin-left:153px; width:125px;" />
+                    	<input type="submit" class="button" value="Cập nhật" style="margin-left:20px; width:125px;" />					 
                     	</li>
 				</ul>
 			</div>

@@ -46,7 +46,7 @@
 					   <div class="row">
 							<li>
 								<?php echo $form->labelEx($model,'introimage'); ?>
-								<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_update')); ?>		
+								<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'introimage')); ?>		
 								<?php echo $form->error($model, 'introimage'); ?>
 							</li>
 						</div>
@@ -69,13 +69,6 @@
 							<?php echo $form->error($model, 'catid'); ?>
 						</li>
 						</div>
-						<div class="row">
-                    	<li>
-                        	<?php echo $form->labelEx($model,'list_special'); ?>
-                        	<?php echo $form->dropDownList($model,'list_special',News::getList_label_specials(),array('style'=>'width:250px','multiple' => 'multiple')); ?>
-                  			<?php echo $form->error($model, 'list_special'); ?>
-                    	</li>
-                    	</div>
                     	<div class="row">
 							<li>
 								<?php echo $form->labelEx($model,'list_suggest'); ?>
@@ -106,7 +99,6 @@
 		</div>
 	</div>
 	<!--end inside content-->
-	
 <!-- Main popup -->
 <div class="bg-overlay"></div>
 <div class="main-popup" style="height:auto;"><a class="popup-close" onclick="hidenPopUp();return false;"></a>
@@ -130,7 +122,6 @@
 							'url'=>array('news/suggestTitle'),
 							'htmlOptions'=>array(
 								'style'=>'width:230px;',
-       							'name'=>'SuggestNews[title]'
 								),
 						)); ?>								
       </li>
@@ -149,13 +140,14 @@
 		<?php echo $form->dropDownList($suggest,'catid',$list,array('style'=>'width:200px','name'=>'SuggestNews[catid]')); ?>
 	</li>            
 	<li>
+	<label>&nbsp;</label> 
 	<input type="submit" class="button" value="Lọc bài viết">
 	</li>
 	<?php $this->endWidget(); ?>	
 	<li>
 	  <?php 
 			$this->widget('iPhoenixGridView', array(
-  				'id'=>'news-list-suggest',
+  				'id'=>'news-list',
   				'dataProvider'=>$suggest->search(),		
   				'columns'=>array(
 					array(

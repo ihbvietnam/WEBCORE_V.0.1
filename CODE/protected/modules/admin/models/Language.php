@@ -22,7 +22,10 @@ class Language extends CActiveRecord
 			$criteria = new CDbCriteria ();
 			$criteria->compare('lang', Yii::app()->language);
 			$criteria->compare('origin',$origin);
-			$criteria->compare('module',Yii::app()->controller->module->id);
+			if(isset(Yii::app()->controller->module->id))
+				$criteria->compare('module',Yii::app()->controller->module->id);
+			else 
+				$criteria->compare('module','');
 			$criteria->compare('controller',Yii::app()->controller->id);
 			$criteria->compare('action',Yii::app()->controller->action->id);
 			$model = self::model ()->find ( $criteria );
@@ -44,7 +47,10 @@ class Language extends CActiveRecord
 					$model=new Language();
 					$model->lang=$code;
 					$model->origin=$origin;
-					$model->module=Yii::app()->controller->module->id;
+					if(isset(Yii::app()->controller->module->id))
+						$model->module=Yii::app()->controller->module->id;
+					else
+						$model->module='';
 					$model->controller=Yii::app()->controller->id;
 					$model->action=Yii::app()->controller->action->id;
 					$model->save();

@@ -35,19 +35,29 @@
                   		<?php echo $form->error($model, 'parent_id'); ?>
 					</li>
                     </div>
+                    <?php if(!$model->isNewRecord):?>
+                    <div class="row">
+                    <li>
+                        <?php echo $form->labelEx($model,'order_view'); ?>
+                        <?php 
+                           	$list_order=array(); 
+                           	$max_order=$model->list_order_view;  
+                        	for($i=1;$i<=sizeof($max_order);$i++){
+                        		$list_order[$i]=$i;
+                        	}                
+                        	echo $form->dropDownList($model,'order_view',$list_order,array('style'=>'width:50px')); 
+                        ?>
+                  		<?php echo $form->error($model, 'order_view'); ?>
+					</li>  
+					</div>
+					<?php endif;?>
                     <div class="row">
                     	<li>
                         	<?php echo $form->labelEx($model,'list_special'); ?>
                         	<?php echo $form->dropDownList($model,'list_special',Category::getList_label_specials(),array('style'=>'width:150px','multiple' => 'multiple')); ?>
                   			<?php echo $form->error($model, 'list_special'); ?>
                     	</li>
-                    	</div> 
-					<div class="row">
-						<li>
-							<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_category')); ?>
-							<?php echo $form->error($model, 'images'); ?>				
-						</li>
-					</div>
+                    </div> 
                    <div class="row">
 						<li>
                        		<?php echo $form->labelEx($model,'description'); ?>

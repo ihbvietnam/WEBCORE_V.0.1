@@ -33,12 +33,12 @@ class News extends CActiveRecord
 	const SPECIAL_MARQUEE=2;
 	
 	const INTRO_LENGTH=100; 	
-	const INTRO_HOMEPAGE_LENGTH=40;	
+	const INTRO_HOMEPAGE_LENGTH=20;	
 	const OTHER_NEWS=5;
 	const LIST_NEWS=10;
 	const LIST_SEARCH=10;
-	const PRESENT_CATEGORY=31;
-	const GUIDE_CATEGORY=71;
+	const PRESENT_CATEGORY=30;
+	const GUIDE_CATEGORY=59;
 	const ALIAS_PRESENT_CATEGORY='gioi-thieu';
 	const ALIAS_GUIDE_CATEGORY='huong-dan';
 	
@@ -70,6 +70,20 @@ class News extends CActiveRecord
 		return $url;
  	}
 	/*
+	 * Get thumb of video
+	 */
+	public function getThumb_url($type){
+		if($this->introimage>0){
+			$image=Image::model()->findByPk($this->introimage);
+			$src=$image->getThumb('News',$type);
+			return '<img class="img" src="'.$src.'" alt="'.$image->title.'">';
+		}
+		else {
+			
+			return '<img class="img" src="'.Image::getDefaultThumb('News', $type).'" alt=""';
+		}
+	}
+	/*
 	 * Get image url which view status of news
 	 */
  	public function getImageStatus()
@@ -88,7 +102,7 @@ class News extends CActiveRecord
  	{
 		$cat=$this->category;
 		return $cat->name;
- 	}	
+ 	}
 	/*
 	 * Get similar news
 	 */
@@ -96,20 +110,24 @@ class News extends CActiveRecord
 		if($this->list_suggest != ''){
 			$list = array_diff ( explode ( ',', $this->list_suggest ), array ('' ) );
 			$result=array();
+			$index=0;
 			foreach ($list as $id){
-				$result[]=News::model()->findByPk($id);
+				$index++;
+				if($index <= Setting::s('LIMIT_SIMILAR_NEWS'))
+					$result[]=News::model()->findByPk($id);
 			}
 		}
 		else {
 			$criteria=new CDbCriteria;
 			$criteria->compare('status', News::STATUS_ACTIVE);
+			$criteria->addCondition('id <>'. $this->id);
 			$criteria->order='id desc';
 			$criteria->compare('catid',$this->catid);
 			$criteria->limit=Setting::s('LIMIT_SIMILAR_NEWS');
 			$result=News::model()->findAll($criteria);		
 		}
 		return $result;
-	}
+	}	
  	/*
 	 * Get all specials of class News
 	 * Use in drop select when create, update news

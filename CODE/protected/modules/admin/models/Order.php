@@ -19,26 +19,36 @@ class Order extends CActiveRecord
 	public $stop_time=null;
 	public $list_item;
 	public $old_answer;
-	private $config_other_attributes = array('activekey','address',
-											'modified','content','phone','email',
-											'fullname','metakey','metadesc',
-											'PaySex','PayFullname','PayAddress','PayPhone',
-											'DelSex','DelFullname','DelAddress','DelPhone',
-											'payment_type','sum');
+	private $config_other_attributes = array('modified','address','content','phone','email','fullname','note','metakey','metadesc');
 	public $list_other_attributes;
 
 	/*
 	 * Decode content from list item in database for viewing
 	*/
-	public function getOrder_Content($content){
+	public function getOrder_content(){
 		$order_content = '';
-		foreach($content as $code => $amount){
-			$product=Product::model()->findByPk($code);
+		foreach($this->list_item as $id => $content){
+			$content=(array)$content;
+			$product=Product::model()->findByPk($id);
 			if(isset($product)){
-				$order_content .=" <br/> Sản phẩm: ".$product->name." - Số lượng: ".$amount;
+				$order_content .=" Sản phẩm: ".$product->name." - Số lượng: ".$content['amount']." - Giá: ".number_format($content['num_price'], 0, ',', '.')." ".$content['unit_price'].'</br>';
 			}
 		}		
 		return ($order_content);
+	}
+	/*
+	 * Get total order
+	*/
+	public function getOrder_value(){
+		$value=0;
+		foreach($this->list_item as $id => $content){
+			$content=(array)$content;
+			$product=Product::model()->findByPk($id);
+			if(isset($product)){
+				$value +=$content['amount']*$content['num_price'];
+			}
+		}		
+		return number_format($value, 0, ',', '.').' '.$content['unit_price'];
 	}
 	/*
 	 * Get image url which view status of contact
@@ -107,11 +117,12 @@ class Order extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fullname,phone,email,address,PayFullname,PayAddress,PayPhone,DelFullname,DelAddress,DelPhone, payment_type','required','message'=>'Dữ liệu bắt buộc','on'=>'create',),
-			array('content', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'create'),
+			array('fullname,address,phone','required','message'=>'Dữ liệu bắt buộc','on'=>'create',),
+			array('note', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'create'),
 			array('email','email','message'=>'Sai dịnh dạng mail','on'=>'create'),
 			array('phone', 'length', 'max'=>13,'message'=>'Tối đa 13 kí tự','on'=>'create'),
-			array('status, process_status, sum','safe','on'=>'search'),
+			array('phone', 'length', 'max'=>13,'message'=>'Tối đa 13 kí tự','on'=>'create'),
+			array('status, process_status','safe','on'=>'search'),
 		);
 	}
 
@@ -136,22 +147,16 @@ class Order extends CActiveRecord
 		return array(
 			'id'=> 'Mã đơn hàng',
 			'content' => 'Nội dung',
-			'phone'=>'Số điện thoại',
+			'phone'=>'Điện thoại',
 			'email'=>'Email',
-			'address'=>'Đại chỉ',
-			'fullname'=>'Người đặt đơn',
+			'address'=>'Địa chỉ',
+			'fullname'=>'Họ và tên',
 			'created_date'=>'Thời điểm đặt đơn',
-			'PayFullname'=>'Họ và tên',
-			'PaySex'=>'Danh xưng',
-			'PayAddress'=>'Địa chỉ',
-			'PayPhone'=>'Điện thoại',
-			'DelFullname'=>'Họ và tên',
-			'DelSex'=>'Danh xưng',
-			'DelAddress'=>'Địa chỉ',
-			'DelPhone'=>'Điện thoại',
-			'payment_type'=>'Hình thức thanh toán',
 			'status'=>'Kích hoạt',
 			'process_status'=>'Xử lý',	
+			'note'=>'Ghi chú',
+			'order_content'=>'Chi tiết',
+			'order_value'=>'Tổng giá trị'
 		);
 	}
 /**
