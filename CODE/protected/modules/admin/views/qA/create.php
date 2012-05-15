@@ -13,7 +13,6 @@
 		<div class="folder-content form">
 		<div>
                 <input type="button" class="button" value="Danh sách câu hỏi" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/qA')?>'"/>
-                <input type="button" class="button" value="Thêm câu hỏi" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/qA/create')?>'"/>
                 <div class="line top bottom"></div>	
             </div>
 		<?php $form=$this->beginWidget('CActiveForm', array('method'=>'post','enableAjaxValidation'=>true)); ?>	
@@ -66,7 +65,7 @@
 					</div>			
                     <li>
 						<input type="reset" class="button" value="Hủy thao tác" style="margin-left:153px; width:125px;" />	
-						<input type="submit" class="button" value="Cập nhật" style="margin-left:20px; width:125px;" />						
+						<input type="submit" class="button" value="Thêm mới" style="margin-left:20px; width:125px;" />						
 					</li>
 				</ul>
 			</div>

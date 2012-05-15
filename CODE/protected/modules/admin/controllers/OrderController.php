@@ -81,10 +81,11 @@ class OrderController extends Controller
 		$model=new Order('search');
 		$model->unsetAttributes();  // clear any default values
 		$model->status=Order::STATUS_PENDING;
-		if(isset($_GET['Order']))
+		if(isset($_GET['Order'])){
 			$model->attributes=$_GET['Order'];
-			$model->start_time = $_GET['order_start_time'];
-			$model->stop_time = $_GET['order_stop_time'];
+			$model->start_time = iPhoenixTime::stringToTime($_GET['order_start_time'],'-','start');
+			$model->stop_time = iPhoenixTime::stringToTime($_GET['order_stop_time'],'-','end');
+		}
 		$this->render('index',array(
 			'model'=>$model
 		));

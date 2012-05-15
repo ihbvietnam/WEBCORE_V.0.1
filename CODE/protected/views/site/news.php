@@ -1,7 +1,6 @@
 <?php 
 $this->bread_crumbs=array(
 	array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
-	array('url'=>Yii::app()->createUrl('site/news'),'title'=>Language::t('Sản phẩm')),
 	array('url'=>Yii::app()->createUrl('site/news',array('cat_alias'=>$cat->alias)),'title'=>Language::t($cat->name)),
 	array('url'=>'','title'=>Language::t($news->title)),
 )
@@ -10,7 +9,7 @@ $this->bread_crumbs=array(
             	<div class="news-left">
                 	<div class="news-detail">
                     	<a class="news-link" href="<?php echo $news->url?>"><?php echo $news->title?></a>
-                        <h6><?php echo date("(d/m/Y)",$data->created_date); ?></h6>        
+                        <h6><?php if(!in_array($cat->id,array(News::GUIDE_CATEGORY,News::PRESENT_CATEGORY)))echo date("(d/m/Y)",$news->created_date); ?></h6>        
                         <div class="news-content">
                         	<?php echo $news->fulltext?>
                         </div><!--news-content-->
@@ -18,6 +17,7 @@ $this->bread_crumbs=array(
                     <?php 
             			$list_similar=$news->list_similar;
             		?>
+            		<?php if(!in_array($cat->id,array(News::GUIDE_CATEGORY,News::PRESENT_CATEGORY))):?>
                     <div class="other-list">
                         <h2><?php echo Language::t('Các tin khác');?>:</h2>
                         <ul>
@@ -26,6 +26,7 @@ $this->bread_crumbs=array(
                        <?php endforeach;?> 
                        </ul>
                     </div><!--other-list-->
+                    <?php endif;?>
                 </div><!--news-left-->
               	<div class="news-right">
                 	<div class="winget">

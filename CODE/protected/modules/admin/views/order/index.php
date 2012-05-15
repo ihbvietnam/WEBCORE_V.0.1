@@ -26,13 +26,6 @@
                 <!--begin left content-->
                 <div class="fl" style="width:480px;">
                     <ul>
-                         <?php 
-					$list=array(''=>'Tất cả',Order::STATUS_PENDING=>'Chưa kích hoạt',Order::STATUS_ACTIVE=>'Đã kích hoạt');
-					?>
-					<li>
-						<label>Trạng thái đơn hàng:</label>
-						<?php echo $form->dropDownList($model,'status',$list,array('style'=>'width:200px')); ?>
-					</li>
 					   <?php 
 					$list=array(''=>'Tất cả',Order::STATUS_PENDING=>'Chưa xử lý',Order::STATUS_ACTIVE=>'Đã xử lý');
 					?>
@@ -106,52 +99,23 @@
 						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
 					), 
 					array(
-						'name'=>'email',
-						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
-					),
-					array(
-						'name'=>'content',
+						'header'=>'Tổng giá trị',
 						'type'=>'raw',
-						'value'=>'iPhoenixString::createIntrotext(Order::getOrder_Content($data->list_item),Contact::SIZE_INTRO_CONTENT)',
+						'value'=>'$data->order_value',
+						'headerHtmlOptions'=>array('width'=>'15%','class'=>'table-title'),		
+					),	
+					array(
+						'header'=>'Chi tiết',
+						'type'=>'raw',
+						'value'=>'$data->order_content',
 						'headerHtmlOptions'=>array('width'=>'35%','class'=>'table-title'),		
-					),			
+					),							
 					array(
 						'name'=>'created_date',
 						'value'=>'date("H:i d/m/Y",$data->created_date)',
 						'headerHtmlOptions'=>array('width'=>'15%','class'=>'table-title'),		
 					), 		
 					array(
-						'header'=>'Kích hoạt',
-						'class'=>'iPhoenixButtonColumn',
-    					'template'=>'{reverse}',
-    					'buttons'=>array
-    					(
-        					'reverse' => array
-    						(
-            					'label'=>'Đổi trạng thái kích hoạt',
-            					'imageUrl'=>'$data->imageStatus',
-            					'url'=>'Yii::app()->createUrl("admin/order/reverseStatus", array("id"=>$data->id))',
-    							'click'=>'function(){
-									var th=this;									
-									jQuery.ajax({
-										type:"POST",
-										dataType:"json",
-										url:$(this).attr("href"),
-										success:function(data) {
-											if(data.success==true){
-												$(th).find("img").attr("src",data.src);
-												}
-											else {
-												jAlert("Đơn hàng chưa được kích hoạt");
-											}
-										},
-										});
-								return false;}',
-        					),
-        				),
-						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),
-					),
-						array(
 						'header'=>'Xử lý',
 						'class'=>'iPhoenixButtonColumn',
     					'template'=>'{reverseprocess}',

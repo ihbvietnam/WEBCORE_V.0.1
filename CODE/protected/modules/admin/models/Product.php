@@ -25,9 +25,6 @@ class Product extends CActiveRecord
 	const PRESENT_CATEGORY=31;
 	
 	static $config_unit_price = array('VND'=>'VND');
-	
-	public $num_price;
-	public $unit_price;
 	public $old_video;
 	public $old_introimage;
 	public $old_name;
@@ -106,7 +103,6 @@ class Product extends CActiveRecord
 			$criteria->compare('status', Product::STATUS_ACTIVE);
 			$criteria->order='id desc';
 			$criteria->compare('catid',$this->catid);
-			$criteria->compare('manufacturer_id',$this->manufacturer_id);
 			$criteria->limit=Setting::s('LIMIT_SIMILAR_PRODUCT');
 			$criteria->addCondition('id <>'. $this->id);
 			$result=Product::model()->findAll($criteria);		
@@ -200,9 +196,9 @@ class Product extends CActiveRecord
 		return array(
 			array('name,catid,code,introimage','required','message'=>'Dữ liệu bắt buộc','on'=>'write'),
 			array('description,parameter,showroom,store,comment', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'write'),
-			array('manufacturer_id,list_special,lang,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
+			array('list_special,lang,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
 			array('num_price', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
-			array('name,lang, manufacturer_id, catid,special, amount_status','safe','on'=>'search'),
+			array('name,lang, catid,special, amount_status','safe','on'=>'search'),
 			array('introimage','safe','on'=>'upload_image'),		
 		);
 	}
@@ -216,7 +212,6 @@ class Product extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'category'=>array(self::BELONGS_TO,'Category','catid'),
-			'manufacturer'=>array(self::BELONGS_TO,'Category','manufacturer_id'),
 			'author'=>array(self::BELONGS_TO,'User','created_by')
 		);
 	}
@@ -229,7 +224,6 @@ class Product extends CActiveRecord
 		return array(
 			'name' => 'Tên sản phẩm',
 			'catid'=>'Nhóm sản phẩm',
-			'manufacturer_id'=>'Nhà sản xuất',
 			'code'=>'Mã sản phẩm',
 			'unit'=>'Đơn vị tính',
 			'price'=>'Giá',
@@ -354,20 +348,7 @@ class Product extends CActiveRecord
 		$criteria = new CDbCriteria ();
 		$criteria->compare ( 'lang', $this->lang );
 		$criteria->compare ( 'name', $this->name, true );
-		$criteria->compare ('amount_status',$this->amount_status);
-		//Filter manufacturer_id
-		$cat = Category::model ()->findByPk ( $this->manufacturer_id );
-		if ($cat != null) {
-			$child_categories = $cat->child_categories;
-			$list_child_id = array ();
-			//Set itself
-			$list_child_id [] = $cat->id;
-			if ($child_categories != null)
-				foreach ( $child_categories as $id => $child_cat ) {
-					$list_child_id [] = $id;
-				}
-			$criteria->addInCondition ( 'manufacturer_id', $list_child_id );
-		}
+		$criteria->compare ('amount_status',$this->amount_status);		
 		//Filter catid
 		$cat = Category::model ()->findByPk ( $this->catid );
 		if ($cat != null) {

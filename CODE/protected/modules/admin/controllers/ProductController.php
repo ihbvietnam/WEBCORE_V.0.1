@@ -109,7 +109,6 @@ class ProductController extends Controller
 			$model->scenario = 'write';
 			// Ajax validate
 			$this->performAjaxValidation ( $model );
-			
 			if (isset ( $_POST ['Product'] )) {
 				$model->attributes = $_POST ['Product'];
 				if(!isset($_POST['Product']['list_special'])) $model->list_special=array();

@@ -58,24 +58,7 @@
 								<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:250px')); ?>
 								<?php echo $form->error($model, 'catid'); ?>
 							</li>
-						</div>				
-						<?php 
-							$list=array();
-							foreach ($list_manufacturer as $id=>$manufacturer){
-								$view = "";
-								for($i=1;$i<$manufacturer['level'];$i++){
-									$view .="---";
-								}
-								$list[$id]=$view." ".$manufacturer['name']." ".$view;
-							}
-							?>
-						<div class="row">
-							<li>
-							<?php echo $form->labelEx($model,'manufacturer_id'); ?>
-							<?php echo $form->dropDownList($model,'manufacturer_id',$list,array('style'=>'width:200px')); ?>
-							<?php echo $form->error($model, 'manufacturer_id'); ?>
-							</li>
-						</div>	
+						</div>						
 						<div class="row">
 							<li>
 							<?php echo $form->labelEx($model,'price'); ?>
@@ -257,6 +240,7 @@ $cs->registerScriptFile('js/admin/popup.js');
 							'url'=>array('product/suggestName'),
 							'htmlOptions'=>array(
 								'style'=>'width:230px;',
+                         		'name'=>'SuggestProduct[name]'
 								),
 						)); ?>
 						</li>
@@ -272,22 +256,8 @@ $cs->registerScriptFile('js/admin/popup.js');
 					?>            
                    	<li>
 						<?php echo $form->labelEx($suggest,'catid'); ?>
-                        <?php echo $form->dropDownList($suggest,'catid', $list );?>
-                    </li>
-                       <?php 
-					$list=array(''=>'Tất cả các nhà sản xuất');
-					foreach ($list_manufacturer as $id=>$cat){
-						$view = "";
-						for($i=1;$i<$cat['level'];$i++){
-							$view .="---";
-						}
-						$list[$id]=$view." ".$cat['name']." ".$view;
-					}
-					?>  
-                    <li>
-						<?php echo $form->labelEx($suggest,'manufacturer_id'); ?>
-                        <?php echo $form->dropDownList($suggest,'manufacturer_id', $list);?>														
-                    </li>  		  
+                        <?php echo $form->dropDownList($suggest,'catid', $list ,array('style'=>'width:200px','name'=>'SuggestProduct[catid]'));?>
+                    </li>	  
 	<li>
 	<label>&nbsp;</label> 
 	<input type="submit" class="button" value="Lọc bài viết">
@@ -313,12 +283,7 @@ $cs->registerScriptFile('js/admin/popup.js');
 						'name'=>'catid',
 						'value'=>'$data->category->name',
 						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
-					), 	
-					array(
-						'name'=>'manufacturer_id',
-						'value'=>'$data->manufacturer->name',
-						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
-					), 	
+					), 		
 					array(
 						'name'=>'created_date',
 						'value'=>'date("H:i d/m/Y",$data->created_date)',

@@ -19,22 +19,38 @@
 			<div class="fl">
 				<ul>
 					<div class="row">						
-							<label><?php echo $model->getAttributeLabel('fullname'); ?>:</label>
+							<b><label><?php echo $model->getAttributeLabel('fullname'); ?>:</label></b>
 							<?php echo $model->fullname;?>									
 					</div>	
+						<div class="row">
+						<li>
+							<b><label><?php echo $model->getAttributeLabel('order_value'); ?></label></b>
+							<?php echo $model->order_value;?>			
+						</li>
+					</div>
+					<div class="row">
+						<li>
+							<b><label><?php echo $model->getAttributeLabel('order_content'); ?></label></b>
+							</br>
+							<?php echo $model->order_content;?>			
+						</li>
+					</div>
+					<div class="row">						
+							<b><label><?php echo $model->getAttributeLabel('address'); ?>:</label></b>
+							<?php echo $model->address;?>									
+					</div>	
 					<div class="row">					
-							<label><?php echo $model->getAttributeLabel('email'); ?>:</label>
+							<b><label><?php echo $model->getAttributeLabel('phone'); ?>:</label></b>
+							<?php echo $model->phone;?>						
+					</div>	
+					<div class="row">					
+							<b><label><?php echo $model->getAttributeLabel('email'); ?>:</label></b>
 							<?php echo $model->email;?>						
 					</div>
 					<div class="row">					
-							<label><?php echo $model->getAttributeLabel('phone'); ?>:</label>
-							<?php echo $model->phone;?>						
-					</div>	
-					<div class="row">
-						<li>
-							<label><?php echo $model->getAttributeLabel('content'); ?>:</label>
-							<?php echo Order::getOrder_Content($model->list_item);?>			
-						</li>
+							<b><label><?php echo $model->getAttributeLabel('note'); ?>:</label></b>
+							</br>
+							<?php echo $model->note;?>						
 					</div>
 				</ul>
 			</div>

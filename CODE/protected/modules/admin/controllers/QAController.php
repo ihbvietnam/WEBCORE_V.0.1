@@ -45,6 +45,33 @@ class QAController extends Controller
 	}
 
 	/**
+	 * Create a particular model.
+	 */
+	public function actionCreate()
+	{
+		$model=new QA();	
+		if(Yii::app()->user->checkAccess('update', array('post' => $model)))	
+		{
+		$model->scenario = 'question';
+		// Ajax validate
+		$this->performAjaxValidation($model);	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+		if(isset($_POST['QA']))
+		{
+			$model->attributes=$_POST['QA'];
+			$model->title=$model->question;
+			if($model->save())
+				$this->redirect(array('update','id'=>$model->id));
+		}		
+		$this->render('create',array(
+			'model'=>$model
+		));	
+		}		
+		else 
+			throw new CHttpException(403,Yii::t('yii','You are not authorized to perform this action.'));
+	}
+	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
@@ -102,7 +129,6 @@ class QAController extends Controller
 		$this->initCheckbox('checked-qa-list');
 		$model=new QA('search');
 		$model->unsetAttributes();  // clear any default values
-		$model->status=QA::STATUS_NOT_ANSWER;
 		if(isset($_GET['QA']))
 			$model->attributes=$_GET['QA'];
 		$this->render('index',array(

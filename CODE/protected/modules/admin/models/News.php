@@ -42,6 +42,8 @@ class News extends CActiveRecord
 	const GUIDE_CATEGORY=59;
 	const ALIAS_PRESENT_CATEGORY='gioi-thieu';
 	const ALIAS_GUIDE_CATEGORY='huong-dan';
+	const ALIAS_GUIDE_BUY_ARTICLE='huong-dan-mua-hang';
+	const ALIAS_GUIDE_PAY_ARTICLE='phuong-thuc-thanh-toan';
 	
 	public $old_fulltext;
 	public $old_introimage;

@@ -1,7 +1,6 @@
 <?php 
 $this->bread_crumbs=array(
 	array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
-	array('url'=>Yii::app()->createUrl('site/news'),'title'=>Language::t('Sản phẩm')),
 	array('url'=>'','title'=>Language::t($cat->name)),
 )
 ?>

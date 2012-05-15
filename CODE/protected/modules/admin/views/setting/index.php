@@ -2,17 +2,17 @@
 	<div class="folder top">
 		<!--begin title-->
 		<div class="folder-header">
-			<h1><?php echo Language::t('quản trị các tham số cấu hình')?></h1>
+			<h1>quản trị các tham số cấu hình</h1>
 			<div class="header-menu">
 				<ul>
-					<li class="ex-show"><a class="activities-icon" href=""><span><?php echo Language::t('Danh sách các tham số cấu hình')?></span></a></li>
+					<li class="ex-show"><a class="activities-icon" href=""><span>Danh sách các tham số cấu hình</span></a></li>
 				</ul>
 			</div>
 		</div>
 		<!--end title-->
 		<div class="folder-content">
             <div>
-            	<input type="button" class="button" value="<?php echo Language::t('Tạo tham số')?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/setting/create')?>'"/>
+            	<input type="button" class="button" value="Tạo tham số" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/setting/create')?>'"/>
                 <div class="line top bottom"></div>	
             </div>
              <!--begin box search-->
@@ -25,7 +25,7 @@
 				});");
 		?>
             <div class="box-search">            
-                <h2><?php echo Language::t('Tìm kiếm')?></h2>
+                <h2>Tìm kiếm</h2>
                 <?php $form=$this->beginWidget('CActiveForm', array('method'=>'get','id'=>'setting-search')); ?>
                 <!--begin left content-->
                 <div class="fl" style="width:480px;">
@@ -43,7 +43,7 @@
                         </li>
                         <li>
                         <?php 
-							echo CHtml::submitButton(Language::t('Lọc kết quả'),
+							echo CHtml::submitButton('Lọc kết quả',
     						array(
     							'class'=>'button',
     							'style'=>'margin-left:153px; width:95px;',
@@ -79,22 +79,22 @@
 						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
 					), 															   	   
 					array(
-						'header'=>Language::t('Công cụ'),
+						'header'=>'Công cụ',
 						'class'=>'CButtonColumn',
     					'template'=>'{update}{delete}',
-						'deleteConfirmation'=>Language::t('Bạn muốn xóa bài viết này?'),
-						'afterDelete'=>'function(link,success,data){ if(success) jAlert("'.Language::t('Bạn đã xóa thành công').'"); }',
+						'deleteConfirmation'=>'Bạn muốn xóa bài viết này?',
+						'afterDelete'=>'function(link,success,data){ if(success) jAlert("Bạn đã xóa thành công"); }',
     					'buttons'=>array
     					(
     						'update' => array(
-    							'label'=>Language::t('Chỉnh sửa bài viết'),
+    							'label'=>'Chỉnh sửa bài viết',
     						),
         					'delete' => array(
-    							'label'=>Language::t('Xóa bài viết'),
+    							'label'=>'Xóa bài viết',
     						),
     						'copy' => array
     						(
-            					'label'=>Language::t('Copy bài viết'),
+            					'label'=>'Copy bài viết',
             					'imageUrl'=>Yii::app()->request->getBaseUrl(true).'/images/admin/copy.gif',
             					'url'=>'Yii::app()->createUrl("admin/setting/copy", array("id"=>$data->id))',
         					),
@@ -103,12 +103,12 @@
 					),    				
  	 			),
  	 			'template'=>'{displaybox}{checkbox}{summary}{items}{pager}',
-  				'summaryText'=>Language::t('Có tổng cộng').' {count} '.Language::t('tin'),
- 	 			'pager'=>array('class'=>'CLinkPager','header'=>'','prevPageLabel'=>'< '.Language::t('Trước'),'nextPageLabel'=>Language::t('Sau').' >','htmlOptions'=>array('class'=>'pages fr')),
+  				'summaryText'=>'Có tổng cộng {count} tin',
+ 	 			'pager'=>array('class'=>'CLinkPager','header'=>'','prevPageLabel'=>'< Trước','nextPageLabel'=>'Sau >','htmlOptions'=>array('class'=>'pages fr')),
 				'actions'=>array(
 					'delete'=>array(
 						'action'=>'delete',
-						'label'=>Language::t('Xóa'),
+						'label'=>'Xóa',
 						'imageUrl' => '/images/admin/delete.png',
 						'url'=>'admin/setting/checkbox'
 					),					

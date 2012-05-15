@@ -19,7 +19,7 @@ return array(
 		'application.components.*',
 		'application.models.*',
 	),
-	'defaultController'=>'site',
+	'defaultController'=>'site/home',
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 		'gii'=>array(
@@ -41,7 +41,6 @@ return array(
 		'counter' => array(
             'class' => 'ext.UserCounter',
 		),
-		/*
 		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
@@ -49,22 +48,21 @@ return array(
 			'rules'=>array(
 				'video/<video_alias>'=>array('site/video','urlSuffix'=>'.html'),
 				'video'=>'site/video',
-				'album/<album_alias>'=>array('site/album','urlSuffix'=>'.html'),
-				'album'=>'site/album',
-				'q-a/<qa_alias>'=>array('site/qa','urlSuffix'=>'.html'),
-				'q-a'=>'site/qa',
-				'home'=>'site/index',
-				'language/<lang:\w+>'=>'site/language',
-				'contact'=>array('site/contact'),
-				'sitemap'=>array('site/sitemap'),
-				'news/<cat_alias>/<news_alias>'=>array('site/news','urlSuffix'=>'.html'),
-				'news/<cat_alias>'=>array('site/news'),
+				'hoi-dap/<qa_alias>'=>array('site/qa','urlSuffix'=>'.html'),
+				'hoi-dap'=>'site/qa',
+				'trang-chu'=>'site/home',
+				'lien-he'=>array('site/contact'),
+				'dat-cau-hoi'=>array('site/question'),
+				'tin-tuc/<cat_alias>/<news_alias>'=>array('site/news','urlSuffix'=>'.html'),
+				'tin-tuc/<cat_alias>'=>array('site/news'),
+				'san-pham/<cat_alias>/<product_alias>'=>array('site/product','urlSuffix'=>'.html'),
+				'san-pham/<cat_alias>'=>array('site/product'),
+				'san-pham'=>array('site/product'),
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-		*/
 		/*
 		'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',

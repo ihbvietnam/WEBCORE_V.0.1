@@ -171,7 +171,6 @@ body{
 }
 .box-search .text{
 	float:left;
-	height:16px;
 	border:none;
 	font-size:12px;
 	width:183px;
@@ -993,7 +992,6 @@ body{
 }
 .contact-form input[type=text]{
 	border:1px solid #e1e1e1 !important;
-	height:17px;
 	-moz-box-shadow:inset 0 0 2px rgba(0,0,0,0.1);
 	-webkit-box-shadow:inset 0 0 2px rgba(0,0,0,0.1);
 	box-shadow:inset 0 0 2px rgba(0,0,0,0.1);

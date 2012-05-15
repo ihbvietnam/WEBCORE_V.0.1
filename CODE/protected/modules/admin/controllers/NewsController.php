@@ -210,7 +210,7 @@ class NewsController extends Controller
 		$this->initCheckbox('checked-news-list');
 		$model=new News('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['catid'])) $model->catid=News::PRESENT_CATEGORY;
+		if(isset($_GET['catid'])) $model->catid=$_GET['catid'];
 		$model->lang=Language::DEFAULT_LANGUAGE;
 		if(isset($_GET['News']))
 			$model->attributes=$_GET['News'];	
