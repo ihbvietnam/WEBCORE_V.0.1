@@ -53,18 +53,18 @@ $(window).scrollTop($(".main").offset().top);
 </div><!--header-->
 <div class="menu">
 	<div class="wrapper">
-         	<?php $this->widget('FrontEndMenu')?>
+         	<?php $this->widget('wMenu',array('root'=>Category::GROUP_USER_MENU,'view'=>'front-end-menu'))?>
          	<?php $this->widget('wQuickSearch')?>
     </div><!--wrapper-->
 </div><!--menu-->
 <div class="slider-outer">
     <div class="wrapper">
     	<div class="slider-wrapper theme-default">				
-            <?php $this->widget('wHeadline')?>
+            <?php $this->widget('wBanner',array('code'=>Banner::CODE_HEADLINE,'view'=>'head-line'))?>
       	</div><!--slider-wrapper-->
       	<div class="slider-right">
         	<div class="box">
-       			<?php $this->widget('wVideo');?> 
+       			<?php $this->widget('wVideo',array('view'=>'video'));?> 
             </div><!--box-->
             <div class="box">
             	<div class="box-title"><label><?php echo Language::t('Hướng dẫn');?></label></div>
@@ -84,7 +84,7 @@ $(window).scrollTop($(".main").offset().top);
     <div class="tree-outer">
     	<div class="tree-view">
     		<?php 
-    			$this->widget('iPhoenixBreadCrumbs',array('data'=>$this->bread_crumbs));
+    			$this->widget('wBreadCrumbs',array('data'=>$this->bread_crumbs));
     		?>        	
         </div><!--tree-view-->
         <span class="update-time"><?php echo date("d/m/Y"); ?></span>
@@ -92,13 +92,13 @@ $(window).scrollTop($(".main").offset().top);
     <div class="bground">
     	<div class="sidebar">
         	<div class="box">
-            	<?php $this->widget('wMenuLeft');?> 
+            	<?php $this->widget('wMenu',array('root'=>Category::GROUP_PRODUCT,'view'=>'menu-left'));?> 
             </div><!--box-->
             <div class="box">
-            	<?php $this->widget('wRemark');?> 
+            	<?php $this->widget('wProduct',array('view'=>'remark','special'=>Product::SPECIAL_REMARK,'limit'=>Setting::s('SIZE_REMARK_PRODUCT')));?> 
             </div><!--box-->
             <div class="box-ad">
-            	<?php $this->widget('wBannerLeft');?> 
+            	<?php $this->widget('wBanner',array('code'=>Banner::CODE_LEFT,'view'=>'banner-left'));?> 
             </div><!--box-ad-->
         </div><!--sidebar-->
         <div class="main">
@@ -109,7 +109,7 @@ $(window).scrollTop($(".main").offset().top);
 </div><!--wrapper-->
 <div class="menu-bottom">
 	<div class="wrapper">
-    <?php $this->widget('FrontEndMenu')?>
+    <?php $this->widget('wMenu',array('root'=>Category::GROUP_USER_MENU,'view'=>'front-end-menu'))?>
 	</div><!--wrapper-->
 </div><!--menu-bottom-->
 <div class="footer">

@@ -2,7 +2,7 @@
 	<div class="folder top">
 		<!--begin title-->
 		<div class="folder-header">
-			<h1>quản trị liên hệ</h1>
+			<h1>quản trị đơn hàng</h1>
 			<div class="header-menu">
 				<ul>
 					<li class="ex-show"><a class="activities-icon" href=""><span>Danh sách</span></a></li>

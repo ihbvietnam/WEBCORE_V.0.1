@@ -2,19 +2,19 @@
 	<div class="folder top">
 		<!--begin title-->
 		<div class="folder-header">
-			<h1><?php echo Language::t('quản trị ngôn ngữ');?></h1>
+			<h1>quản trị ngôn ngữ</h1>
 			<div class="header-menu">
 				<ul>
-					<li><a class="header-menu-active new-icon" href=""><span><?php echo Language::t('Xuất dữ liệu ra file excel');?></span></a></li>					
+					<li><a class="header-menu-active new-icon" href=""><span>Xuất dữ liệu ra file excel</span></a></li>					
 				</ul>
 			</div>
 		</div>
 		<!--end title-->	
 		<div class="folder-content form">
-					<input type="button" class="button" value="<?php echo Language::t('Chỉnh sửa');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/edit')?>'"/>
-			<input type="button" class="button" value="<?php echo Language::t('Tạo mới');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/create')?>'"/>
-			<input type="button" class="button" value="<?php echo Language::t('Xóa');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/delete')?>'"/>
-			<input type="button" class="button" value="<?php echo Language::t('Export');?>" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/export')?>'"/>
+					<input type="button" class="button" value="Chỉnh sửa" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/edit')?>'"/>
+			<input type="button" class="button" value="Tạo mới" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/create')?>'"/>
+			<input type="button" class="button" value="Xóa" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/delete')?>'"/>
+			<input type="button" class="button" value="Export" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/language/export')?>'"/>
 			<?php $form=$this->beginWidget('CActiveForm', array('method'=>'post','enableAjaxValidation'=>true)); ?>	
 			<!--begin left content-->
 			<div class="fl" style="width:480px;">
@@ -27,8 +27,8 @@
                     </li>
                     </div>					
                    		<li>
-                   		<input type="reset" class="button" value="<?php echo Language::t('Hủy thao tác')?>" style="margin-left:153px; width:125px;" />
-                    	<input type="submit" class="button" value="<?php echo Language::t('Xuất')?>" style="margin-left:20px; width:125px;" />					 
+                   		<input type="reset" class="button" value="Hủy thao tác" style="margin-left:153px; width:125px;" />
+                    	<input type="submit" class="button" value="Xuất" style="margin-left:20px; width:125px;" />					 
                     	</li>
 				</ul>
 			</div>

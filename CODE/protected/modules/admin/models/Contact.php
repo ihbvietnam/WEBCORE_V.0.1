@@ -110,12 +110,12 @@ class Contact extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'content' => Language::t('Nội dung'), 
-			'phone' => Language::t('Điện thoại'),
-			'email'=> Language::t('Email'),
-			'fullname' => Language::t('Họ và tên'), 
-			'address'=>Language::t('Địa chỉ'), 
-			'created_date'=> Language::t('Ngày tạo'),
+			'content' => 'Nội dung', 
+			'phone' => 'Điện thoại',
+			'email'=> 'Email',
+			'fullname' => 'Họ và tên', 
+			'address'=>'Địa chỉ', 
+			'created_date'=> 'Ngày tạo',
 		);
 	}
 /**

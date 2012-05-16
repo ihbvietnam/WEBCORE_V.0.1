@@ -9,17 +9,23 @@ $cs->registerCssFile(Yii::app()->request->getBaseUrl(true).'/css/admin/sprite.cs
 			<h1>
 			<?php 
 			switch ($group){
-				case Category::GROUP_ADMIN_MENU: echo "Menu trang quản trị";
+				case Category::GROUP_ADMIN_MENU: echo "Danh mục menu trang quản trị";
 				break;
-				case Category::GROUP_USER_MENU: echo 'Menu trang frontend';
+				case Category::GROUP_USER_MENU: echo 'Danh mục menu trang frontend';
 				break;
 				case Category::GROUP_ROOT: echo "Danh mục gốc";
 				break;
 				case Category::GROUP_NEWS: echo "Danh mục bài viết";
 				break;
+				case Category::GROUP_ALBUM: echo "Danh mục album";
+				break;
+				case Category::GROUP_GALLERYVIDEO: echo "Danh mục video";
+				break;
+				case Category::GROUP_STATICPAGE: echo "Danh mục các trang tĩnh";
+				break;
 				case Category::GROUP_PRODUCT: echo "Danh mục sản phẩm";
 				break;
-				case Category::GROUP_MANUFACTURER:  echo "Danh sách nhà sản xuất";
+				case Category::GROUP_MANUFACTURER:  echo "Danh mục nhà sản xuất";
 				break;
 				default: echo 'Danh mục';
 				break;
@@ -32,17 +38,23 @@ $cs->registerCssFile(Yii::app()->request->getBaseUrl(true).'/css/admin/sprite.cs
 					<li><a class="header-menu-active new-icon" href=""><span>
 			<?php 
 			switch ($group){
-				case Category::GROUP_ADMIN_MENU: echo "Menu trang quản trị";
+					case Category::GROUP_ADMIN_MENU: echo "Danh mục menu trang quản trị";
 				break;
-				case Category::GROUP_USER_MENU: echo 'Menu trang frontend';
+				case Category::GROUP_USER_MENU: echo 'Danh mục menu trang frontend';
 				break;
 				case Category::GROUP_ROOT: echo "Danh mục gốc";
 				break;
 				case Category::GROUP_NEWS: echo "Danh mục bài viết";
 				break;
+				case Category::GROUP_ALBUM: echo "Danh mục album";
+				break;
+				case Category::GROUP_GALLERYVIDEO: echo "Danh mục video";
+				break;
+				case Category::GROUP_STATICPAGE: echo "Danh mục các trang tĩnh";
+				break;
 				case Category::GROUP_PRODUCT: echo "Danh mục sản phẩm";
 				break;
-				case Category::GROUP_MANUFACTURER:  echo "Danh sách nhà sản xuất";
+				case Category::GROUP_MANUFACTURER:  echo "Danh mục nhà sản xuất";
 				break;
 				default: echo 'Danh mục';
 				break;
@@ -65,6 +77,12 @@ $cs->registerCssFile(Yii::app()->request->getBaseUrl(true).'/css/admin/sprite.cs
 				case Category::GROUP_ROOT: $form="_form_root";
 				break;
 				case Category::GROUP_NEWS: $form="_form_news";
+				break;
+				case Category::GROUP_GALLERYVIDEO: $form="_form_video";
+				break;
+				case Category::GROUP_ALBUM: $form="_form_album";
+				break;
+				case Category::GROUP_STATICPAGE: $form="_form_static_page";
 				break;
 				case Category::GROUP_PRODUCT: $form="_form_product";
 				break;

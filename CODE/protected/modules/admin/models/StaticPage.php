@@ -1,20 +1,20 @@
 <?php
 /**
- * This is the model class for table "news".
+ * This is the model class for table "staticPage".
  *
  */
-class News extends CActiveRecord
+class StaticPage extends CActiveRecord
 {	
 	public function tableName()
 	{
 		return 'tbl_article';
 	}
 	/*
-	 * Config scope of news
+	 * Config scope of staticPage
 	 */
 	public function defaultScope(){
 		return array(
-			'condition'=>'type = '.Article::ARTICLE_NEWS,
+			'condition'=>'type = '.Article::ARTICLE_STATICPAGE,
 		);	
 	}
 	/*
@@ -34,8 +34,8 @@ class News extends CActiveRecord
 	
 	const INTRO_LENGTH=100; 	
 	const INTRO_HOMEPAGE_LENGTH=20;	
-	const OTHER_NEWS=5;
-	const LIST_NEWS=10;
+	const OTHER_STATICPAGE=5;
+	const LIST_STATICPAGE=10;
 	const LIST_SEARCH=10;
 	const PRESENT_CATEGORY=30;
 	const GUIDE_CATEGORY=59;
@@ -66,7 +66,7 @@ class News extends CActiveRecord
  	{
  		$cat_alias=$this->category->alias;
  		$alias=$this->alias;
- 		$url=Yii::app()->createUrl("/site/news",array('cat_alias'=>$cat_alias,'news_alias'=>$alias));
+ 		$url=Yii::app()->createUrl("/site/staticPage",array('cat_alias'=>$cat_alias,'staticPage_alias'=>$alias));
 		return $url;
  	}
 	/*
@@ -75,16 +75,16 @@ class News extends CActiveRecord
 	public function getThumb_url($type){
 		if($this->introimage>0){
 			$image=Image::model()->findByPk($this->introimage);
-			$src=$image->getThumb('News',$type);
+			$src=$image->getThumb('StaticPage',$type);
 			return '<img class="img" src="'.$src.'" alt="'.$image->title.'">';
 		}
 		else {
 			
-			return '<img class="img" src="'.Image::getDefaultThumb('News', $type).'" alt=""';
+			return '<img class="img" src="'.Image::getDefaultThumb('StaticPage', $type).'" alt=""';
 		}
 	}
 	/*
-	 * Get image url which view status of news
+	 * Get image url which view status of staticPage
 	 */
  	public function getImageStatus()
  	{
@@ -104,7 +104,7 @@ class News extends CActiveRecord
 		return $cat->name;
  	}
 	/*
-	 * Get similar news
+	 * Get similar staticPage
 	 */
 	public function getList_similar(){
 		if($this->list_suggest != ''){
@@ -113,24 +113,24 @@ class News extends CActiveRecord
 			$index=0;
 			foreach ($list as $id){
 				$index++;
-				if($index <= Setting::s('LIMIT_SIMILAR_NEWS'))
-					$result[]=News::model()->findByPk($id);
+				if($index <= Setting::s('LIMIT_SIMILAR_STATICPAGE'))
+					$result[]=StaticPage::model()->findByPk($id);
 			}
 		}
 		else {
 			$criteria=new CDbCriteria;
-			$criteria->compare('status', News::STATUS_ACTIVE);
+			$criteria->compare('status', StaticPage::STATUS_ACTIVE);
 			$criteria->addCondition('id <>'. $this->id);
 			$criteria->order='id desc';
 			$criteria->compare('catid',$this->catid);
-			$criteria->limit=Setting::s('LIMIT_SIMILAR_NEWS');
-			$result=News::model()->findAll($criteria);		
+			$criteria->limit=Setting::s('LIMIT_SIMILAR_STATICPAGE');
+			$result=StaticPage::model()->findAll($criteria);		
 		}
 		return $result;
 	}	
  	/*
-	 * Get all specials of class News
-	 * Use in drop select when create, update news
+	 * Get all specials of class StaticPage
+	 * Use in drop select when create, update staticPage
 	 */
 	static function getList_label_specials()
  	{
@@ -141,7 +141,7 @@ class News extends CActiveRecord
 		);
  	}
  	 /*
- 	 * Get specials of a object news
+ 	 * Get specials of a object staticPage
  	 * Use in page lit admin
  	 */
 	public function getLabel_specials()
@@ -179,10 +179,10 @@ class News extends CActiveRecord
 	public function getImage($type){
 		$image=Image::model()->findByPk($this->introimage);
 		if(isset($image)){
-			$url='<img class="img" src="'.$image->getThumb('News',$type).'" alt="'.$image->title.'" />';
+			$url='<img class="img" src="'.$image->getThumb('StaticPage',$type).'" alt="'.$image->title.'" />';
 		}
 		else {
-			$url='<img class="img" src="'.Image::getDefaultThumb('News',$type).'" />';
+			$url='<img class="img" src="'.Image::getDefaultThumb('StaticPage',$type).'" />';
 		}
 			return $url;	
 	}
@@ -214,7 +214,7 @@ class News extends CActiveRecord
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return News the static model class
+	 * @return StaticPage the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -247,7 +247,7 @@ class News extends CActiveRecord
 		$criteria->compare ( 'lower(alias)', strtolower ( $this->alias) );
 		if ($this->id > 0)
 			$criteria->addCondition ( 'id <> ' . $this->id );
-		$list = News::model ()->findAll ( $criteria );
+		$list = StaticPage::model ()->findAll ( $criteria );
 		if (sizeof ( $list ) > 0)
 			return false;
 		else
@@ -278,9 +278,9 @@ class News extends CActiveRecord
 			'introtext' => 'Tóm tắt',
 			'introimage' => 'Ảnh minh họa',
 			'author' => 'Tác giả',
-			'created_date' => 'Thời điểm đăng tin',
+			'created_date' => 'Thời điểm đăng',
 			'category' => 'Thuộc danh mục',
-			'fulltext' => 'Nội dung tin',
+			'fulltext' => 'Nội dung trang',
 			'list_special' => 'Nhóm hiển thị',
 			'special'=>'Lọc theo nhóm hiển thị',
 			'catid' => 'Thuộc danh mục',
@@ -336,14 +336,9 @@ class News extends CActiveRecord
 			{
 				$this->created_date=time();
 				$this->created_by=Yii::app()->user->id;
-				$this->status=News::STATUS_ACTIVE;
+				$this->status=StaticPage::STATUS_ACTIVE;
 				//Set alias
 				$this->alias=iPhoenixString::createAlias($this->title);	
-				if(!$this->validateUniqueAlias())
-				{
-					$parent=Category::model()->findByPk($this->catid);
-					if(isset($parent))	$this->alias = $parent->alias.'-'.$this->alias;
-				}
 				while(!$this->validateUniqueAlias()){
 					$pre=rand(1,100);
 					$this->alias=$pre.'-'.$this->alias;
@@ -353,18 +348,12 @@ class News extends CActiveRecord
 				$modified=$this->modified;
 				$modified[time()]=Yii::app()->user->id;
 				$this->modified=json_encode($modified);	
-				if($this->title != $this->old_title) 
-					$this->alias=iPhoenixString::createAlias($this->title);
-				if(!$this->validateUniqueAlias())
-				{
-					$parent=Category::model()->findByPk($this->catid);
-					if(isset($parent))	$this->alias = $parent->alias.'-'.$this->alias;
-				}
+				if($this->title != $this->old_title) $this->alias=iPhoenixString::createAlias($this->title);
 				while(!$this->validateUniqueAlias()){
 					$pre=rand(1,100);
 					$this->alias=$pre.'-'.$this->alias;
-					}
-				//Handler list suggest news
+				}
+				//Handler list suggest staticPage
 				$list_clear=array_diff(explode(',',$this->list_suggest),array(''));
 				$list_filter=array_diff($list_clear,array($this->id));
 				$this->list_suggest=implode(',', $list_filter);
@@ -372,7 +361,7 @@ class News extends CActiveRecord
 			//Encode special
 			$this->special=iPhoenixStatus::encodeStatus($this->list_special);		
 			//Encode other attributes  		
-			$this->type=Article::ARTICLE_NEWS;
+			$this->type=Article::ARTICLE_STATICPAGE;
 			//Encode fulltext
 			if($this->old_fulltext != $this->fulltext || $this->isNewRecord){
 				$fulltext=$this->fulltext;
@@ -478,7 +467,7 @@ class News extends CActiveRecord
 	 */
 	public function suggestTitle($keyword,$limit=20)
 	{
-		$list_news=$this->findAll(array(
+		$list_staticPage=$this->findAll(array(
 			'condition'=>'title LIKE :keyword',
 			'order'=>'title DESC',
 			'limit'=>$limit,
@@ -487,12 +476,12 @@ class News extends CActiveRecord
 			),
 		));
 		$titles=array();
-		foreach($list_news as $news)
-			$titles[]=$news->title;
+		foreach($list_staticPage as $staticPage)
+			$titles[]=$staticPage->title;
 			return $titles;
 	}
 	/*
-	 * Set status of news
+	 * Set status of staticPage
 	 */
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
@@ -524,14 +513,14 @@ class News extends CActiveRecord
 		else return false;
 	}
 		/*
-	 * Copy news
+	 * Copy staticPage
 	 */
 	static function copy($id) {
 		$sql = 'insert into ' . self::model ()->tableName () . ' (catid,type,lang,status,special,order_view,title,alias,keywords,other,created_date,created_by) select catid,type,lang,status,special,order_view,title,alias,keywords,other,created_date,created_by from ' . self::model ()->tableName () . ' where id=' . $id;
 		$command = Yii::app ()->db->createCommand ( $sql );
 		if ($command->execute ()) {
 			$copy_id = Yii::app ()->db->getLastInsertID ();
-			$model = News::model ()->findByPk ( $copy_id );
+			$model = StaticPage::model ()->findByPk ( $copy_id );
 			$model->scenario = 'copy';
 			$model->title = $model->title . ' - Copy ';
 			$model->alias=$model->alias . '-copy';

@@ -1,13 +1,13 @@
 <?php 
 							switch ($model->id){
 								case Banner::CODE_LEFT:
-									$type_image="left";
+									$type_image="thumb_left";
 									break;	
 								case Banner::CODE_HEADLINE:
 									$type_image="thumb_headline";
 									break;	
 								case Banner::CODE_RIGHT:
-									$type_image="right";
+									$type_image="thumb_right";
 									break;							
 							}
 ?>

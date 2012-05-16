@@ -8,10 +8,10 @@ class AdminMenu extends CPortlet
 	}
 	protected function renderContent()
 	{
-		$model=new Category();
+		$model=Category::model()->findByPk(Category::GROUP_ADMIN_MENU);
 		$model->group=Category::GROUP_ADMIN_MENU;
 		//Create list menu which are used when view menu
-		$list=$model->list_Categories;	
+		$list=$model->list_Categories;
 		$previous_id=0;
 		$finish=0;
 		if(sizeof($list)>0){
@@ -42,7 +42,7 @@ class AdminMenu extends CPortlet
 			$list[$previous_id]['close']=$list[$previous_id]['level']-1;
 		}
 		$list_menus=array();
-		$list_active_menu_id=Category::findActiveAdminMenu();				
+		$list_active_menu_id=$model->findActiveMenu();				
 		foreach ($list as $id=>$menu) {
 			$list_menus[$id]['name']=$menu['name'];
 			$list_menus[$id]['url']=$menu['url'];

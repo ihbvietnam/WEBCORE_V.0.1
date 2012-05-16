@@ -71,6 +71,21 @@ class CategoryController extends Controller
 				$model->scenario='news';	
 				$form="_form_news";
 				break;
+				case				
+				Category::GROUP_GALLERYVIDEO: 
+				$model->scenario='video';	
+				$form="_form_video";
+				break;
+				case				
+				Category::GROUP_ALBUM: 
+				$model->scenario='album';	
+				$form="_form_album";
+				break;
+				case				
+				Category::GROUP_STATICPAGE: 
+				$model->scenario='staticPage';	
+				$form="_form_static_page";
+				break;
 				case
 				Category::GROUP_PRODUCT: 
 				$model->scenario='product';	
@@ -125,6 +140,21 @@ class CategoryController extends Controller
 				$model->scenario='news';	
 				$form="_form_news";
 				break;
+				case				
+				Category::GROUP_GALLERYVIDEO: 
+				$model->scenario='video';	
+				$form="_form_video";
+				break;
+				case				
+				Category::GROUP_ALBUM: 
+				$model->scenario='album';	
+				$form="_form_album";
+				break;
+				case				
+				Category::GROUP_STATICPAGE: 
+				$model->scenario='staticPage';	
+				$form="_form_static_page";
+				break;
 				case
 				Category::GROUP_PRODUCT: 
 				$model->scenario='product';	
@@ -177,6 +207,21 @@ class CategoryController extends Controller
 				Category::GROUP_NEWS: 
 				$model->scenario='news';	
 				$form="_form_news";
+				break;
+				case				
+				Category::GROUP_GALLERYVIDEO: 
+				$model->scenario='video';	
+				$form="_form_video";
+				break;
+				case				
+				Category::GROUP_ALBUM: 
+				$model->scenario='album';	
+				$form="_form_album";
+				break;
+				case				
+				Category::GROUP_STATICPAGE: 
+				$model->scenario='staticPage';	
+				$form="_form_staticPage";
 				break;
 				case
 				Category::GROUP_PRODUCT: 
@@ -269,6 +314,18 @@ class CategoryController extends Controller
 				Category::GROUP_NEWS: 
 				$model->scenario='news';	
 				break;
+				case				
+				Category::GROUP_GALLERYVIDEO: 
+				$model->scenario='video';	
+				break;
+				case				
+				Category::GROUP_ALBUM: 
+				$model->scenario='album';	
+				break;
+				case				
+				Category::GROUP_STATICPAGE: 
+				$model->scenario='staticPage';	
+				break;
 				case
 				Category::GROUP_PRODUCT: 
 				$form="_form_product";
@@ -305,6 +362,18 @@ class CategoryController extends Controller
 				case				
 				Category::GROUP_NEWS: 
 				$model->scenario='news';	
+				break;
+				case				
+				Category::GROUP_GALLERYVIDEO: 
+				$model->scenario='video';	
+				break;
+				case				
+				Category::GROUP_ALBUM: 
+				$model->scenario='album';	
+				break;
+				case				
+				Category::GROUP_STATICPAGE: 
+				$model->scenario='staticPage';	
 				break;
 				case
 				Category::GROUP_PRODUCT: 
@@ -359,6 +428,21 @@ class CategoryController extends Controller
 				$model->scenario='news';	
 				$form="_form_news";
 				break;
+				case				
+				Category::GROUP_GALLERYVIDEO: 
+				$model->scenario='video';	
+				$form="_form_video";
+				break;
+				case				
+				Category::GROUP_ALBUM: 
+				$model->scenario='album';	
+				$form="_form_album";
+				break;
+				case				
+				Category::GROUP_STATICPAGE: 
+				$model->scenario='staticPage';	
+				$form="_form_static_page";
+				break;
 				case
 				Category::GROUP_PRODUCT: 
 				$model->scenario='product';	
@@ -375,12 +459,12 @@ class CategoryController extends Controller
 			if(!isset($_POST['Category']['params']) &&  $model->scenario=="menu"){
 				$model->params="";
 			}
-			if(!isset($_POST['Category']['list_special']) && ($model->scenario=="news" || $model->scenario=="product")) $model->list_special=array();
+			if(!isset($_POST['Category']['list_special']) && ($model->scenario=="staticPage" || $model->scenario=="news" || $model->scenario=="product")) $model->list_special=array();
 			if(!isset($model->parent_id)){
 					$model->parent_id=$group;
 			}
 			if($model->save()){
-				if(($model->scenario == "menu" || $model->scenario == 'news' || $model->scenario == 'product') && $action!="create")
+				if(($model->scenario == "menu" || $model->scenario=="staticPage" || $model->scenario == 'news' || $model->scenario == 'product') && $action!="create")
 				{	
 					$model->changeOrderView();
 				}

@@ -1,23 +1,17 @@
 <?php 
 Yii::import('zii.widgets.CPortlet');
-class wMenuLeft extends CPortlet
+class wMenu extends CPortlet
 {
+	public $root;
+	public $view;
 	public function init(){
 		parent::init();
 		
 	}
 	protected function renderContent()
 	{
-		$model=new Category();
-		$model->group=Category::GROUP_PRODUCT;
-		//Create list menu which are used when view menu
-		$list_categories=$model->list_Categories;	
-		$list=array();
-		foreach ($list_categories as $index=>$category){
-			$list_special=iPhoenixStatus::decodeStatus($category['special']);
-			if(in_array(Category::SPECIAL_REMARK,$list_special))
-				$list[$index]=$category;			
-		}
+		$model=Category::model()->findByPk($this->root);
+		$list=$model->list_Categories;	
 		$previous_id=0;
 		$finish=0;
 		if(sizeof($list)>0){
@@ -47,15 +41,20 @@ class wMenuLeft extends CPortlet
 			$list[$last]['class']='last';
 			$list[$previous_id]['close']=$list[$previous_id]['level']-1;
 		}
-		$list_menus=array();			
+		$list_menus=array();
+		$list_active_menu_id=$model->findActiveMenu();				
 		foreach ($list as $id=>$menu) {
 			$list_menus[$id]['name']=$menu['name'];
 			$list_menus[$id]['url']=$menu['url'];
+			$list_menus[$id]['root']=$menu['root'];
 			$list_menus[$id]['class']=isset($menu['class'])?$menu['class']:'';
+			if(in_array($id,$list_active_menu_id)){
+				$list_menus[$id]['class'] .=" active";
+			}
 			$list_menus[$id]['havechild']=isset($menu['havechild'])?$menu['havechild']:false;
 			$list_menus[$id]['close']=isset($menu['close'])?$menu['close']:false;
 		}
-		$this->render('menu-left',array(
+		$this->render($this->view,array(
 			'list_menus'=>$list_menus,
 		));
 	}

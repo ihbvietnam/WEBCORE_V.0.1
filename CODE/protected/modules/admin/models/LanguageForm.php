@@ -145,11 +145,11 @@ class LanguageForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'lang'=> Language::t('Ngôn ngữ'),
-			'origin_lang'=> Language::t('Ngôn ngữ nguồn'),
-			'module'=>Language::t('Module'),
-			'controller'=>Language::t('Controller'),
-			'action'=>Language::t('Action'),
+			'lang'=> 'Ngôn ngữ',
+			'origin_lang'=> 'Ngôn ngữ nguồn',
+			'module'=>'Module',
+			'controller'=>'Controller',
+			'action'=>'Action',
 		);
 	}
 	static function copyLanguage($origin_language,$language){

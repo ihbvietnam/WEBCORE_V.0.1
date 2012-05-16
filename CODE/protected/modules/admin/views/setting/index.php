@@ -11,10 +11,6 @@
 		</div>
 		<!--end title-->
 		<div class="folder-content">
-            <div>
-            	<input type="button" class="button" value="Tạo tham số" style="width:180px;" onClick="parent.location='<?php echo Yii::app()->createUrl('admin/setting/create')?>'"/>
-                <div class="line top bottom"></div>	
-            </div>
              <!--begin box search-->
          <?php 
 			Yii::app()->clientScript->registerScript('search', "
@@ -53,7 +49,25 @@
                         </li>
                     </ul>
                 </div>
-                <!--end left content-->                
+                <!--end left content-->   
+                <!--begin right content-->
+                <div class="fl" style="width:480px;">
+                    <ul>
+                     <li>
+							<?php echo $form->labelEx($model,'module'); ?>
+							<?php echo $form->dropDownList($model,'module',array('all'=>'Tất cả')+$model->list_modules,array('style'=>'width:200px')); ?>
+                    </li>                   
+				   <li>
+							<?php echo $form->labelEx($model,'controller'); ?>
+							<?php echo $form->dropDownList($model,'controller',array('all'=>'Tất cả')+$model->list_controllers,array('style'=>'width:200px')); ?>
+                    </li>  
+                     <li>
+							<?php echo $form->labelEx($model,'action'); ?>
+							<?php echo $form->dropDownList($model,'action',array('all'=>'Tất cả')+$model->list_actions,array('style'=>'width:200px')); ?>
+                    </li>  
+                    </ul>
+                </div>
+                <!--end right content-->             
                 <?php $this->endWidget(); ?>
                 <div class="clear"></div>
                 <div class="line top bottom"></div>
@@ -77,6 +91,18 @@
 					array(
 						'name'=>'value',
 						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
+					), 	
+					array(
+						'name'=>'module',
+						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
+					), 	
+					array(
+						'name'=>'controller',
+						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
+					), 	
+					array(
+						'name'=>'action',
+						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
 					), 															   	   
 					array(
 						'header'=>'Công cụ',

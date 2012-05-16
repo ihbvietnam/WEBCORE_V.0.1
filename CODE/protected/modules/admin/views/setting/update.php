@@ -20,10 +20,31 @@
 			<!--begin left content-->
 			<div class="fl" style="width:480px;">
 				<ul>
+					<div class="row">
+                    <li>
+                        <?php echo $form->labelEx($model,'module'); ?>
+                        <?php echo $form->textField($model,'module',array('style'=>'width:150px','readonly'=>'readonly')); ?>
+                  		<?php echo $form->error($model, 'module'); ?>
+                    </li>
+                    </div>
+                    <div class="row">
+                    <li>
+                        <?php echo $form->labelEx($model,'controller'); ?>
+                        <?php echo $form->textField($model,'controller',array('style'=>'width:150px','readonly'=>'readonly')); ?>
+                  		<?php echo $form->error($model, 'controller'); ?>
+                    </li>
+                    </div>
+                    <div class="row">
+                    <li>
+                        <?php echo $form->labelEx($model,'action'); ?>
+                        <?php echo $form->textField($model,'action',array('style'=>'width:150px','readonly'=>'readonly')); ?>
+                  		<?php echo $form->error($model, 'action'); ?>
+                    </li>
+                    </div>
 				    <div class="row">
                     <li>
                         <?php echo $form->labelEx($model,'name'); ?>
-                        <?php echo $form->textField($model,'name',array('style'=>'width:150px')); ?>
+                        <?php echo $form->textField($model,'name',array('style'=>'width:150px','readonly'=>'readonly')); ?>
                   		<?php echo $form->error($model, 'name'); ?>
                     </li>
                     </div>

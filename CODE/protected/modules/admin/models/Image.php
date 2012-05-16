@@ -26,6 +26,7 @@ class Image extends CActiveRecord
 		'Album'=>'Album',
 		'GalleryVideo'=>'GalleryVideo',
 		'Banner'=>'Banner',
+		'StaticPage'=>'StaticPage'
 	);
 	/*
 	 * Config size of thumb
@@ -40,13 +41,21 @@ class Image extends CActiveRecord
 			'otherimage'=>array('h'=>234,'w'=>382),
 			'thumb_otherimage'=>array('h'=>117,'w'=>191),
 		),
+		'StaticPage'=>array(
+			'introimage'=>array('h'=>100,'w'=>130)
+		),
 		'Album'=>array(
 		),
 		'Banner'=>array(
-			'left'=>array('h'=>252,'w'=>210),
+			'thumb_upload'=>array('h'=>100,'w'=>'100'),
 			'thumb_headline'=>array('h'=>100,'w'=>260),
 			'headline'=>array('h'=>295,'w'=>780),
-			'right'=>array('h'=>150,'w'=>300),
+			'thumb_top'=>array('h'=>100,'w'=>260),
+			'top'=>array('h'=>295,'w'=>780),
+			'left'=>array('h'=>252,'w'=>210),
+			'thumb_left'=>array('h'=>252,'w'=>210),
+			'right'=>array('h'=>450,'w'=>300),
+			'thumb_right'=>array('h'=>450,'w'=>300)
 		),
 		'GalleryVideo'=>array(
 		),
@@ -376,6 +385,10 @@ class Image extends CActiveRecord
 						$parent = Product::model ()->findByPk ( $this->parent_id );
 						$parent->scenario = 'upload-image';
 						break;
+					case self::$config_category ['StaticPage'] :
+						$parent = StaticPage::model ()->findByPk ( $this->parent_id );
+						$parent->scenario = 'upload-image';
+						break;
 					case self::$config_category ['Banner'] :
 						$parent = Banner::model ()->findByPk ( $this->parent_id );
 						$parent->scenario = 'upload-image';
@@ -425,6 +438,9 @@ class Image extends CActiveRecord
 						break;
 					case self::$config_category ['Album'] :
 						$parent = Album::model ()->findByPk ( $this->parent_id );
+						break;
+					case self::$config_category ['StaticPage'] :
+						$parent = StaticPage::model ()->findByPk ( $this->parent_id );
 						break;
 					case self::$config_category ['Banner'] :
 						$parent = Banner::model ()->findByPk ( $this->parent_id );

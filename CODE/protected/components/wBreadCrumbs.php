@@ -1,6 +1,6 @@
 <?php 
 Yii::import('zii.widgets.CPortlet');
-class iPhoenixBreadCrumbs extends CPortlet
+class wBreadCrumbs extends CPortlet
 {
 	public $data;
 	public function init(){

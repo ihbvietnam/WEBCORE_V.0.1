@@ -1,7 +1,10 @@
 <?php 
 Yii::import('zii.widgets.CPortlet');
-class wBestSeller extends CPortlet
+class wProduct extends CPortlet
 {
+	public $view;
+	public $special;
+	public $limit;
 	public function init(){
 		parent::init();
 		
@@ -10,11 +13,11 @@ class wBestSeller extends CPortlet
 	{
 		$criteria=new CDbCriteria;
 		$criteria->compare('status', Product::STATUS_ACTIVE);
-		$criteria->addInCondition('special',Product::getCode_special(Product::SPECIAL_BESTSELLER));
+		$criteria->addInCondition('special',Product::getCode_special($this->special));
 		$criteria->order='id desc';
-		$criteria->limit=Setting::s('SIZE_BEST_SELLER_PRODUCT');
+		$criteria->limit=$this->limit;
 		$list_product=Product::model()->findAll($criteria);
-		$this->render('best-seller',array(
+		$this->render($this->view,array(
 			'list_product'=>$list_product,
 		));
 	}

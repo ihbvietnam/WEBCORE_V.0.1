@@ -45,7 +45,7 @@
 			<ul>
 				<div class="row">
 						<li>
-							<?php echo $this->renderPartial('/image/_galleryupload', array('model'=>$model,'attribute'=>'images','type_image'=>'thumb_headline')); ?>
+							<?php echo $this->renderPartial('/image/_galleryupload', array('model'=>$model,'attribute'=>'images','type_image'=>'thumb_upload')); ?>
 							<?php echo $form->error($model, 'images'); ?>				
 						</li>
 					</div>

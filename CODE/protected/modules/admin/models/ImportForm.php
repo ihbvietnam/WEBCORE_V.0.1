@@ -14,8 +14,8 @@ class ImportForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'lang'=> Language::t('Ngôn ngữ'),
-			'file'=>Language::t('File'),
+			'lang'=> 'Ngôn ngữ',
+			'file'=>'File',
 		);
 	}	
 }

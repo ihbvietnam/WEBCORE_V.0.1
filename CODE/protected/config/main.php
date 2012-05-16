@@ -16,6 +16,7 @@ return array(
 	// autoloading model and component classes
 	'import'=>array(
 		'application.modules.admin.models.*',
+		'application.components.core.*',
 		'application.components.*',
 		'application.models.*',
 	),
@@ -72,7 +73,7 @@ return array(
 		*/
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=dogo',
+			'connectionString' => 'mysql:host=localhost;dbname=cms',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => 'thanhdaica',

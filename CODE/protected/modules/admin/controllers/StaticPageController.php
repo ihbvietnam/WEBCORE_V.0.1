@@ -1,6 +1,6 @@
 <?php
 
-class NewsController extends Controller
+class StaticPageController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -50,32 +50,32 @@ class NewsController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new News('write');
+		$model=new StaticPage('write');
 		// Ajax validate
 		$this->performAjaxValidation($model);	
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['News']))
+		if(isset($_POST['StaticPage']))
 		{
-			$model->attributes=$_POST['News'];
-			if(!isset($_POST['News']['list_special'])) $model->list_special=array();
+			$model->attributes=$_POST['StaticPage'];
+			if(!isset($_POST['StaticPage']['list_special'])) $model->list_special=array();
 			if($model->save())
 				$this->redirect(array('update','id'=>$model->id));
 		}
-		//Group categories that contains news
+		//Group categories that contains staticPage
 		$group=new Category();		
-		$group->group=Category::GROUP_NEWS;
+		$group->group=Category::GROUP_STATICPAGE;
 		$list_category=$group->list_categories;
 		if (! Yii::app ()->getRequest ()->getIsAjaxRequest ())
 				Yii::app ()->session ['checked-suggest-list'] = array();
-		//Handler list suggest news		
+		//Handler list suggest staticPage		
 		$this->initCheckbox('checked-suggest-list');
-		$suggest=new News('search');
+		$suggest=new StaticPage('search');
 		$suggest->unsetAttributes();  // clear any default values
 		if(isset($_GET['catid'])) $suggest->catid=$model->catid;
-		if(isset($_GET['SuggestNews']))
-			$suggest->attributes=$_GET['SuggestNews'];
+		if(isset($_GET['SuggestStaticPage']))
+			$suggest->attributes=$_GET['SuggestStaticPage'];
 			
 		$this->render('create',array(
 			'model'=>$model,
@@ -89,7 +89,7 @@ class NewsController extends Controller
 	 */
 	public function actionCopy($id)
 	{
-		$copy=News::copy($id);
+		$copy=StaticPage::copy($id);
 		if(isset($copy))
 		{
 				$this->redirect(array('update','id'=>$copy->id));
@@ -110,17 +110,16 @@ class NewsController extends Controller
 		$this->performAjaxValidation($model);	
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-		if(isset($_POST['News']))
+		if(isset($_POST['StaticPage']))
 		{
-			if(!isset($_POST['News']['list_special'])) $model->list_special=array();
-			$model->attributes=$_POST['News'];
-			if($model->save()){				
+			if(!isset($_POST['StaticPage']['list_special'])) $model->list_special=array();
+			$model->attributes=$_POST['StaticPage'];
+			if($model->save())
 				$this->redirect(array('update','id'=>$model->id));
-			}
 		}
-		//Group categories that contains news
+		//Group categories that contains staticPage
 		$group=new Category();		
-		$group->group=Category::GROUP_NEWS;
+		$group->group=Category::GROUP_STATICPAGE;
 		$list=$group->list_categories;
 		$list_category=array();
 		foreach ($list as $id=>$cat){
@@ -128,13 +127,13 @@ class NewsController extends Controller
 		}
 		if (! Yii::app ()->getRequest ()->getIsAjaxRequest ())
 				Yii::app ()->session ['checked-suggest-list'] = array_diff ( explode ( ',', $model->list_suggest ), array ('' ) );
-		//Handler list suggest news
+		//Handler list suggest staticPage
 		$this->initCheckbox('checked-suggest-list');
-		$suggest=new News('search');
+		$suggest=new StaticPage('search');
 		$suggest->unsetAttributes();  // clear any default values
 		if(isset($_GET['catid'])) $suggest->catid=$model->catid;
-		if(isset($_GET['SuggestNews']))
-			$suggest->attributes=$_GET['SuggestNews'];
+		if(isset($_GET['SuggestStaticPage']))
+			$suggest->attributes=$_GET['SuggestStaticPage'];
 		$this->render('update',array(
 			'model'=>$model,
 			'list_category'=>$list_category,
@@ -172,13 +171,13 @@ class NewsController extends Controller
 	 */
 	public function actionCheckbox($action)
 	{
-		$this->initCheckbox('checked-news-list');
-		$list_checked = Yii::app()->session["checked-news-list"];
+		$this->initCheckbox('checked-staticPage-list');
+		$list_checked = Yii::app()->session["checked-staticPage-list"];
 		switch ($action) {
 			case 'delete' :
 				if (Yii::app ()->user->checkAccess ( 'update')) {
 					foreach ( $list_checked as $id ) {
-						$item = News::model ()->findByPk ( (int)$id );
+						$item = StaticPage::model ()->findByPk ( (int)$id );
 						if (isset ( $item ))
 							if (! $item->delete ()) {
 								echo 'false';
@@ -192,7 +191,7 @@ class NewsController extends Controller
 				break;
 			case 'copy' :
 				foreach ( $list_checked as $id ) {
-					$copy=News::copy((int)$id);
+					$copy=StaticPage::copy((int)$id);
 					if(!isset($copy))
 					{
 						echo 'false';
@@ -210,16 +209,16 @@ class NewsController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$this->initCheckbox('checked-news-list');
-		$model=new News('search');
+		$this->initCheckbox('checked-staticPage-list');
+		$model=new StaticPage('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['catid'])) $model->catid=$_GET['catid'];
 		$model->lang=Language::DEFAULT_LANGUAGE;
-		if(isset($_GET['News']))
-			$model->attributes=$_GET['News'];	
-		//Group categories that contains news
+		if(isset($_GET['StaticPage']))
+			$model->attributes=$_GET['StaticPage'];	
+		//Group categories that contains staticPage
 		$group=new Category();		
-		$group->group=Category::GROUP_NEWS;
+		$group->group=Category::GROUP_STATICPAGE;
 		$list=$group->list_categories;
 		$list_category=$list;	
 		$this->render('index',array(
@@ -228,24 +227,24 @@ class NewsController extends Controller
 		));
 	}
 	/**
-	 * Reverse status of news
+	 * Reverse status of staticPage
 	 */
 	public function actionReverseStatus($id)
 	{
-		$src=News::reverseStatus($id);
+		$src=StaticPage::reverseStatus($id);
 			if($src) 
 				echo json_encode(array('success'=>true,'src'=>$src));
 			else 
 				echo json_encode(array('success'=>false));		
 	}
 	/**
-	 * Suggests title of news.
+	 * Suggests title of staticPage.
 	 */
 	public function actionSuggestTitle()
 	{
 		if(isset($_GET['q']) && ($keyword=trim($_GET['q']))!=='')
 		{
-			$titles=News::model()->suggestTitle($keyword);
+			$titles=StaticPage::model()->suggestTitle($keyword);
 			if($titles!==array())
 				echo implode("\n",$titles);
 		}
@@ -257,9 +256,7 @@ class NewsController extends Controller
 		if (! isset ( Yii::app ()->session [$name_params] ))
 			Yii::app ()->session [$name_params] = array ();
 		if (! Yii::app ()->getRequest ()->getIsAjaxRequest () && $name_params != 'checked-suggest-list')
-		{
 				Yii::app ()->session [$name_params] = array ();
-		}
 		else {
 			if (isset ( $_POST ['list-checked'] )) {
 				$list_new = array_diff ( explode ( ',', $_POST ['list-checked'] ), array ('' ) );
@@ -285,7 +282,7 @@ class NewsController extends Controller
 		}
 	}
 	/*
-	 * List news suggest 
+	 * List staticPage suggest 
 	 */
 	public function actionUpdateSuggest()
 	{
@@ -300,7 +297,7 @@ class NewsController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=News::model()->findByPk($id);
+		$model=StaticPage::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -314,7 +311,7 @@ class NewsController extends Controller
 	{
 		if(Yii::app()->getRequest()->getIsAjaxRequest() )
 		{
-		if( !isset($_GET['ajax'] )  || ($_GET['ajax'] != 'news-list-suggest' && $_GET['ajax'] != 'news-list')){
+		if( !isset($_GET['ajax'] )  || ($_GET['ajax'] != 'staticPage-list-suggest' && $_GET['ajax'] != 'staticPage-list')){
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
