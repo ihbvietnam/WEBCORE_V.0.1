@@ -761,13 +761,13 @@ class Category extends CActiveRecord
 		elseif($this->findGroup() == Category::GROUP_NEWS){
 			
  			$cat_alias=$this->alias;
- 			$url=Yii::app()->createUrl("/site/news",array('cat_alias'=>$cat_alias));
+ 			$url=Yii::app()->createUrl("/news/index",array('cat_alias'=>$cat_alias));
 			return $url;
 		}
 		elseif($this->findGroup() == Category::GROUP_PRODUCT){
 
  			$cat_alias=$this->alias;
- 			$url=Yii::app()->createUrl("/site/product",array('cat_alias'=>$cat_alias));
+ 			$url=Yii::app()->createUrl("/product/index",array('cat_alias'=>$cat_alias));
 			return $url;
 		}
 		else 

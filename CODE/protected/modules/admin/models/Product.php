@@ -66,7 +66,7 @@ class Product extends CActiveRecord
  	public function getUrl(){
 		$cat_alias=$this->category->alias;
  		$alias=$this->alias;
-		$url=Yii::app()->createUrl("site/product",array('cat_alias'=>$cat_alias,'product_alias'=>$alias)); 
+		$url=Yii::app()->createUrl("product/view",array('cat_alias'=>$cat_alias,'product_alias'=>$alias)); 
 		return $url;
 	}
  	

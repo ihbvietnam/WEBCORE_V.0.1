@@ -47,7 +47,7 @@ $(window).scrollTop($(".main").offset().top);
     	<a class="logo"></a>
         <div class="fright" style="width:200px;">
         	<div class="hotline"><?php echo Language::t('Hotline');?>: <span><?php echo Setting::s('HOTLINE');?></span></div>
-        	<a href="<?php echo Yii::app()->createUrl('site/cart')?>" class="btn-showcart"><?php echo Language::t('Giỏ hàng');?>:<span id="qty_cart"> <?php if(isset(Yii::app()->session['cart']))echo sizeof(Yii::app()->session['cart']); else {Yii::app()->session['cart']=array();echo '0';}?></span></a>
+        	<a href="<?php echo Yii::app()->createUrl('product/cart')?>" class="btn-showcart"><?php echo Language::t('Giỏ hàng');?>:<span id="qty_cart"> <?php if(isset(Yii::app()->session['cart']))echo sizeof(Yii::app()->session['cart']); else {Yii::app()->session['cart']=array();echo '0';}?></span></a>
         </div>
     </div><!--wrapper-->	
 </div><!--header-->
@@ -71,8 +71,8 @@ $(window).scrollTop($(".main").offset().top);
                 <div class="box-content">
                 	<div class="box-intro">
                         <ul>
-                            <li><a href="<?php echo Yii::app()->createUrl('site/news',array('cat_alias'=>News::ALIAS_GUIDE_CATEGORY,'news_alias'=>News::ALIAS_GUIDE_BUY_ARTICLE))?>"><?php echo Language::t('Hướng dẫn mua hàng');?></a></li>
-                            <li><a href="<?php echo Yii::app()->createUrl('site/news',array('cat_alias'=>News::ALIAS_GUIDE_CATEGORY,'news_alias'=>News::ALIAS_GUIDE_PAY_ARTICLE))?>"><?php echo Language::t('Phương thức thanh toán');?></a></li>
+                            <li><a href="<?php echo Yii::app()->createUrl('site/news',array('cat_alias'=>News::ALIAS_GUIDE_CATEGORY))?>"><?php echo Language::t('Hướng dẫn mua hàng');?></a></li>
+                            <li><a href="<?php echo Yii::app()->createUrl('site/news',array('cat_alias'=>News::ALIAS_GUIDE_CATEGORY))?>"><?php echo Language::t('Phương thức thanh toán');?></a></li>
                         </ul>
                     </div><!--box-intro-->
                 </div><!--box-content-->

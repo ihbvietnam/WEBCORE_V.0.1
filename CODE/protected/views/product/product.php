@@ -37,7 +37,7 @@ $this->bread_crumbs=array(
                 <div class="pd-right">
                 	<div class="pd-title">
                     	<h2><?php echo $product->name?></h2>
-                    	<?php echo CHtml::ajaxLink(Language::t('Cho vào giỏ'),Yii::app()->createUrl('site/addCart',array('id'=>$product->id)), array('success'=>'function(data){$("#qty_cart").html(" "+data);jAlert("'.Language::t('Đã thêm sản phẩm vào giỏ hàng').'");}'), array('id'=>'add-cart','class'=>'pd-cart'));?>
+                    	<?php echo CHtml::ajaxLink(Language::t('Cho vào giỏ'),Yii::app()->createUrl('product/addCart',array('id'=>$product->id)), array('success'=>'function(data){$("#qty_cart").html(" "+data);jAlert("'.Language::t('Đã thêm sản phẩm vào giỏ hàng').'");}'), array('id'=>'add-cart','class'=>'pd-cart'));?>
                         <h5><?php echo Language::t('Mã SP')?>: <span><?php echo $product->code?></span></h5>
                         <h5><?php echo Language::t('Giá')?>: <span><?php if($product->num_price!='') echo number_format($product->num_price, 0, ',', '.')?></span> <?php echo $product->unit_price?></h5>
                         <h5><?php echo Language::t('Tình trạng')?>: <span><?php if($product->amount_status == 0) echo Language::t('Hết hàng'); else echo Language::t('Còn hàng');?></span></h5>
