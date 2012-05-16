@@ -1,6 +1,5 @@
 assets/*
 protected/runtime/*
-upload/*
 .settings/*
 .buildpath
 .project

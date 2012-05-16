@@ -58,7 +58,24 @@
 								<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:250px')); ?>
 								<?php echo $form->error($model, 'catid'); ?>
 							</li>
-						</div>						
+						</div>		
+						<?php 
+						$list=array();
+						foreach ($list_manufacturer as $id=>$cat){
+							$view = "";
+							for($i=1;$i<$cat['level'];$i++){
+								$view .="---";
+							}
+							$list[$id]=$view." ".$cat['name']." ".$view;
+						}
+						?>
+						<div class="row">
+							<li>
+							<?php echo $form->labelEx($model,'manufacturer_id'); ?>
+							<?php echo $form->dropDownList($model,'manufacturer_id',$list,array('style'=>'width:250px')); ?>
+							<?php echo $form->error($model, 'manufacturer_id'); ?>
+							</li>
+						</div>					
 						<div class="row">
 							<li>
 							<?php echo $form->labelEx($model,'price'); ?>
@@ -100,9 +117,11 @@
                             		<ul class="menu">
                                 		<li><a id="select1" class="active"><span>Tính năng nổi bật</span></a></li>
                                 		<li><a id="select2"><span>Thông số kĩ thuật</span></a></li>
+                                		<!--  
                                     	<li><a id="select3"><span>Showroom bán hàng</span></a></li>
                                     	<li><a id="select4"><span>Văn phòng giao dịch</span></a></li>
                                     	<li><a id="select5"><span>Nhận xét</span></a></li>
+                                    	-->
                                 	</ul>
                             	</div>
                             	<div id="tabContent">
@@ -121,19 +140,19 @@
                                 	<div id="tab3" class="content">
                                     <div class="clear"></div>
                                     <?php  
-                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'showroom','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
+                        				//$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'showroom','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
                         			?>
                                 	</div>
                                 	<div id="tab4" class="content">
                                     <div class="clear"></div>
                                     <?php  
-                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'store','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
+                        				//$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'store','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
                         			?>
                                 	</div>
                                 	<div id="tab5" class="content">
                                     <div class="clear"></div>
                                     <?php  
-                        				$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'comment','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
+                        				//$this->widget('application.extensions.tinymce.ETinyMce',array('model'=>$model,'attribute'=>'comment','editorTemplate'=>'full','htmlOptions'=>array('style'=>'width:950px;height:500px'))); 
                         			?>
                                 	</div>
                             	</div>

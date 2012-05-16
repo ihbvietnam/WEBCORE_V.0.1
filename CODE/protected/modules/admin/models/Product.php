@@ -29,7 +29,7 @@ class Product extends CActiveRecord
 	public $old_introimage;
 	public $old_name;
 	public $list_special;
-	private $config_other_attributes=array('list_suggest','modified','unit','year','warranty','parameter','description','showroom','store','comment','unit_price','introimage','otherimage','metakey','metadesc');	
+	private $config_other_attributes=array('list_suggest','modified','unit','year','warranty','parameter','description','unit_price','introimage','otherimage','metakey','metadesc');	
 	private $list_other_attributes;
 	
 	/*
@@ -194,7 +194,7 @@ class Product extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name,catid,manufacturer_id,code,introimage','required','message'=>'Dữ liệu bắt buộc','on'=>'write'),
+			array('name,catid,code,introimage,manufacturer_id','required','message'=>'Dữ liệu bắt buộc','on'=>'write'),
 			array('description,parameter', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'write'),
 			array('list_special,lang,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
 			array('num_price', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
@@ -212,6 +212,7 @@ class Product extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'category'=>array(self::BELONGS_TO,'Category','catid'),
+			'manufacturer'=>array(self::BELONGS_TO,'Category','manufacturer_id'),
 			'author'=>array(self::BELONGS_TO,'User','created_by')
 		);
 	}
@@ -224,6 +225,7 @@ class Product extends CActiveRecord
 		return array(
 			'name' => 'Tên sản phẩm',
 			'catid'=>'Nhóm sản phẩm',
+			'manufacturer_id'=>'Nhà sản xuất',
 			'code'=>'Mã sản phẩm',
 			'unit'=>'Đơn vị tính',
 			'price'=>'Giá',
@@ -361,6 +363,19 @@ class Product extends CActiveRecord
 					$list_child_id [] = $id;
 				}
 			$criteria->addInCondition ( 'catid', $list_child_id );
+		}
+		//Filter manufacturer
+		$cat = Category::model ()->findByPk ( $this->manufacturer_id );
+		if ($cat != null) {
+			$child_categories = $cat->child_categories;
+			$list_child_id = array ();
+			//Set itself
+			$list_child_id [] = $cat->id;
+			if ($child_categories != null)
+				foreach ( $child_categories as $id => $child_cat ) {
+					$list_child_id [] = $id;
+				}
+			$criteria->addInCondition ( 'manufacturer_id', $list_child_id );
 		}
 		$criteria->order = "id DESC";
 		if (isset ( $_GET ['pageSize'] ))

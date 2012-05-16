@@ -54,7 +54,21 @@
                    	<li>
 						<?php echo $form->labelEx($model,'catid'); ?>
                         <?php echo $form->dropDownList($model,'catid', $list );?>
-                    </li> 										
+                    </li> 	
+                    <?php 
+					$list=array(''=>'Tất cả các nhóm');
+					foreach ($list_manufacturer as $id=>$cat){
+						$view = "";
+						for($i=1;$i<$cat['level'];$i++){
+							$view .="---";
+						}
+						$list[$id]=$view." ".$cat['name']." ".$view;
+					}
+					?>            
+                   	<li>
+						<?php echo $form->labelEx($model,'manufacturer_id'); ?>
+                        <?php echo $form->dropDownList($model,'manufacturer_id', $list );?>
+                    </li> 											
 						<li>
                         <?php 
 							echo CHtml::submitButton('Lọc kết quả',
@@ -116,6 +130,11 @@
 						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
 					), 	
 					array(
+						'name'=>'manufacturer_id',
+						'value'=>'$data->manufacturer->name',
+						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
+					), 	
+					array(
 						'header'=>'Trạng thái',
 						'class'=>'iPhoenixButtonColumn',
     					'template'=>'{reverse}',
@@ -169,7 +188,7 @@
 								return false;}',
         					),
         				),
-						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),
+						'headerHtmlOptions'=>array('width'=>'15%','class'=>'table-title'),
 					),     											   	   
 					array(
 						'header'=>'Công cụ',
