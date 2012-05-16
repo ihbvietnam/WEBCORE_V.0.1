@@ -1,10 +1,33 @@
 <?php
+/**
+ * 
+ * UserController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * UserController includes actions relevant to User
+ *** view
+ *** create
+ *** update
+ *** delete
+ *** index
+ *** reverse status
+ *** reset password
+ *** load model
+ *** suggest name
+ *** suggest email
+ *** perform action to list of selected models from checkbox   
+ */
 class UserController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. Defaults to '/protected/modules/admin/view/layouts/main'.
+	 * See '/protected/modules/admin/view/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -136,6 +159,7 @@ class UserController extends Controller
 	}
 	/**
 	 * Reverse status of news
+	 * @param integer $id the ID of model to be reversed
 	 */
 	public function actionReverseStatus($id)
 	{
@@ -146,7 +170,8 @@ class UserController extends Controller
 				echo json_encode(array('success'=>false));		
 	}
 	/**
-	 * Reset password
+	 * Reset User password
+	 * @param integer $id the ID of user to reset password
 	 */
 	public function actionResetPassword($id)
 	{
@@ -244,6 +269,12 @@ class UserController extends Controller
 				echo implode("\n",$owners);
 		}
 	}
+	
+	/**
+	 * Performs the action with multi-selected users from checked models in section
+	 * @param string action to perform
+	 * @return boolean, true if the action is procced successfully, otherwise return false
+	 */
 	public function actionCheckbox($action)
 	{
 		$this->initCheckbox('checked-user-list');
@@ -270,9 +301,11 @@ class UserController extends Controller
 		Yii::app()->end();
 		
 	}
-	/*
-	 * Init checkbox
-	 */
+
+	/**
+	 * Init checkbox selection
+	 * @param string $name_params, name of section to work	 
+	 */	
 	public function initCheckbox($name_params){
 		if (! isset ( Yii::app ()->session [$name_params] ))
 			Yii::app ()->session [$name_params] = array ();

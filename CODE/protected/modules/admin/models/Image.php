@@ -1,24 +1,31 @@
 <?php
-
+/**
+ * 
+ * Category class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 /**
  * This is the model class for table "image".
- *
- * The followings are the available columns in table 'image':
- * @property integer $id
- * @property integer $catid
- * @property string $other
  */
 class Image extends CActiveRecord
 {
+	/**
+	 * Config max size of thumb image
+	 */
 	const MAX_WIDTH_THUMB_IMAGE_UPDATE=300;
 	const MAX_WIDTH_THUMB_AUTO=10;
-	/*
+	
+	/**
 	 * Config status of image
 	 */
 	const STATUS_PENDING=0;
 	const STATUS_ACTIVE=1;	
-	/*
-	 * Config categories image
+	/**
+	 * Config group of categories images
 	 */
 	static $config_category=array(
 		'News'=>'News',
@@ -27,7 +34,7 @@ class Image extends CActiveRecord
 		'GalleryVideo'=>'GalleryVideo',
 		'Banner'=>'Banner',
 	);
-	/*
+	/**
 	 * Config size of thumb
 	 */
 	static $config_thumb_size=array(
@@ -78,42 +85,47 @@ class Image extends CActiveRecord
 			'thumb_category'=>array('h'=>155,'w'=>229)
 		)	
 	);	
-	/*
+	/**
 	 * Config thumb_type 
-	 * Use remove image
+	 * declare thumb_type images
 	 */
 	static $config_thumb_type=array('thumb_auto','thumb_right','thumb_update','thumb_detail_video','thumb_list_page','thumb_image_big','thumb_image_small','thumb_listpage','thumb_detailpage','link_partner','footer','right','other_image_homepage','first_image_homepage','thumb_update','thumb_list_admin','headline','thumb_headline');
 	private $config_other_attributes=array();	
 	private $list_other_attributes;
 	
-	/*
+	/**
 	 * Get path of origin image
+	 * @return string the absoluted path of this image
 	 */
 	public function getPathOrigin(){
 		return Yii::getPathOfAlias('webroot').'/'.$this->src.'/origin/'.$this->filename.'.'.$this->extension;
 	}
-	/*
+	/**
 	 * Get url of origin image
+	 * @return string the absoluted url of this image
 	 */
 	public function getUrlOrigin(){
 		return Yii::app()->request->getBaseUrl(true).'/'.$this->src.'/origin/'.$this->filename.'.'.$this->extension;
 	}
-	/*
-	 * Get width of origin image
+	
+	/**
+	 * Get width of this origin image
 	 */
 	public function getWidth(){
 		$size=getimagesize($this->pathOrigin);
 		return $size[0];
 	}
-	/*
-	 * Get height of origin image
+	
+	/**
+	 * Get height of this origin image
 	 */
 	public function getHeight(){
 		$size=getimagesize($this->pathOrigin);
 		return $size[1];
 	}
-	/*
-	 * Get url
+	/**
+	 * Get url of this image
+	 * @return string $url, url of this image
 	 */
 	public function getUrl()
  	{
@@ -122,8 +134,10 @@ class Image extends CActiveRecord
  		else 
  			return "";
  	}
- 	/*
- 	 * Get auto thumb of image 
+ 	
+ 	/**
+ 	 * Get auto thumb of image
+ 	 * @return string, html code of this default thumb image 
  	 */
 	public function getAutoThumb(){
 			$type="auto_thumb";
@@ -143,8 +157,11 @@ class Image extends CActiveRecord
 		}
 		return '<img class="img" src="'.Yii::app()->request->getBaseUrl(true).'/'.$this->src.'/'.$type.'/'.$this->filename.'.'.$this->extension.'" alt="">';
 	}
-	/*
+	/**
 	 * Get thumb of image
+	 * @param string $category, category of image
+	 * @param string $type, type of thumb image
+	 * @return string, absoluted path of thumb image
 	 */
 	public function getThumb($category=null,$type=null){
 		if($category != null && $type != null){
@@ -180,8 +197,11 @@ class Image extends CActiveRecord
 		return Yii::app()->request->getBaseUrl(true).'/'.$this->src.'/'.$type.'/'.$this->filename.'.'.$this->extension;
 		}
 	}
-	/*
-	 * Returnthumb default of image
+	/**
+	 * Return default thumb of this image
+	 * @param string $category, category of image
+	 * @param string $type, type of thumb image
+	 * @return string, absoluted path of default thumb image	  
 	 */
 	static function getDefaultThumb($category,$type){
 		$config=array(
@@ -228,8 +248,11 @@ class Image extends CActiveRecord
 		else 
 			return '';
 	}
-	/*
+	/**
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -239,8 +262,10 @@ class Image extends CActiveRecord
 			parent::__set($name,$value);
 	}
 	
-	/*
+	/**
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -252,8 +277,11 @@ class Image extends CActiveRecord
 		else
 			return parent::__get($name);
 	}
-	/*
-	 * Get image url which view status of image
+	
+	/**
+	 * Get image url which display status of contact
+	 * @return string path to enable.png if this status is STATUS_ACTIVE
+	 * path to disable.png if status is STATUS_PENDING
 	 */
  	public function getImageStatus()
  	{
@@ -493,7 +521,12 @@ class Image extends CActiveRecord
 		}
 		return $dir;
 	}
-	//Find images from html
+	/**
+	 * 
+	 * Find images from html
+	 * @param string $html, html
+	 * @return array $list_src, list of image path
+	 */
 	static function findImages($html) {
 		if ($html == "")
 			return array ();
@@ -525,8 +558,10 @@ class Image extends CActiveRecord
 		return $list_src;
 		}
 	}
-	/*
-	 * Copy image
+	/**
+	 * Copy image to another place
+	 * @param integer $origin_id, ID of the image to be copied
+	 * @param integer $new_parent_id, ID of the place the image belongs to
 	 */
 	static function copy($origin_id,$new_parent_id){
 		$origin=Image::model()->findByPk($origin_id);
@@ -562,8 +597,9 @@ class Image extends CActiveRecord
         else
         	return false;
 	}
-	/*
+	/**
 	 * Suggests a list image which matching the specified keyword.
+	 * @param string $keyword, the input keyword to compare
 	 */
 	public function suggestTitle($keyword,$limit=20)
 	{
@@ -580,8 +616,9 @@ class Image extends CActiveRecord
 			$titles[]=$qa->title;
 			return $titles;
 	}
-	/*
-	 * Set status of image
+	/**
+	 * Change status of image
+	 * @param integer $id, the ID of image model
 	 */
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()

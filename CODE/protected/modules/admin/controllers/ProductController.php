@@ -1,10 +1,32 @@
 <?php
+/**
+ * 
+ * ProductController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * ProductController includes actions relevant to Product in the eCommercial website:
+ *** create
+ *** update
+ *** delete
+ *** index
+ *** reverse status
+ *** reverse amount status
+ *** suggest name
+ *** load model
+ *** update suggest
+ *** perform action to list of selected models from checkbox   
+ */
 class ProductController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. Defaults to '/protected/modules/admin/view/layouts/main'.
+	 * See '/protected/modules/admin/view/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -199,6 +221,7 @@ class ProductController extends Controller
 	}
 	/**
 	 * Reverse status of product
+	 * @param integer $id, the ID of model to be reversed
 	 */
 	public function actionReverseStatus($id)
 	{
@@ -208,8 +231,10 @@ class ProductController extends Controller
 			else 
 				echo json_encode(array('success'=>false));		
 	}
+	
 	/**
 	 * Reverse amount status of product
+	 * @param integer $id, the ID of model to be reversed
 	 */
 	public function actionReverseAmountStatus($id)
 	{
@@ -267,7 +292,13 @@ class ProductController extends Controller
 		$list_checked = Yii::app()->session["checked-suggest-list"];
 		echo implode(',',$list_checked);
 	}
-public function actionCheckbox($action)
+
+	/**
+	 * Performs the action with multi-selected products from checked models in section
+	 * @param string action to perform
+	 * @return boolean, true if the action is procced successfully, otherwise return false
+	 */
+	public function actionCheckbox($action)
 	{
 		$this->initCheckbox('checked-product-list');
 		$list_checked = Yii::app()->session["checked-product-list"];
@@ -293,9 +324,11 @@ public function actionCheckbox($action)
 		Yii::app()->end();
 		
 	}
-	/*
-	 * Init checkbox
-	 */
+
+	/**
+	 * Init checkbox selection
+	 * @param string $name_params, name of section to work	 
+	 */	
 	public function initCheckbox($name_params){
 		if (! isset ( Yii::app ()->session [$name_params] ))
 			Yii::app ()->session [$name_params] = array ();

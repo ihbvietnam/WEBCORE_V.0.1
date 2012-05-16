@@ -1,10 +1,29 @@
 <?php
+/**
+ * 
+ * QAController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * QAController includes actions relevant to Question & Answer activities:
+ *** update
+ *** delete
+ *** index
+ *** reverse status
+ *** suggest title
+ *** load model
+ *** perform action to list of selected models from checkbox   
+ */
 class QAController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. Defaults to '/protected/modules/admin/view/layouts/main'.
+	 * See '/protected/modules/admin/view/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -110,7 +129,8 @@ class QAController extends Controller
 		));
 	}
 	/**
-	 * Reverse status of news
+	 * Reverse status of qa
+	 * @param integer $id, the ID of model to be reversed
 	 */
 	public function actionReverseStatus($id)
 	{
@@ -157,6 +177,12 @@ class QAController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
+	/**
+	 * Performs the action with multi-selected qas from checked models in section
+	 * @param string action to perform
+	 * @return boolean, true if the action is procced successfully, otherwise return false
+	 */
 	public function actionCheckbox($action)
 	{
 		$this->initCheckbox('checked-qa-list');
@@ -183,8 +209,10 @@ class QAController extends Controller
 		Yii::app()->end();
 		
 	}
-	/*
-	 * Init checkbox
+
+	/**
+	 * Init checkbox selection
+	 * @param string $name_params, name of section to work	 
 	 */
 	public function initCheckbox($name_params){
 		if (! isset ( Yii::app ()->session [$name_params] ))

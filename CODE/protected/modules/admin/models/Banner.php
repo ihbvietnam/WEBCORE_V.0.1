@@ -1,11 +1,28 @@
 <?php
+/**
+ * 
+ * Banner class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+
+/**
+ * Banner includes attributes and methods of Banner class  
+ */
 class Banner extends CActiveRecord
 {
+	/**
+	 * @return string the associated database table name
+	 */
 	public function tableName()
 	{
 		return 'tbl_article';
 	}
-	/*
+	
+	/**
 	 * Config scope of banner
 	 */
 	public function defaultScope(){
@@ -13,15 +30,16 @@ class Banner extends CActiveRecord
 			'condition'=>'type = '.Article::ARTICLE_BANNER,
 		);	
 	}
-	/*
+	/**
 	 * Config status of banner
 	 */
 	const STATUS_PENDING=0;
 	const STATUS_ACTIVE=1;
 	const LIST_ADMIN=10;
 	
-	/*
+	/**
 	 * Config code of banner (id)
+	 * represent the position of banner 
 	 */
 	const CODE_TOP=1;
 	const CODE_MAIN=2;
@@ -30,12 +48,28 @@ class Banner extends CActiveRecord
 	const CODE_FOOTER=5;
 	const CODE_LINK_PARTNER=6;
 	
+	/**
+	 * @var string old images of the banner	 
+	 */
 	public $old_images;
+	
+	/**
+	 * @var string old title of the banner	 
+	 */
 	public $old_title;
+	
+	/**
+	 * @var array list other attributes of the banner 	 
+	 */
 	private $list_other_attributes;
+	
+	/**
+	 * @var array config list other attributes of the banner
+	 * this attribute no need to search	 
+	 */
 	private $config_other_attributes=array('modified','images','description','metakey','metadesc');	
 	
-	/*
+	/**
 	 * Get image url which view status of banner 
 	 */
  	public function getImageStatus()
@@ -49,23 +83,26 @@ class Banner extends CActiveRecord
  				break;
  		}	
  	}
-	/*
-	 * Get quantity images of a banner
+	/**
+	 * Get number images of a banner
 	 */
 	public function getQuantity_images(){
 		$list=array_diff ( explode ( ',', $this->images ), array ('' ) );	
 		return sizeof($list);
 	}
-	/*
-	 * Get id of first image in banner
+	/**
+	 * Get thumb of the first id of first image in banner
 	 */
 	public function getThumb_id(){
 		$list=array_diff ( explode ( ',', $this->images ), array ('' ) );	
 		reset($list);
 		return current($list);
 	}
-		/*
+	
+	/**
 	 * Get url of first image
+	 * @param string $type, type of thumb image
+	 * @return string url path of thumb image if success, otherwise ""
 	 */
 	public function getThumb_url($type){
 		if($this->thumb_id>0){
@@ -77,8 +114,11 @@ class Banner extends CActiveRecord
 		}
 		return '<img src="'.$src.'">';
 	}
-	/*
+	/**
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -88,8 +128,10 @@ class Banner extends CActiveRecord
 			parent::__set($name,$value);
 	}
 	
-	/*
+	/**
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -206,6 +248,13 @@ class Banner extends CActiveRecord
 			return false;
 	}
 	
+	/**
+	 * This method is invoked after saving a record (after validation, if any).
+	 * The default implementation raises the {@link onAfterSave} event.
+	 * You may override this method to do any preparation work for record saving.	 
+	 * Make sure you call the parent implementation so that the event is raised properly.
+	 * @return boolean whether the saving is successed or not. Defaults to true.
+	 */	
 	public function afterSave(){
 		if ($this->old_images != $this->images) {
 			foreach ( array_diff ( explode ( ',', $this->images ), array ('' ) ) as $image_id ) {
@@ -221,8 +270,9 @@ class Banner extends CActiveRecord
 		return true;
 	}
 	
-/**
+	/**
 	 * This method is invoked before delete a record 
+	 * @return boolean whether the deleting is successed or not. Defaults to true. 
 	 */
 	public function beforeDelete() {
 		if (parent::beforeDelete ()) {
@@ -257,7 +307,7 @@ class Banner extends CActiveRecord
     		),
 		));
 	}
-	/*
+	/**
 	 * Suggests a list banner which matching the specified keyword.
 	 */
 	public function suggestTitle($keyword,$limit=20)
@@ -275,8 +325,9 @@ class Banner extends CActiveRecord
 			$titles[]=$qa->title;
 			return $titles;
 	}
-	/*
-	 * Reverse status of banner
+	/**
+	 * Reverse status (enable & disbale)of banner
+	 * @return boolean wheather the reverse status activities is success or not; default value is false
 	 */
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()

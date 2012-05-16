@@ -186,7 +186,7 @@ class AlbumController extends Controller
 		}
 	}
 	
-	/*
+	/**
 	 * Performs the action with multi-selected album from checked albums in section
 	 * @param string action to perform
 	 * @return boolean, true if the action is procced successfully, otherwise return false
@@ -218,7 +218,7 @@ class AlbumController extends Controller
 		
 	}
 	
-	/*
+	/**
 	 * Init checkbox selection
 	 * @param $name_params, name of section to work	 
 	 */

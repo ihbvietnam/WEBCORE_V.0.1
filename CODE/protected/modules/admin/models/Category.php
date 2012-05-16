@@ -1,18 +1,31 @@
 <?php
+/**
+ * 
+ * Category class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+
+/**
+ * Category includes attributes and methods of Category class  
+ */
 class Category extends CActiveRecord
 {	
-	/*
+	/**
 	 * Config maximun rank in a group
 	 */
 	const MAX_RANK=4;	
-	/*
+	/**
 	 * Config code error when delete category
 	 */
 	const DELETE_OK=1;
 	const DELETE_HAS_CHILD=2;
 	const DELETE_HAS_ITEMS=3;
-	/*
-	 * Config code (id) of the groups category which have parent_id=0
+	/**
+	 * Config code (id) of the main category groups which have parent_id=0
 	 */
 	const GROUP_ROOT=0;
 	const GROUP_ADMIN_MENU=1;
@@ -20,16 +33,21 @@ class Category extends CActiveRecord
 	const GROUP_NEWS=3;
 	const GROUP_PRODUCT=4;
 	const GROUP_MANUFACTURER=5;
-	/*
+	/**
 	 * Config default controller and action when create admin menu
 	 */
 	const ADMIN_MENU_CONTROLLER_DEFAULT='news';
 	const ADMIN_MENU_ACTION_DEFAULT='index';
-	/*
+	/**
 	 * Config special
 	 * SPECIAL_REMARK when group is news, category news is viewed at homepage
 	 */
-	const SPECIAL_REMARK=0;	
+	const SPECIAL_REMARK=0;
+
+	/**
+	 * @var array config list other attributes of the banner
+	 * these attributes is stored in other field of article table	 
+	 */
 	private $config_other_attributes=array('introimage','params','action','controller','description','modified','max_rank');	
 	private $list_other_attributes;
 	
@@ -43,7 +61,8 @@ class Category extends CActiveRecord
 	public $old_parent_id;
 	//Store name
 	public $old_name;
-	/*
+	
+	/**
 	 * Get all specials of class Category
 	 * Use in drop select when create, update banner
 	 */
@@ -53,9 +72,9 @@ class Category extends CActiveRecord
 			self::SPECIAL_REMARK=>'Hiển thị ở trang chủ',
 		);
  	}
- 	 /*
- 	 * Get specials of a object category
- 	 * Use in page lit admin
+ 	/**
+ 	 * Get specials attributes of a category object
+ 	 * Used in page list admin views
  	 */
 	public function getLabel_specials()
  	{
@@ -66,8 +85,9 @@ class Category extends CActiveRecord
 		}
 		return $label_specials;
  	}
- 	 /*
- 	 * Special is encoded before save in database
+ 	
+ 	/**
+ 	 * Special attributes are encoded before save in database
  	 * Function get all code of the special
  	 */
 	static function getCode_special($index=null)
@@ -86,8 +106,10 @@ class Category extends CActiveRecord
  		}
  		return $result;
  	}
-	/*
-	 * Returns all categories in the group 
+ 	
+	/**
+	 * Returns all categories in the group
+	 * @return array $result, array all category in a group
 	 */
 	public function getList_Categories(){
 		$result=array();	
@@ -108,8 +130,9 @@ class Category extends CActiveRecord
 		$result=$this->tmp_list;
 		return $result;
 	}
-	/*
+	/**
 	 * Returns all child of the category.
+	 * @return array $result array of sub-categories of this category
 	 */
 	public function getChild_categories(){
 		if(!isset($this->id)){	
@@ -122,9 +145,10 @@ class Category extends CActiveRecord
 			return $result;
 		}
 	}
-	/*
+	/**
 	 * Return ancestor categories of the category 
-	 * Use in bread crumb
+	 * Used in bread crumb
+	 * @return array $bread_crumb ancestor array of this category
 	 */
 	public function getBread_crumb(){
 		$bread_crumb=array();
@@ -141,8 +165,10 @@ class Category extends CActiveRecord
 		}
 		return $bread_crumb;
 	}
-	/*
-	 * Return ancestor of the category which has level 1 in the group.
+	
+	/**
+	 * Return ancestor of the category which has level 1 in the category group.
+	 * @return integer $current_id, the ID of root category
 	 */
 	public function getRoot(){
 		$check=true;
@@ -157,8 +183,10 @@ class Category extends CActiveRecord
 		}
 		return $current_id;
 	}
-	/*
-	 * Return group 
+	
+	/**
+	 * find category group
+	 * @return integer $current_id, the id of category group 
 	 */
 	public function findGroup(){
 		$check=true;
@@ -173,8 +201,10 @@ class Category extends CActiveRecord
 		}
 		return $current_id;
 	}
-	/*
+	
+	/**
 	 * Returns the rank of category 
+	 * @return integer $result, the rank of this category
 	 */
 	public function getRank(){
 		$result=0;
@@ -183,8 +213,10 @@ class Category extends CActiveRecord
 		}
 		return $result;
 	}
-	/*
+	
+	/**
 	 * Returns order view of brother categories
+	 * @return array $result, the array sibling of this category
 	 */
 	public function getList_order_view(){
 		$result=array();	
@@ -194,8 +226,9 @@ class Category extends CActiveRecord
 		}
 		return $result;
 	}
-	/*
-	 * Returns all categories that can be parent of the category.
+	
+	/**
+	 * Returns all categories that can be parent of this category.
 	 */
 	public function getParent_categories(){
 		
@@ -224,7 +257,7 @@ class Category extends CActiveRecord
 		}		
 		return $result;
 	}
-	/*
+	/**
 	 * Recursive algorithms for tree traversals
 	 */
 	public function treeTraversal($group,$level,$rank){
@@ -259,8 +292,11 @@ class Category extends CActiveRecord
 		}
 	}
 	
-	/*
+	/**
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -270,8 +306,10 @@ class Category extends CActiveRecord
 			parent::__set($name,$value);
 	}
 	
-	/*
+	/**
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -323,14 +361,20 @@ class Category extends CActiveRecord
 			array('list_special,lang','safe','on'=>'news')
 		);
 	}
-	//Function validator role
+	
+	/**
+	 * Function validator role
+	 */
 	public function validatorMaxRank($attributes,$params){
 		if($this->id > 0){
 			if($this->rank>$this->max_rank) 
 				$this->addError('max_rank', 'Nhóm thư mục này hiện đã vượt quá cấp mà bạn chọn.');
 		}			
 	}
-	//Function validator role
+	/**
+	 * 
+	 * Function validator role
+	 */
 	public function validatorParent($attributes,$params){
 		if($this->group>0 && $this->id>0){
 			$root=Category::model()->findByPk($this->group);
@@ -458,7 +502,12 @@ class Category extends CActiveRecord
 		} else
 			return false;
 	}
-	// Handler when change order view of a category
+	/**
+	 * Change order view of a category
+	 * @return boolean false if it is not changed successfully
+	 * otherwise, it changed the order of this category
+	 */
+	
 	public function changeOrderView() {
 		if(!isset($this->old_parent_id) || $this->old_parent_id == ""){
 			$this->old_parent_id=0;
@@ -532,7 +581,7 @@ class Category extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-	/*
+	/**
 	 * Recursive algorithms for tree traversals
 	 */
 	public function checkDelete($id){
@@ -547,8 +596,11 @@ class Category extends CActiveRecord
 		}
 		return self::DELETE_OK;
 	}
-	/*
-	 * Recursive algorithms for tree traversals
+	/**
+	 * Config menu of category, each menu have corresponding controller/action
+	 * @param string $type, controller or action
+	 * @param array $value, the information of corresponding url
+	 * @return array
 	 */
 	public function codeUrl($type,$value=array()){
 		switch ($type) {
@@ -624,8 +676,10 @@ class Category extends CActiveRecord
 				break;			
 		}
 	}
-	/*
+	/**
 	 * Get list params for menu
+	 * @param string $controller, the controller of menu
+	 * @param string $action, the action of menu
 	 */
 	static function getListParams($controller,$action){
 		$result=array();
@@ -711,9 +765,11 @@ class Category extends CActiveRecord
 				return $result;
 		}
 	}
-	/*
+	
+	/**
 	 * Create route for url of menu
-	 */
+	 * @return string the corresponding url of this controller/action
+	 */	
 	public function getRoute(){
 		$config=array(
 			'news'=>array(
@@ -785,8 +841,9 @@ class Category extends CActiveRecord
 		);
 		return $config [$this->controller] [$this->action];
 	}
-	/*
+	/**
 	 * Create params for url of menu
+	 * @return string, the url of menu
 	 */
 	public function getUrl() {
 		if ($this->group == Category::GROUP_ADMIN_MENU || $this->group == Category::GROUP_USER_MENU) {
@@ -832,6 +889,7 @@ class Category extends CActiveRecord
 	}
 	/**
 	 * Get active menu
+	 * @return array $result, the active menu in admin board
 	 */
 	static function findActiveAdminMenu(){
 		$model=new Category();

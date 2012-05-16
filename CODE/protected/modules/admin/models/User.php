@@ -1,22 +1,41 @@
 <?php
 
 /**
- * This is the model class for table "user".
+ * 
+ * User class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
  *
+ */
+/**
+ * This is the model class for table "tbl_user".
  */
 class User extends CActiveRecord
 {
+	/**
+	 * config times typing password
+	 */
 	const LIMIT_INCORRECT=5;
+	/**
+	 * config user status
+	 */
 	const STATUS_PENDING=0;
 	const STATUS_ACTIVE=1;
 	
 	const LIST_ADMIN=10;
-	
+	/**
+	 * @var array config list other attributes of the banner
+	 * this attribute no need to search	 
+	 */		
 	private $config_other_attributes=array('subscribe','firstname','lastname','phone','address','register_date','last_visit_date');	
 	private $list_other_attributes;
 
-	/*
-	 * Get image url which view status of user
+	/**
+	 * Get image url which display status of contact
+	 * @return string path to enable.png if this status is STATUS_ACTIVE
+	 * path to disable.png if status is STATUS_PENDING
 	 */
  	public function getImageStatus()
  	{
@@ -30,14 +49,28 @@ class User extends CActiveRecord
  				
  		}	
  	}
+ 	/**
+	 * Get list label status, used in dropDownList
+	 * @return array, status of user
+	 */	
  	public function getList_label_status(){
  		return array(
  				self::STATUS_PENDING=>'Disable',
  				self::STATUS_ACTIVE=>'Enable',
  		);
  	}
+ 	
+ 	/**
+ 	 * 
+ 	 * config role of users
+ 	 * @var array $list_roles
+ 	 */
 	private $list_roles=array('admin','author','editor','manager_account');
-	//PHP getter magic method for virtual property list_label_roles
+	
+	/**
+	 * 
+	 * get label for user roles, used in dropDownList
+	 */
 	public function getList_label_roles()
  	{
 	return array(
@@ -47,7 +80,11 @@ class User extends CActiveRecord
 			'manager_account'=>'Manager Account'
 		);
  	}
-	public function getLabel_role()
+	/**
+	 * 
+	 * PHP getter magic method for virtual property list_label_roles
+	 */
+ 	public function getLabel_role()
  	{
 		$label_role=array();
 		foreach ($this->role as $role) {
@@ -58,6 +95,9 @@ class User extends CActiveRecord
  	
 	/**
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -69,6 +109,8 @@ class User extends CActiveRecord
 	
 	/**
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -86,8 +128,9 @@ class User extends CActiveRecord
 	public $role=array();
 	public $old_role=array();
 	
-	/*
+	/**
 	 * Get full name of user
+	 * @return string fullname of user
 	 */
 	public function getFullname(){
 		if(isset($this->list_other_attributes['firstname'])&&isset($this->list_other_attributes['lastname']))
@@ -157,13 +200,24 @@ class User extends CActiveRecord
 			array('username, email', 'safe', 'on'=>'search'),
 		);
 	}
-	//Function validator role
+
+	/**
+	 * 
+	 * Function validator role
+	 * @param unknown_type $attributes
+	 * @param unknown_type $params
+	 */
 	public function validatorRole($attributes,$params){
 		if(sizeof(array_diff($this->role,$this->list_roles))>0){
 			$this->addError('role', 'Không tồn tại quyền này');
 		}
 	}
-//Function validator role
+	/**
+	 * 
+	 * Function validator role
+	 * @param unknown_type $attributes
+	 * @param unknown_type $params
+	 */
 	public function validatorOldPassword($attributes,$params){
 		$user=User::model()->findByPk(Yii::app()->user->id);
 		if(!$user->validatePassword($this->old_password)){
@@ -377,8 +431,9 @@ class User extends CActiveRecord
 			$names[]=$user->email;
 			return $names;
 	}
-	/*
-	 * Set status of user
+	/**
+	 * Change status of image
+	 * @param integer $id, the ID of image model
 	 */
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()

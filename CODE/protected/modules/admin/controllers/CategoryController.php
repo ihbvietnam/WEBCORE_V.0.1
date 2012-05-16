@@ -1,10 +1,31 @@
 <?php
+/**
+ * 
+ * CategoryController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * CategoryController includes actions relevant to Category:
+ *** create new Category
+ *** update information of a Category
+ *** delete Category
+ *** validate category
+ *** index category
+ *** write 
+ *** update list order view
+ *** load model Banner from banner's id
+ *** perform action to list of selected banner from checkbox  
+ */
 class CategoryController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. Defaults to '/protected/modules/admin/view/layouts/main'. 
+	 * See '/protected/modules/admin/view/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -44,6 +65,7 @@ class CategoryController extends Controller
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * @param $group group of category, like below constant
 	 */
 	public function actionCreate($group)
 	{
@@ -241,6 +263,8 @@ class CategoryController extends Controller
 
 	/**
 	 * Validate category
+	 * @param Group $group of category
+	 * @return 
 	 */
 	public function actionValidateCategory($group)
 	{
@@ -284,7 +308,9 @@ class CategoryController extends Controller
 		}
 	}
 	/**
-	 * Validate ajax.
+	 * Display list of category.
+	 * @param integer $group, id of menu group
+	 * @return
 	 */
 	public function actionIndex($group)
 	{
@@ -323,7 +349,9 @@ class CategoryController extends Controller
 		));
 	}
 	/**
-	 * Creates and updates a new model.
+	 * Creates and updates a new Category model.
+	 * @param integer $group, id of menu group
+	 * @return 
 	 */
 	public function actionWrite($group)
 	{	
@@ -401,8 +429,10 @@ class CategoryController extends Controller
 			echo $html_form.$html_tree;
 		}
 	}
+	
 	/**
 	 * Updates list order view.
+	 * @param integer $parent_id id of parent category
 	 */
 	public function actionUpdateListOrderView($parent_id)
 	{	
@@ -412,6 +442,9 @@ class CategoryController extends Controller
 	}
 	/**
 	 * Updates list params that create url for menus
+	 * @param integer $id, id of model
+	 * @param controller $controller, controller of url
+	 * @param action $action, action of url
 	 */
 	public function actionConfigUrl($id,$controller,$action)
 	{
@@ -450,6 +483,12 @@ class CategoryController extends Controller
 		$result ['selected_action'] = $select_action;
 		echo json_encode ( $result );
 	}
+	
+	/**
+	 * 
+	 * action set menu active in the admin cp 
+	 * @param integer $id, id of the menu
+	 */
 	public function actionSetActiveAdminMenu($id)
 	{
 		if(Yii::app()->session['active_admin_menu'] = $id)

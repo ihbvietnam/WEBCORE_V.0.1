@@ -1,15 +1,27 @@
 <?php
 /**
+ * 
+ * News class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+/**
  * This is the model class for table "news".
  *
  */
 class News extends CActiveRecord
 {	
+	/**
+	 * @return string the associated database table name
+	 */	
 	public function tableName()
 	{
 		return 'tbl_article';
 	}
-	/*
+	/**
 	 * Config scope of news
 	 */
 	public function defaultScope(){
@@ -17,21 +29,33 @@ class News extends CActiveRecord
 			'condition'=>'type = '.Article::ARTICLE_NEWS,
 		);	
 	}
-	/*
-	 * Config status of album
+	/**
+	 * Config status of news
 	 */
 	const STATUS_PENDING=0;
 	const STATUS_ACTIVE=1;
 	
 	const LIST_ADMIN=10;
-	/*
+	/**
 	 * Config special
-	 * SPECIAL_REMARK album is viewed at homepage
+	 * SPECIAL_REMARK news is news that can be viewed at homepage
+	 * SPECIAL_NOTICE news is news that can be viewed at notice
+	 * SPECIAL_MARQUEE news is news that can be viewed at...
 	 */
 	const SPECIAL_REMARK=0;
 	const SPECIAL_NOTICE=1;
 	const SPECIAL_MARQUEE=2;
 	
+	/**
+	 * Config other attribute
+	 ** INTRO_LENGTH number characters of news displayed in introduction
+	 ** INTRO_HOMEPAGE_LENGTH number characters of news displayed in homepage
+	 ** OTHER_NEWS number of news display in the other news widget
+	 ** LIST_NEWS number of news displayed in the list news page
+	 ** LIST_SEARCH number of news displayed in the list of search page
+	 ** PRESENT_CATEGORY
+	 ** PRESENT_CATEGORY_EN 
+	 */
 	const INTRO_LENGTH=100; 	
 	const INTRO_HOMEPAGE_LENGTH=40;	
 	const OTHER_NEWS=5;
@@ -40,14 +64,24 @@ class News extends CActiveRecord
 	const PRESENT_CATEGORY=31;
 	const PRESENT_CATEGORY_EN=71;
 	
+	/**
+	 * variable using to store cached data
+	 * @var unknown_type
+	 */
 	public $old_fulltext;
 	public $old_introimage;
 	public $list_special;
 	public $old_title;
+	
+	/**
+	 * @var array config list other attributes of the banner
+	 * this attribute no need to search	 
+	 */	
 	private $config_other_attributes=array('modified','fulltext','introtext','introimage','list_suggest','metakey','metadesc');	
 	private $list_other_attributes;
-	/*
+	/**
 	 * Get list order view
+	 * @return array represent order view
 	 */
 	public function getList_order_view(){
 		$file = dirname(__FILE__).'/../runtime/store.inc';
@@ -57,8 +91,9 @@ class News extends CActiveRecord
 		else
 			return array('0'=>'Không thiết lập','1'=>'Mức 1');
 	}
-	/*
-	 * Get url
+	/**
+	 * Get url of this news
+	 * @return string $url, the absoluted path of this news
 	 */
 	public function getUrl()
  	{
@@ -67,8 +102,10 @@ class News extends CActiveRecord
  		$url=Yii::app()->createUrl("/site/news",array('cat_alias'=>$cat_alias,'news_alias'=>$alias));
 		return $url;
  	}
-	/*
-	 * Get image url which view status of news
+	/**
+	 * Get image url which display status of contact
+	 * @return string path to enable.png if this status is STATUS_ACTIVE
+	 * path to disable.png if status is STATUS_PENDING
 	 */
  	public function getImageStatus()
  	{
@@ -82,14 +119,18 @@ class News extends CActiveRecord
  		}	
  	}
 	
+ 	/** 
+ 	 * Get name of category of this news
+ 	 * @return string name of the category
+ 	 */
 	public function getLabel_category()
  	{
 		$cat=$this->category;
 		return $cat->name;
  	}	
- 	/*
+ 	/**
 	 * Get all specials of class News
-	 * Use in drop select when create, update news
+	 * Used in dropdownlist when create or update news
 	 */
 	static function getList_label_specials()
  	{
@@ -99,9 +140,9 @@ class News extends CActiveRecord
 			self::SPECIAL_MARQUEE=>'Hiển thị trong phần tin chạy thuộc trang chủ',
 		);
  	}
- 	 /*
- 	 * Get specials of a object news
- 	 * Use in page lit admin
+ 	/**
+ 	 * Get specials attributes of a category object
+ 	 * Used in page list admin views
  	 */
 	public function getLabel_specials()
  	{
@@ -112,9 +153,10 @@ class News extends CActiveRecord
 		}
 		return $label_specials;
  	}
- 	 /*
+ 	 /**
  	 * Special is encoded before save in database
  	 * Function get all code of the special
+ 	 * @param string $index,
  	 */
 	static function getCode_special($index=null)
  	{
@@ -132,8 +174,9 @@ class News extends CActiveRecord
  		}
  		return $result;
  	}
-	/*
-	 * Get thumb image
+	/**
+	 * Get thumb image of this news
+	 * @param string $type, type of needed thumb image
 	 */
 	public function getImage($type){
 		$image=Image::model()->findByPk($this->introimage);
@@ -145,8 +188,11 @@ class News extends CActiveRecord
 		}
 			return $url;	
 	}
- 	/**
+	/**
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -158,6 +204,8 @@ class News extends CActiveRecord
 	
 	/**
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -200,7 +248,12 @@ class News extends CActiveRecord
 			array('status','safe','on'=>'reverse_status')
 		);
 	}
-	//Function validator title
+
+	/**
+	 * Function validate news title, don't allow add a news has same title with an existing news
+	 * @param string $attributes
+	 * @param $params
+	 */
 	public function validatorTitle($attributes,$params){
 		if($this->title==""){
 			$this->addError('title', 'Dữ liệu bắt buộc');
@@ -212,7 +265,9 @@ class News extends CActiveRecord
 		}
 	}
 	
-	//Function validate unique title
+	/**
+	 * Function validate unique title
+	 */
 	public function validateUniqueTitle() {
 		$criteria = new CDbCriteria ();
 		$criteria->compare ( 'catid', $this->catid );
@@ -350,7 +405,12 @@ class News extends CActiveRecord
 		else
 			return false;
 	}
-	
+	/**
+	 * This method is invoked after saving a record successfully.
+	 * The default implementation raises the {@link onAfterSave} event.
+	 * You may override this method to do postprocessing after record saving.
+	 * Make sure you call the parent implementation so that the event is raised properly.
+	 */	
 	public function afterSave(){
 		if($this->old_introimage != $this->introimage){
 			$introimage = Image::model()->findByPk($this->introimage);
@@ -444,8 +504,9 @@ class News extends CActiveRecord
 			$titles[]=$news->title;
 			return $titles;
 	}
-	/*
-	 * Set status of news
+	/**
+	 * Change status of image
+	 * @param integer $id, the ID of contact model
 	 */
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
@@ -476,8 +537,9 @@ class News extends CActiveRecord
 		}
 		else return false;
 	}
-		/*
+	/**
 	 * Copy news
+	 * @param integer $id, the ID of news to be copied
 	 */
 	static function copy($id) {
 		$sql = 'insert into ' . self::model ()->tableName () . ' (catid,type,lang,status,special,order_view,title,alias,keywords,other,created_date,created_by) select catid,type,lang,status,special,order_view,title,alias,keywords,other,created_date,created_by from ' . self::model ()->tableName () . ' where id=' . $id;

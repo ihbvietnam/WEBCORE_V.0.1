@@ -1,9 +1,21 @@
 <?php
+/**
+ * 
+ * Album class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * Album.php includes attributes and methods of Album class  
+ */
 class Album extends CActiveRecord
 {
 	/**
-	 * @return string the associated database table name - tbl_article
+	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
@@ -27,12 +39,12 @@ class Album extends CActiveRecord
 	 */
 	const STATUS_PENDING=0;
 	const STATUS_ACTIVE=1;	
-	/*
+	/**
 	 * Config special
 	 * SPECIAL_REMARK album is viewed at homepage
 	 */
 	const SPECIAL_REMARK=0;	
-	/*
+	/**
 	 * Config number of items display in CListView for the Album list, Admin list, and other album list.  
 	 */
 	const LIST_ADMIN=10;
@@ -44,7 +56,7 @@ class Album extends CActiveRecord
 	public $old_title;
 	public $list_special;
 	private $list_other_attributes;
-	/*
+	/**
 	 * Config other new attributes for album.
 	 * @var modified: modified time
 	 * @var images: Album's Logo
@@ -54,7 +66,7 @@ class Album extends CActiveRecord
 	 */
 	private $config_other_attributes=array('modified','images','description','metakey','metadesc');	
 	
-	/*
+	/**
 	 * Get image url which represents status of album
 	 * @param boolean $this->status
 	 * @return url definitive path of status image
@@ -72,7 +84,7 @@ class Album extends CActiveRecord
  				break;
  		}	
  	}
-	/*
+	/**
 	 * Get url of album
 	 * @return album's url
 	 */
@@ -82,7 +94,7 @@ class Album extends CActiveRecord
 		return $url;
  	}
  	
-	/*
+	/**
 	 * Get all special view options of class Album
 	 * Used in dropDownList on create or update album
 	 * @return array represent the display option
@@ -90,11 +102,11 @@ class Album extends CActiveRecord
 	static function getList_label_specials()
  	{
 	return array(
-			self::SPECIAL_REMARK=>'Hi?n th? ? trang ch?',
+			self::SPECIAL_REMARK=>'Hiển thị ở trang chủ',
 		);
  	}
  	
- 	/*
+ 	/**
  	 * Get specials of an album object
  	 * Used in admin page list
  	 * @return array
@@ -108,7 +120,7 @@ class Album extends CActiveRecord
 		}
 		return $label_specials;
  	}
- 	/*
+ 	/**
  	 * Special attributes are encoded before saved in database
  	 * Function get all code of the special attributes
  	 * @return array encoded status of Album's special display options 
@@ -130,16 +142,15 @@ class Album extends CActiveRecord
  		return $result;
  	}
  	
-	/*
-	 * Get quantity images of a album
-	 * @param $this->images
-	 * @return list quality images of this album 
+	/**
+	 * Get number images of a album	 
+	 * @return integer number of images in this album 
 	 */
 	public function getQuantity_images(){
 		$list=array_diff ( explode ( ',', $this->images ), array ('' ) );	
 		return sizeof($list);
 	}
-	/*
+	/**
 	 * Get id of first image in album
 	 * @return int id of first image in this album
 	 */
@@ -148,7 +159,7 @@ class Album extends CActiveRecord
 		reset($list);
 		return current($list);
 	}
-	/*
+	/**
 	 * Get url of first image
 	 * @return url of the first image in this album
 	 */
@@ -162,7 +173,7 @@ class Album extends CActiveRecord
 			return '<img class="img" src="'.Image::getDefaultThumb('Album',$type).'" alt="">';
 		}
 	}
-	/*
+	/**
 	 * PHP setter magic method for other attributes
 	 * @param $name the attribute name
 	 * @param $value the attribute value
@@ -176,7 +187,7 @@ class Album extends CActiveRecord
 			parent::__set($name,$value);
 	}
 	
-	/*
+	/**
 	 * PHP getter magic method for other attributes
 	 * @param $name the attribute name
 	 * @return value of {$name} attribute
@@ -192,14 +203,14 @@ class Album extends CActiveRecord
 			return parent::__get($name);
 	}
 
-	/*
+	/**
 	 * @returns the static model of the specified AR class.
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-	/*
+	/**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -216,7 +227,7 @@ class Album extends CActiveRecord
 		);
 	}
 
-	/*
+	/**
 	 * @return array relational rules.
 	 */
 	public function relations()
@@ -377,7 +388,7 @@ class Album extends CActiveRecord
 		));
 	}
 	
-	/*
+	/**
 	 * Suggests a list banner which matching the specified keyword.
 	 * @return array list of titles similar to input keyword
 	 */
@@ -396,7 +407,7 @@ class Album extends CActiveRecord
 			$titles[]=$qa->title;
 			return $titles;
 	}
-	/*
+	/**
 	 * Reverse status (enable & disbale)of album
 	 * @return boolean wheather the reverse status activities is success or not; default value is false
 	 */

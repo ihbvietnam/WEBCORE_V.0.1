@@ -1,5 +1,20 @@
 <?php
+/**
+ * 
+ * DefaultController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * DefaultController includes actions relevant to default actions of system:
+ *** index
+ *** login
+ *** logout   
+ */
 class DefaultController extends Controller
 {
 	/**
@@ -12,7 +27,7 @@ class DefaultController extends Controller
 		$this->redirect(array('news/index'));
 	}
 	/**
-	 * Displays the login page
+	 * Displays the login page, redirect to index page if login successfully 
 	 */
 	public function actionLogin()
 	{
@@ -45,6 +60,7 @@ class DefaultController extends Controller
 		// display the login form
 		$this->render('login',array('model'=>$model));
 	}
+	
 	/**
 	 * Logs out the current user and redirect to homepage.
 	 */

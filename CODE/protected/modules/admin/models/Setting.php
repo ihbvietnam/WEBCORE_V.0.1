@@ -1,16 +1,32 @@
 <?php
-
+/**
+ * 
+ * Setting class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+/**
+ * This is the model class for table "setting".
+ */
 class Setting extends CActiveRecord
 {
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-
+	/**
+	 * @return string the associated database table name
+	 */	
 	public function tableName()
 	{
 		return 'tbl_setting';
 	}
+	/**
+	 * @return array validation rules for model attributes.
+	 */	
 	public function rules()
 	{
 		return array(
@@ -18,6 +34,9 @@ class Setting extends CActiveRecord
 			array('name','unique')
 		);
 	}
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */	
 	public function attributeLabels()
 	{
 		return array(
@@ -25,7 +44,7 @@ class Setting extends CActiveRecord
 			'value' => Language::t('Giá trị'),
 		);
 	}
-/**
+	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
@@ -37,7 +56,7 @@ class Setting extends CActiveRecord
 		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Yii::app ()->params ['defaultPageSize'] ) ), 'sort' => array ('defaultOrder' => 'id DESC' )    		
 		));
 	}
-/**
+	/**
 	 * Suggests a list of existing names matching the specified keyword.
 	 * @param string the keyword to be matched
 	 * @param integer maximum number of tags to be returned
@@ -58,6 +77,12 @@ class Setting extends CActiveRecord
 			$names[]=$news->name;
 			return $names;
 	}
+
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param string $name
+	 */
 	public static function s($name) {
 			$criteria = new CDbCriteria ();
 			$criteria->compare('name', $name);

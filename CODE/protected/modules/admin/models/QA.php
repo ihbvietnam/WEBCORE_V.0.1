@@ -1,11 +1,26 @@
 <?php
+/**
+ * 
+ * QA class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+/**
+ * This is the model class for table "qa".
+ */
 class QA extends CActiveRecord
 {
+	/**
+	 * @return string the associated database table name
+	 */	
 	public function tableName()
 	{
 		return 'tbl_article';
 	}
-	/*
+	/**
 	 * Config scope of news
 	 */
 	public function defaultScope(){
@@ -13,7 +28,7 @@ class QA extends CActiveRecord
 			'condition'=>'type = '.Article::ARTICLE_QA,
 		);	
 	}
-	/*
+	/**
 	 * Config status of qa
 	 */
 	const STATUS_PENDING=0;
@@ -28,18 +43,24 @@ class QA extends CActiveRecord
 	
 	public $old_answer;
 	public $old_title;
+	/**
+	 * @var array config list other attributes of the banner
+	 * this attribute no need to search	 
+	 */	
 	private $config_other_attributes=array('modified','question','answer','phone','email','fullname','metakey','metadesc');	
 	private $list_other_attributes;
-	/*
-	 * Get url
+	/**
+	 * Get url of this image
+	 * @return string $url, url of this image
 	 */
 	public function getUrl()
  	{		
  		$url=Yii::app()->createUrl("site/qa",array('qa_alias'=>$this->alias));
 		return $url;
  	}	
-	/*
-	 * Get link answer in list admin
+	/**
+	 * Display link answer in admin qa page
+	 * @return CHtml link to update the qa
 	 */
 	public function getLink_answer(){
 		if($this->answer!= "")
@@ -50,8 +71,10 @@ class QA extends CActiveRecord
 			return CHtml::link('Trả lời',array('update','id'=>$this->id));
 		}
 	}
-	/*
-	 * Get image url which view status of qa
+	/**
+	 * Get image url which display status of contact
+	 * @return string path to enable.png if this status is STATUS_ACTIVE
+	 * path to disable.png if status is STATUS_PENDING
 	 */
  	public function getImageStatus()
  	{
@@ -70,6 +93,9 @@ class QA extends CActiveRecord
 
 	/**
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -81,6 +107,8 @@ class QA extends CActiveRecord
 	
 	/**
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -264,8 +292,9 @@ class QA extends CActiveRecord
 			$titles[]=$qa->title;
 			return $titles;
 	}
-	/*
-	 * Set status of qa
+	/**
+	 * Change status of image
+	 * @param integer $id, the ID of image model
 	 */
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
