@@ -822,11 +822,6 @@ class Category extends CActiveRecord
 				'index'=>'/admin/banner/index',
 				'create'=>'/admin/banner/create',
 			),
-			'galleryVideo'=>array(
-				'index'=>'/admin/galleryVideo/index',
-				'create'=>'/admin/galleryVideo/create',
-				'view_video'=>'site/video'
-			), 
 			'setting'=>array(
 				'index'=>'/admin/setting/index',
 			), 
