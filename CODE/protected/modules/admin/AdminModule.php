@@ -20,9 +20,6 @@ class AdminModule extends CWebModule
 	{
 		if(parent::beforeControllerAction($controller, $action))
 		{
-			if(Setting::s('ADMIN_LANGUAGE')!=null)
-				Yii::app()->language=Setting::s('ADMIN_LANGUAGE');
-			else 
 				Yii::app()->language=Language::DEFAULT_LANGUAGE;
 			return true;
 		}

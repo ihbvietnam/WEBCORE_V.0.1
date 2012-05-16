@@ -94,7 +94,7 @@ class Product extends CActiveRecord
 			$index=0;
 			foreach ($list as $id){
 				$index++;
-				if($index <= Setting::s('LIMIT_SIMILAR_PRODUCT'))
+				if($index <= Setting::s('LIMIT_SIMILAR_PRODUCT','Product'))
 					$result[]=Product::model()->findByPk($id);
 			}
 		}
@@ -103,7 +103,7 @@ class Product extends CActiveRecord
 			$criteria->compare('status', Product::STATUS_ACTIVE);
 			$criteria->order='id desc';
 			$criteria->compare('catid',$this->catid);
-			$criteria->limit=Setting::s('LIMIT_SIMILAR_PRODUCT');
+			$criteria->limit=Setting::s('LIMIT_SIMILAR_PRODUCT','Product');
 			$criteria->addCondition('id <>'. $this->id);
 			$result=Product::model()->findAll($criteria);		
 		}

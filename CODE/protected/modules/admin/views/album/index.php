@@ -40,7 +40,21 @@
 								'style'=>'width:230px;',
 								),
 						)); ?>								
-                        </li>     
+                        </li> 
+                         <?php 
+					$list=array(''=>'Tất cả các thư mục');
+					foreach ($list_category as $id=>$cat){
+						$view = "";
+						for($i=1;$i<$cat['level'];$i++){
+							$view .="---";
+						}
+						$list[$id]=$view." ".$cat['name']." ".$view;
+					}
+					?>
+					<li>
+						<?php echo $form->labelEx($model,'catid'); ?>
+						<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:200px')); ?>
+					</li>    
                         <li>
                         <?php 
 							echo CHtml::submitButton('Lọc kết quả',
@@ -94,9 +108,10 @@
 					), 	
 					array(
 						'name'=>'thumb_album',
-						'value'=>'$data->getThumb_url("thumb_list_admin")',
+						'value'=>'$data->getThumb_url("thumb")',
 						'type'=>'html',
-						'headerHtmlOptions'=>array('width'=>'15%','class'=>'table-title'),		
+						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),	
+						'htmlOptions'=>array('style'=>'text-align:center'),		
 					), 	
 					array(
 						'name'=>'quantity_images',
@@ -104,14 +119,14 @@
 						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
 					), 
 					array(
-						'name'=>'list_special',
-						'value'=>'implode(", ",$data->label_specials)',
-						'headerHtmlOptions'=>array('width'=>'15%','class'=>'table-title'),		
-					),
+						'name'=>'category',
+						'value'=>'$data->label_category',
+						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),						
+					), 
 					array(
 						'name'=>'created_date',
 						'value'=>'date("H:i d/m/Y",$data->created_date)',
-						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
+						'headerHtmlOptions'=>array('width'=>'15%','class'=>'table-title'),		
 					), 		
 					array(
 						'name'=>'created_by',

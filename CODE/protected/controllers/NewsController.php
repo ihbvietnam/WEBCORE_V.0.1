@@ -16,7 +16,39 @@ class NewsController extends Controller
 	/**
 	 * Displays news
 	 */
-	public function actionNews($cat_alias,$news_alias="")
+	public function actionIndex($cat_alias)
+	{	
+		$criteria=new CDbCriteria;
+		$criteria->compare('alias',$cat_alias);
+		$list_cat=Category::model()->findAll($criteria);
+		foreach ($list_cat as $category) {
+			if($category->findGroup() == Category::GROUP_NEWS) $cat=$category;
+		}
+		if(isset($cat)) {
+				$child_categories=$cat->child_categories;
+ 				$list_child_id=array();
+ 				//Set itself
+ 				$list_child_id[]=$cat->id;
+ 				foreach ($child_categories as $id=>$child_cat){
+ 					$list_child_id[]=$id;
+ 				}
+				$criteria=new CDbCriteria;
+				$criteria->addInCondition('catid',$list_child_id);
+				$criteria->compare('status',News::STATUS_ACTIVE);
+				$criteria->order='id desc';
+				$list_news=new CActiveDataProvider('News', array(
+					'pagination'=>array(
+						'pageSize'=>Setting::s('NEWS_PAGE_SIZE','News'),
+					),
+					'criteria'=>$criteria,
+				));
+				$this->render('list-news',array(
+					'cat'=>$cat,
+					'list_news'=>$list_news
+				));
+		}	
+	}	
+	public function actionView($cat_alias,$news_alias="")
 	{	
 		$criteria=new CDbCriteria;
 		$criteria->compare('alias',$cat_alias);
@@ -36,31 +68,7 @@ class NewsController extends Controller
 					'news'=>$news,
 					));
 				}
-			}
-			else {
-				$child_categories=$cat->child_categories;
- 				$list_child_id=array();
- 				//Set itself
- 				$list_child_id[]=$cat->id;
- 				foreach ($child_categories as $id=>$child_cat){
- 					$list_child_id[]=$id;
- 				}
-				$criteria=new CDbCriteria;
-				$criteria->addInCondition('catid',$list_child_id);
-				$criteria->compare('status',News::STATUS_ACTIVE);
-				$criteria->order='id desc';
-				$list_news=new CActiveDataProvider('News', array(
-					'pagination'=>array(
-						'pageSize'=>Setting::s('NEWS_PAGE_SIZE'),
-					),
-					'criteria'=>$criteria,
-				));
-				$this->render('list-news',array(
-					'cat'=>$cat,
-					'list_news'=>$list_news
-				));
-			}
-		}
-		
+			}			
+		}	
 	}	
 }

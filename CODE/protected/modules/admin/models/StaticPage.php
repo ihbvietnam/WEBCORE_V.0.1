@@ -66,7 +66,7 @@ class StaticPage extends CActiveRecord
  	{
  		$cat_alias=$this->category->alias;
  		$alias=$this->alias;
- 		$url=Yii::app()->createUrl("/site/staticPage",array('cat_alias'=>$cat_alias,'staticPage_alias'=>$alias));
+ 		$url=Yii::app()->createUrl("staticPage/view",array('cat_alias'=>$cat_alias,'staticPage_alias'=>$alias));
 		return $url;
  	}
 	/*
@@ -113,7 +113,7 @@ class StaticPage extends CActiveRecord
 			$index=0;
 			foreach ($list as $id){
 				$index++;
-				if($index <= Setting::s('LIMIT_SIMILAR_STATICPAGE'))
+				if($index <= Setting::s('LIMIT_SIMILAR_STATICPAGE','StaticPage'))
 					$result[]=StaticPage::model()->findByPk($id);
 			}
 		}
@@ -123,7 +123,7 @@ class StaticPage extends CActiveRecord
 			$criteria->addCondition('id <>'. $this->id);
 			$criteria->order='id desc';
 			$criteria->compare('catid',$this->catid);
-			$criteria->limit=Setting::s('LIMIT_SIMILAR_STATICPAGE');
+			$criteria->limit=Setting::s('LIMIT_SIMILAR_STATICPAGE','StaticPage');
 			$result=StaticPage::model()->findAll($criteria);		
 		}
 		return $result;

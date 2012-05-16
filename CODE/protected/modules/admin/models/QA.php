@@ -35,7 +35,7 @@ class QA extends CActiveRecord
 	 */
 	public function getUrl()
  	{		
- 		$url=Yii::app()->createUrl("site/qa",array('qa_alias'=>$this->alias));
+ 		$url=Yii::app()->createUrl("qA/view",array('qa_alias'=>$this->alias));
 		return $url;
  	}
 		/*
@@ -46,7 +46,7 @@ class QA extends CActiveRecord
 		$criteria->compare ( 'status', News::STATUS_ACTIVE );
 		$criteria->addCondition('id <>'. $this->id);
 		$criteria->order = 'id desc';
-		$criteria->limit = Setting::s ( 'LIMIT_SIMILAR_QA' );
+		$criteria->limit = Setting::s ( 'LIMIT_SIMILAR_QA','QA' );
 		$result = QA::model ()->findAll ( $criteria );
 		return $result;
 	}		

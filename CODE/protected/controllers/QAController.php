@@ -1,6 +1,6 @@
 <?php
 
-class SiteController extends Controller
+class QAController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. 
@@ -13,25 +13,28 @@ class SiteController extends Controller
 		Yii::app()->clientScript->scriptMap['jquery.js'] = false;
 		Yii::app()->clientScript->scriptMap['jquery.min.js'] = false;
 	}
+	/**
+	 * Displays qa
+	 */
+	public function actionIndex()
+	{
+			$criteria = new CDbCriteria ();
+			$criteria->compare ( 'status', QA::STATUS_ACTIVE );
+			$criteria->order = 'id desc';
+			$list_qa = new CActiveDataProvider ( 'QA', array ('pagination' => array ('pageSize' => Setting::s ( 'QA_PAGE_SIZE','QA' ) ), 'criteria' => $criteria ) );
+			$this->render ( 'list-qa', array ('list_qa' => $list_qa ) );
+	}
 /**
 	 * Displays qa
 	 */
-	public function actionQA($qa_alias="")
+	public function actionView($qa_alias)
 	{
-		if ($qa_alias != "") {
 			$criteria = new CDbCriteria ();
 			$criteria->compare ( 'alias', $qa_alias );
 			$qa = QA::model ()->find ( $criteria );
 			if (isset ( $qa )) {
 				$this->render ( 'qa', array ('cat' => $cat, 'qa' => $qa ) );
-			}
-		} else {
-			$criteria = new CDbCriteria ();
-			$criteria->compare ( 'status', QA::STATUS_ACTIVE );
-			$criteria->order = 'id desc';
-			$list_qa = new CActiveDataProvider ( 'QA', array ('pagination' => array ('pageSize' => Setting::s ( 'QA_PAGE_SIZE' ) ), 'criteria' => $criteria ) );
-			$this->render ( 'list-qa', array ('list_qa' => $list_qa ) );
-		}	
+			}	
 	}
 	/**
 	 * Create question

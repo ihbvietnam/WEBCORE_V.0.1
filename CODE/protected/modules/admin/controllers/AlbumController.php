@@ -63,9 +63,17 @@ class AlbumController extends Controller
 			if($model->save())
 				$this->redirect(array('update','id'=>$model->id));
 		}
-
+		//List category product
+		$group=new Category();		
+		$group->group=Category::GROUP_ALBUM;
+		$list=$group->list_categories;
+		$list_category=array();
+		foreach ($list as $id=>$cat){
+			$list_category[$id]=$cat;
+		}
 		$this->render('create',array(
-			'model'=>$model
+			'model'=>$model,
+			'list_category'=>$list_category
 			
 		));
 	}
@@ -92,7 +100,15 @@ class AlbumController extends Controller
 				if ($model->save ())
 					$this->redirect ( array ('update', 'id' => $model->id ) );
 			}
-			$this->render ( 'update', array ('model' => $model ) );
+		//List category product
+		$group=new Category();		
+		$group->group=Category::GROUP_ALBUM;
+		$list=$group->list_categories;
+		$list_category=array();
+		foreach ($list as $id=>$cat){
+			$list_category[$id]=$cat;
+		}
+			$this->render ( 'update', array ('model' => $model, 'list_category'=>$list_category) );
 		}
 		else 
 			throw new CHttpException(403,Yii::t('yii','You are not authorized to perform this action.'));
@@ -127,8 +143,17 @@ class AlbumController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Album']))
 			$model->attributes=$_GET['Album'];
+	//List category product
+		$group=new Category();		
+		$group->group=Category::GROUP_ALBUM;
+		$list=$group->list_categories;
+		$list_category=array();
+		foreach ($list as $id=>$cat){
+			$list_category[$id]=$cat;
+		}
 		$this->render('index',array(
-			'model'=>$model
+			'model'=>$model,
+			'list_category'=>$list_category
 		));
 	}
 	/**

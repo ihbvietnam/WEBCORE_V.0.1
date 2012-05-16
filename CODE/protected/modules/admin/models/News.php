@@ -66,7 +66,7 @@ class News extends CActiveRecord
  	{
  		$cat_alias=$this->category->alias;
  		$alias=$this->alias;
- 		$url=Yii::app()->createUrl("/site/news",array('cat_alias'=>$cat_alias,'news_alias'=>$alias));
+ 		$url=Yii::app()->createUrl("news/view",array('cat_alias'=>$cat_alias,'news_alias'=>$alias));
 		return $url;
  	}
 	/*
@@ -113,7 +113,7 @@ class News extends CActiveRecord
 			$index=0;
 			foreach ($list as $id){
 				$index++;
-				if($index <= Setting::s('LIMIT_SIMILAR_NEWS'))
+				if($index <= Setting::s('LIMIT_SIMILAR_NEWS','News'))
 					$result[]=News::model()->findByPk($id);
 			}
 		}
@@ -123,7 +123,7 @@ class News extends CActiveRecord
 			$criteria->addCondition('id <>'. $this->id);
 			$criteria->order='id desc';
 			$criteria->compare('catid',$this->catid);
-			$criteria->limit=Setting::s('LIMIT_SIMILAR_NEWS');
+			$criteria->limit=Setting::s('LIMIT_SIMILAR_NEWS','News');
 			$result=News::model()->findAll($criteria);		
 		}
 		return $result;

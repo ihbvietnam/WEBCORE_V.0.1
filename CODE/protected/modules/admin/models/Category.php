@@ -152,7 +152,8 @@ class Category extends CActiveRecord
 		$current_id=$this->id;
 		while ($check){
 			$current=Category::model()->findByPk($current_id);
-			if($current->parent_id == Category::GROUP_ADMIN_MENU || $current->parent_id == Category::GROUP_USER_MENU){
+			if(in_array($current->parent_id,array(Category::GROUP_ADMIN_MENU,Category::GROUP_USER_MENU,Category::GROUP_ALBUM,Category::GROUP_GALLERYVIDEO,Category::GROUP_MANUFACTURER,Category::GROUP_NEWS,Category::GROUP_STATICPAGE,Category::GROUP_PRODUCT)))
+			{
 				$check=false;
 			}
 			else 
@@ -787,7 +788,7 @@ class Category extends CActiveRecord
 				'index'=>'/admin/staticPage/index',
 				'create'=>'/admin/staticPage/create',
 				'manager_category'=>'/admin/category',
-				'view_category'=>'/site/staticPage',
+				'view_category'=>'staticPage/index',
 				'home'=>'site/home'
 			),
 			'album'=>array(
@@ -808,7 +809,7 @@ class Category extends CActiveRecord
 			'qa'=>array(
 				'index'=>'/admin/qA/index',
 				'create'=>'/admin/qA/create',
-				'view_qa'=>'site/qa'
+				'view_qa'=>'qA/index'
 			),
 			'contact'=>array(
 				'index'=>'/admin/contact/index',

@@ -2,7 +2,7 @@
 Yii::import('zii.widgets.CPortlet');
 class wMenu extends CPortlet
 {
-	public $root;
+	public $group;
 	public $view;
 	public function init(){
 		parent::init();
@@ -10,7 +10,8 @@ class wMenu extends CPortlet
 	}
 	protected function renderContent()
 	{
-		$model=Category::model()->findByPk($this->root);
+		$model=Category::model()->findByPk($this->group);
+		$model->group=$this->group;
 		$list=$model->list_Categories;	
 		$previous_id=0;
 		$finish=0;
@@ -46,8 +47,9 @@ class wMenu extends CPortlet
 		foreach ($list as $id=>$menu) {
 			$list_menus[$id]['name']=$menu['name'];
 			$list_menus[$id]['url']=$menu['url'];
+			if(isset($list_menus[$id]['root']))
 			$list_menus[$id]['root']=$menu['root'];
-			$list_menus[$id]['class']=isset($menu['class'])?$menu['class']:'';
+				$list_menus[$id]['class']=isset($menu['class'])?$menu['class']:'';
 			if(in_array($id,$list_active_menu_id)){
 				$list_menus[$id]['class'] .=" active";
 			}

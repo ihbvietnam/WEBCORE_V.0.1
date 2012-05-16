@@ -78,6 +78,14 @@ class Album extends CActiveRecord
 		return $label_specials;
  	}
  	/*
+ 	 * Get label category
+ 	 */
+	public function getLabel_category()
+ 	{
+		$cat=$this->category;
+		return $cat->name;
+ 	}
+ 	/*
  	 * Special is encoded before save in database
  	 * Function get all code of the special
  	 */
@@ -119,10 +127,10 @@ class Album extends CActiveRecord
 		if($this->thumb_id>0){
 			$image=Image::model()->findByPk($this->thumb_id);
 			$src=$image->getThumb('Album',$type);
-			return '<img class="img" src="'.$src.'" alt="'.$image->title.'">';
+			return '<img align="middle" class="img" src="'.$src.'" alt="'.$image->title.'">';
 		}
 		else {
-			return '<img class="img" src="'.Image::getDefaultThumb('Album',$type).'" alt="">';
+			return '<img align="middle" class="img" src="'.Image::getDefaultThumb('Album',$type).'" alt="">';
 		}
 	}
 	/*
@@ -163,12 +171,12 @@ class Album extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('title,images','required','message'=>'Dữ liệu bắt buộc','on'=>'write',),
+			array('title,images,catid','required','message'=>'Dữ liệu bắt buộc','on'=>'write',),
 			array('title', 'unique','message'=>'Album đã tồn tại','on'=>'write'),
 			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'write'),
 			array('description', 'length', 'max'=>512,'message'=>'Tối đa 512 kí tự','on'=>'write'),
 			array('lang,list_special','safe','on'=>'write'),
-			array('title,special,lang','safe','on'=>'search'),
+			array('title,special,lang,catid','safe','on'=>'search'),
 			array('images','safe','on'=>'upload_image'),
 		);
 	}
@@ -198,7 +206,8 @@ class Album extends CActiveRecord
 			'thumb_album'=>'Ảnh đại diện',
 			'list_special' => 'Nhóm hiển thị',
 			'special' => 'Lọc theo nhóm hiển thị',
-			'lang' => 'Ngôn ngữ'
+			'lang' => 'Ngôn ngữ',
+			'category'=>'Danh mục'
 		);
 	}
 	/**
@@ -315,6 +324,19 @@ class Album extends CActiveRecord
 		$criteria->compare('title',$this->title,true);
 		if($this->special !='')
 			$criteria->addInCondition('special',self::getCode_special($this->special));
+		//Filter catid
+		$cat = Category::model ()->findByPk ( $this->catid );
+		if ($cat != null) {
+			$child_categories = $cat->child_categories;
+			$list_child_id = array ();
+			//Set itself
+			$list_child_id [] = $cat->id;
+			if ($child_categories != null)
+				foreach ( $child_categories as $id => $child_cat ) {
+					$list_child_id [] = $id;
+				}
+			$criteria->addInCondition ( 'catid', $list_child_id );
+		}
 		$criteria->order="id DESC";
 		if(isset($_GET['pageSize']))
 				Yii::app()->user->setState('pageSize',$_GET['pageSize']);

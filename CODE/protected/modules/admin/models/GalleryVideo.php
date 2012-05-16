@@ -84,6 +84,14 @@ class GalleryVideo extends CActiveRecord
 		);
  	}
  	/*
+ 	 * Get label category
+ 	 */
+	public function getLabel_category()
+ 	{
+		$cat=$this->category;
+		return $cat->name;
+ 	}
+ 	/*
  	 * Get specials of a object album
  	 * Use in page lit admin
  	 */
@@ -157,13 +165,13 @@ class GalleryVideo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title,link','required','message'=>'Dữ liệu bắt buộc','on'=>'write',),
+			array('title,link,catid','required','message'=>'Dữ liệu bắt buộc','on'=>'write',),
 			array('title', 'unique','message'=>'Video này đã tồn tại','on'=>'write'),
 			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'write'),
 			array('description', 'length', 'max'=>512,'message'=>'Tối đa 512 kí tự','on'=>'write'),
 			array('introimage', 'length', 'max'=>8,'message'=>'Tối đa 512 kí tự','on'=>'write'),
 			array('list_special,lang', 'safe','on'=>'write'),
-			array('title,lang','safe','on'=>'search'),
+			array('title,lang,catid,special','safe','on'=>'search'),
 			array('link','safe','on'=>'upload_video'),
 			array('introimage','safe','on'=>'upload_image'),
 		);
@@ -324,6 +332,21 @@ class GalleryVideo extends CActiveRecord
 		$criteria=new CDbCriteria;
 		$criteria->compare('lang',$this->lang);
 		$criteria->compare('title',$this->title,true);
+		if($this->special !='')
+			$criteria->addInCondition('special',self::getCode_special($this->special));
+		//Filter catid
+		$cat = Category::model ()->findByPk ( $this->catid );
+		if ($cat != null) {
+			$child_categories = $cat->child_categories;
+			$list_child_id = array ();
+			//Set itself
+			$list_child_id [] = $cat->id;
+			if ($child_categories != null)
+				foreach ( $child_categories as $id => $child_cat ) {
+					$list_child_id [] = $id;
+				}
+			$criteria->addInCondition ( 'catid', $list_child_id );
+		}
 		$criteria->order="id DESC";
 		if(isset($_GET['pageSize']))
 				Yii::app()->user->setState('pageSize',$_GET['pageSize']);

@@ -26,13 +26,13 @@ $this->bread_crumbs=array(
                         		$total += $qty*$product->num_price;
                         	?>
                             <tr>
-                                <td align="center"><?php echo CHtml::ajaxLink(Language::t('Xóa SP'),Yii::app()->createUrl('site/removeCart',array('id'=>$id_product)), array('dataType'=>'json','success'=>'function(data){$(".main").html(data.cart);$("#qty_cart").html(" "+data.qty)}'), array('id'=>'remove-cart'.$id_product));?></td>
+                                <td align="center"><?php echo CHtml::ajaxLink(Language::t('Xóa SP'),Yii::app()->createUrl('cart/removeCart',array('id'=>$id_product)), array('dataType'=>'json','success'=>'function(data){$(".main").html(data.cart);$("#qty_cart").html(" "+data.qty)}'), array('id'=>'remove-cart'.$id_product));?></td>
                                 <td><?php echo $product->code;?></td>
                                 <td><?php echo $product->name;?></td>
                                 <td align="right"><?php echo $product->code;?></td>
-                                <td align="center"><?php echo CHtml::ajaxLink('+',Yii::app()->createUrl('site/plusMinusCart',array('id'=>$id_product,'sign'=>'1')), array('dataType'=>'json','success'=>'function(data){$(".main").html(data.cart);$("#qty_cart").html(" "+data.qty)}'), array('id'=>'plus-cart'.$id_product,'class'=>'btn-plus'));?></td>
+                                <td align="center"><?php echo CHtml::ajaxLink('+',Yii::app()->createUrl('cart/plusMinusCart',array('id'=>$id_product,'sign'=>'1')), array('dataType'=>'json','success'=>'function(data){$(".main").html(data.cart);$("#qty_cart").html(" "+data.qty)}'), array('id'=>'plus-cart'.$id_product,'class'=>'btn-plus'));?></td>
                                 <td align="center"><?php echo $qty?></td>
-                                <td align="center"><?php echo CHtml::ajaxLink('-',Yii::app()->createUrl('site/plusMinusCart',array('id'=>$id_product,'sign'=>'-1')), array('dataType'=>'json','success'=>'function(data){$(".main").html(data.cart);$("#qty_cart").html(" "+data.qty)}'), array('id'=>'minus-cart'.$id_product,'class'=>'btn-minus'));?></td>
+                                <td align="center"><?php echo CHtml::ajaxLink('-',Yii::app()->createUrl('cart/plusMinusCart',array('id'=>$id_product,'sign'=>'-1')), array('dataType'=>'json','success'=>'function(data){$(".main").html(data.cart);$("#qty_cart").html(" "+data.qty)}'), array('id'=>'minus-cart'.$id_product,'class'=>'btn-minus'));?></td>
                                 <td align="right"><?php echo number_format($product->num_price, 0, ',', '.').' '.$product->unit_price;?></td>
                             </tr>
                             <?php endforeach;?>                           

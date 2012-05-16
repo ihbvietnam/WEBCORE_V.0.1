@@ -10,22 +10,22 @@ $this->bread_crumbs=array(
 ?>
 <div class="contact-outer">
             	<div class="contact-detail">
-                	<h2><?php echo Language::t(Setting::s('COMPANY'));?></h2>
-                    <p><?php echo Language::t('Số TK');?>: <?php echo Language::t(Setting::s('BANK_ACCOUNT'));?></p>
-                    <p><?php echo Language::t('MST');?>: <?php echo Language::t(Setting::s('MA_SO_THUE'));?></p>
-                    <p><?php echo Language::t('Email');?>: <?php echo Language::t(Setting::s('EMAIL'));?></p>
-                    <p><?php echo Language::t('Website');?>: <?php echo Language::t(Setting::s('WEBSITE'));?></p>
+                	<h2><?php echo Language::t(Setting::s('COMPANY','System'));?></h2>
+                    <p><?php echo Language::t('Số TK');?>: <?php echo Language::t(Setting::s('BANK_ACCOUNT','System'));?></p>
+                    <p><?php echo Language::t('MST');?>: <?php echo Language::t(Setting::s('MA_SO_THUE','System'));?></p>
+                    <p><?php echo Language::t('Email');?>: <?php echo Language::t(Setting::s('EMAIL','System'));?></p>
+                    <p><?php echo Language::t('Website');?>: <?php echo Language::t(Setting::s('WEBSITE','System'));?></p>
                 </div><!--contact-detail-->	
                 <div class="contact-tab">
                 	<div class="tab-click1 active">
                     	<h3><?php echo Language::t('Văn phòng giao dịch');?></h3>
-                        <p><?php echo Language::t(Setting::s('ADDRESS'));?></p>
-                        <p><?php echo Language::t('ĐT');?>: <?php echo Language::t(Setting::s('MOBILE'));?></p>
+                        <p><?php echo Language::t(Setting::s('ADDRESS','System'));?></p>
+                        <p><?php echo Language::t('ĐT');?>: <?php echo Language::t(Setting::s('MOBILE','System'));?></p>
                     </div><!--tab-click-->
                     <div class="tab-click2">
                     	<h3><?php echo Language::t('Showroom');?></h3>
-                        <p><?php echo Language::t(Setting::s('ADDRESS_SHOWROOM'));?></p>
-                        <p><?php echo Language::t('ĐT');?>: <?php echo Language::t(Setting::s('MOBILE_SHOWROOM'));?></p>
+                        <p><?php echo Language::t(Setting::s('ADDRESS_SHOWROOM','System'));?></p>
+                        <p><?php echo Language::t('ĐT');?>: <?php echo Language::t(Setting::s('MOBILE_SHOWROOM','System'));?></p>
                     </div><!--tab-click-->
                 </div><!--contact-tab-->
                 <div class="contact-map">

@@ -47,14 +47,14 @@ class SiteController extends Controller
 		$criteria=new CDbCriteria;
 		$criteria->compare('status', Product::STATUS_ACTIVE);
 		$criteria->order='id desc';
-		$criteria->limit=Setting::s('SIZE_REMARK_PRODUCT');
+		$criteria->limit=Setting::s('SIZE_REMARK_PRODUCT','Product');
 		$list_product=Product::model()->findAll($criteria);
 		
 		$criteria=new CDbCriteria;
 		$criteria->compare('status', Product::STATUS_ACTIVE);
 		$criteria->addNotInCondition('catid', array(News::PRESENT_CATEGORY,News::GUIDE_CATEGORY));
 		$criteria->order='id desc';
-		$criteria->limit=Setting::s('SIZE_HOME_NEWS');
+		$criteria->limit=Setting::s('SIZE_HOME_NEWS','News');
 		$list_news=News::model()->findAll($criteria);
 		$this->render( 'home' ,array('list_news'=>$list_news,'list_product'=>$list_product));
 	}	
@@ -75,7 +75,7 @@ class SiteController extends Controller
 				$criteria->addCondition('num_price >= '. $search->start_price);
 		}
 		$criteria->order = "id DESC";
-		$result=new CActiveDataProvider ( 'Product', array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Setting::s('SEARCH_PAGE_SIZE' ) ) ) );
+		$result=new CActiveDataProvider ( 'Product', array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Setting::s('SEARCH_PAGE_SIZE','Product' ) ) ) );
 		$this->render( 'search',array('result'=>$result) );
 	}	
 	/**

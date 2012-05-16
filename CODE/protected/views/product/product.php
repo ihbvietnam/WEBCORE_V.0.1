@@ -1,8 +1,7 @@
 <?php 
 $this->bread_crumbs=array(
 	array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
-	array('url'=>Yii::app()->createUrl('site/product'),'title'=>Language::t('Sản phẩm')),
-	array('url'=>Yii::app()->createUrl('site/product',array('cat_alias'=>$cat->alias)),'title'=>Language::t($cat->name)),
+	array('url'=>Yii::app()->createUrl('product/index',array('cat_alias'=>$cat->alias)),'title'=>Language::t($cat->name)),
 	array('url'=>'','title'=>Language::t($product->name)),
 )
 ?>
@@ -37,7 +36,7 @@ $this->bread_crumbs=array(
                 <div class="pd-right">
                 	<div class="pd-title">
                     	<h2><?php echo $product->name?></h2>
-                    	<?php echo CHtml::ajaxLink(Language::t('Cho vào giỏ'),Yii::app()->createUrl('product/addCart',array('id'=>$product->id)), array('success'=>'function(data){$("#qty_cart").html(" "+data);jAlert("'.Language::t('Đã thêm sản phẩm vào giỏ hàng').'");}'), array('id'=>'add-cart','class'=>'pd-cart'));?>
+                    	<?php echo CHtml::ajaxLink(Language::t('Cho vào giỏ'),Yii::app()->createUrl('cart/addCart',array('id'=>$product->id)), array('success'=>'function(data){$("#qty_cart").html(" "+data);jAlert("'.Language::t('Đã thêm sản phẩm vào giỏ hàng').'");}'), array('id'=>'add-cart','class'=>'pd-cart'));?>
                         <h5><?php echo Language::t('Mã SP')?>: <span><?php echo $product->code?></span></h5>
                         <h5><?php echo Language::t('Giá')?>: <span><?php if($product->num_price!='') echo number_format($product->num_price, 0, ',', '.')?></span> <?php echo $product->unit_price?></h5>
                         <h5><?php echo Language::t('Tình trạng')?>: <span><?php if($product->amount_status == 0) echo Language::t('Hết hàng'); else echo Language::t('Còn hàng');?></span></h5>
@@ -55,9 +54,6 @@ $this->bread_crumbs=array(
             <div class="tab-outer">
                 <div class="tab-title">
                     <a href="#tab1"><?php echo Language::t('Thông số kỹ thuật')?></a>
-                    <a href="#tab2"><?php echo Language::t('Showroom bán hàng')?></a>
-                    <a href="#tab3"><?php echo Language::t('Văn phòng giao dịch')?></a>
-                    <a href="#tab4"><?php echo Language::t('Nhận xét')?></a>
                 </div><!-- tab-title -->
                 <div class="tab-container">
                     <div id="tab1" class="tab-content">
@@ -69,30 +65,6 @@ $this->bread_crumbs=array(
                         ?>
                         <br />                        
                     </div><!-- content-1 -->
-                    <div id="tab2" class="tab-content">
-                        <?php 
-                        if($product->showroom != '') 
-                        	echo $product->showroom;
-                        else
-                        	echo Language::t('Chưa có thông tin cập nhật!');                      
-                        ?>
-                    </div><!-- content-2 -->
-                    <div id="tab3" class="tab-content">
-                        <?php 
-                        if($product->store != '') 
-                        	echo $product->store;
-                        else
-                        	echo Language::t('Chưa có thông tin cập nhật!');                      
-                        ?>
-                    </div><!-- content-3 -->
-                    <div id="tab4" class="tab-content">
-                         <?php 
-                        if($product->comment != '') 
-                        	echo $product->comment;
-                        else
-                        	echo Language::t('Chưa có thông tin cập nhật!');                      
-                        ?>
-                    </div><!-- content-3 -->
                 </div><!-- tab-container -->
             </div><!-- tab-outer -->
             <div class="big-title"><label><?php echo Language::t('Sản phẩm tương tự')?></label></div>

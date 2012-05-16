@@ -2,6 +2,7 @@
 
 class Setting extends CActiveRecord
 {
+	public $list=array('System'=>'System','News'=>'News','Product'=>'Product','QA'=>'QA','StaticPage'=>'StaticPage');
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -14,8 +15,9 @@ class Setting extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('name,value','required'),
-			array('name','unique')
+			array('name,value,category','required'),
+			array('name','unique'),
+			array('description','safe')
 		);
 	}
 	public function attributeLabels()
@@ -23,6 +25,8 @@ class Setting extends CActiveRecord
 		return array(
 			'name' => 'Tên tham số',
 			'value' => 'Giá trị',
+			'category'=>'Nhóm',
+			'description'=>'Miêu tả'
 		);
 	}
 /**
@@ -32,10 +36,7 @@ class Setting extends CActiveRecord
 	public function search() {
 		$criteria = new CDbCriteria ();
 		$criteria->compare ( 'name', $this->name );
-		if($this->module != 'all')
-			$criteria->compare ( 'module', $this->module );
-		$criteria->compare ( 'controller', $this->controller );
-		$criteria->compare ( 'action', $this->action );
+		$criteria->compare ( 'category', $this->category );
 		if (isset ( $_GET ['pageSize'] ))
 			Yii::app ()->user->setState ( 'pageSize', $_GET ['pageSize'] );
 		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Yii::app ()->params ['defaultPageSize'] ) ), 'sort' => array ('defaultOrder' => 'id DESC' )    		
@@ -61,67 +62,24 @@ class Setting extends CActiveRecord
 		foreach($list_news as $news)
 			$names[]=$news->name;
 			return $names;
-	}
-	//Get list module
-	public function getList_modules(){
-		$dbCommand = Yii::app()->db->createCommand("
-   			SELECT module FROM `tbl_language` GROUP BY `module`
-		");
-		$data = $dbCommand->queryAll();
-		$list=array();	 
-		foreach ($data as $item){
-			$list[$item['module']]=$item['module'];			
-		}
-        return $list;
-    }
- 	//Get list controller
-	public function getList_controllers(){
-		$dbCommand = Yii::app()->db->createCommand("
-   			SELECT controller FROM `tbl_language` WHERE module = '$this->module' GROUP BY `controller`
-		");
-		$data = $dbCommand->queryAll();
-		$list=array();	 
-		foreach ($data as $item){
-			$list[$item['controller']]=$item['controller'];			
-		}
-        return $list;
-    }
-	//Get list action
-	public function getList_actions(){
-		$dbCommand = Yii::app()->db->createCommand("
-   			SELECT action FROM `tbl_language` WHERE module =  '$this->module' AND controller ='$this->controller' GROUP BY `action`
-		");
-		$data = $dbCommand->queryAll();
-		$list=array();	 
-		foreach ($data as $item){
-			$list[$item['action']]=$item['action'];			
-		}
-        return $list;
-    } 	
-	public static function s($name) {
+	}	
+	public static function s($name,$category) {
 		$criteria = new CDbCriteria ();
 		$criteria->compare ( 'name', $name );
-		if (isset ( Yii::app ()->controller->module->id ))
-			$criteria->compare ( 'module', Yii::app ()->controller->module->id );
-		else
-			$criteria->compare ( 'module', '' );
-		$criteria->compare ( 'controller', Yii::app ()->controller->id );
-		$criteria->compare ( 'action', Yii::app ()->controller->action->id );
+		$criteria->compare ( 'category', $category );
 		$model = self::model ()->find ( $criteria );
-		if (isset ( $model )) {
-				return $model->value;
-		} else {
-			$model = new Setting ();
-			$model->name = $name;
-			$model->value = 1;
-			if (isset ( Yii::app ()->controller->module->id ))
-				$model->module = Yii::app ()->controller->module->id;
-			else
-				$model->module = '';
-			$model->controller = Yii::app ()->controller->id;
-			$model->action = Yii::app ()->controller->action->id;
-			$model->save ();
-			return $model->value;
+		if (isset ( $model )) 
+				return $model->value;	
+		else
+		{
+			/*
+			$model=new Setting();
+			$model->name=$name;
+			$model->value=1;
+			$model->category=$category;
+			$model->save();
+			*/
+			throw new CHttpException(400,'Trong nhóm '.$category.'không tồn tại tham số cấu hình '.$name);
 		}
 	}
 }

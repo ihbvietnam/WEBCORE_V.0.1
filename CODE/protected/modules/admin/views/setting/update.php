@@ -19,32 +19,18 @@
 			<?php $form=$this->beginWidget('CActiveForm', array('method'=>'post','enableAjaxValidation'=>true)); ?>	
 			<!--begin left content-->
 			<div class="fl" style="width:480px;">
-				<ul>
-					<div class="row">
-                    <li>
-                        <?php echo $form->labelEx($model,'module'); ?>
-                        <?php echo $form->textField($model,'module',array('style'=>'width:150px','readonly'=>'readonly')); ?>
-                  		<?php echo $form->error($model, 'module'); ?>
-                    </li>
-                    </div>
+				<ul>             
                     <div class="row">
                     <li>
-                        <?php echo $form->labelEx($model,'controller'); ?>
-                        <?php echo $form->textField($model,'controller',array('style'=>'width:150px','readonly'=>'readonly')); ?>
-                  		<?php echo $form->error($model, 'controller'); ?>
-                    </li>
-                    </div>
-                    <div class="row">
-                    <li>
-                        <?php echo $form->labelEx($model,'action'); ?>
-                        <?php echo $form->textField($model,'action',array('style'=>'width:150px','readonly'=>'readonly')); ?>
-                  		<?php echo $form->error($model, 'action'); ?>
+                        <?php echo $form->labelEx($model,'category'); ?>
+                        <?php echo $form->dropDownList($model,'category',$model->list,array('style'=>'width:150px')); ?>
+                  		<?php echo $form->error($model, 'category'); ?>
                     </li>
                     </div>
 				    <div class="row">
                     <li>
                         <?php echo $form->labelEx($model,'name'); ?>
-                        <?php echo $form->textField($model,'name',array('style'=>'width:150px','readonly'=>'readonly')); ?>
+                        <?php echo $form->textField($model,'name',array('style'=>'width:150px')); ?>
                   		<?php echo $form->error($model, 'name'); ?>
                     </li>
                     </div>
@@ -54,14 +40,26 @@
                         <?php echo $form->textField($model,'value',array('style'=>'width:150px')); ?>
                   		<?php echo $form->error($model, 'value'); ?>
                     </li>
-                    </div>
+                    </div>                  
                    		<li>
                    		<input type="reset" class="button" value="Hủy thao tác" style="margin-left:153px; width:125px;" />
                     	<input type="submit" class="button" value="Cập nhật" style="margin-left:20px; width:125px;" />					 
                     	</li>
 				</ul>
 			</div>
-			<!--end left content-->			
+			<!--end left content-->	
+			<!--begin right content-->
+			<div class="fl menu-tree" style="width:470px;">
+			<ul>
+				 <div class="row">
+						<li>
+                       		<?php echo $form->labelEx($model,'description',array('style'=>'width:200px;')); ?>
+                        	<?php echo $form->textArea($model,'description',array('style'=>'width:300px;max-width:300px;','rows'=>6)); ?>
+                   			<?php echo $form->error($model, 'description'); ?>
+                    	</li>
+                    </div>
+			</ul>
+			</div>		
 			<?php $this->endWidget(); ?>
 			<div class="clear"></div>
 		</div>

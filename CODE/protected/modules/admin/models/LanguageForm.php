@@ -179,7 +179,7 @@ class LanguageForm extends CFormModel
 			if (! $record->delete ())
 				return false;
 		}
-		$setting = Setting::s('ADMIN_LANGUAGE');
+		$setting = Setting::s('ADMIN_LANGUAGE','System');
 		if ($language == $setting->value) {
 			$setting->value = Language::DEFAULT_LANGUAGE;
 			$setting->save ();

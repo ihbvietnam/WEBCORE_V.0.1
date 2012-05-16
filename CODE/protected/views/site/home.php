@@ -27,7 +27,7 @@ $this->bread_crumbs=array(
                     <a class="viewmore" href="<?php echo $data->url?>"><?php echo Language::t('Chi tiết')?></a>
                 	<div class="g-content">
                     	<div class="g-row"><a class="g-title" href="<?php echo $data->url?>"><?php echo $data->title?></a><span><?php echo date("(d/m/Y)"); ?></span></div>
-                        <div class="g-row"><?php echo iPhoenixString::createIntrotext($data->introtext,Setting::s('HOME_INTRO_LENGTH'));?></div>
+                        <div class="g-row"><?php echo iPhoenixString::createIntrotext($data->introtext,Setting::s('HOME_INTRO_LENGTH','News'));?></div>
                     </div>
                 </div><!--grid-->
                 <?php endforeach;?>              

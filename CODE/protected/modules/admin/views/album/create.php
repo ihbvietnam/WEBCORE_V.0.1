@@ -39,7 +39,24 @@
                         	<?php echo $form->dropDownList($model,'list_special',Album::getList_label_specials(),array('style'=>'width:150px','multiple' => 'multiple')); ?>
                   			<?php echo $form->error($model, 'list_special'); ?>
                     	</li>
-                    </div>					
+                    </div>	
+                    <?php 
+						$list=array();
+						foreach ($list_category as $id=>$cat){
+							$view = "";
+							for($i=1;$i<$cat['level'];$i++){
+								$view .="---";
+							}
+							$list[$id]=$view." ".$cat['name']." ".$view;
+						}
+						?>
+						<div class="row">
+						<li>
+							<?php echo $form->labelEx($model,'category'); ?>
+							<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:200px')); ?>
+							<?php echo $form->error($model, 'catid'); ?>
+						</li>
+						</div>				
            			<div class="row">
 					<li>
 						<?php echo $form->labelEx($model,'description'); ?>
@@ -59,7 +76,7 @@
 			<ul>
 				<div class="row">
 						<li>
-							<?php echo $this->renderPartial('/image/_galleryupload', array('model'=>$model,'attribute'=>'images','type_image'=>'thumb_update')); ?>
+							<?php echo $this->renderPartial('/image/_galleryupload', array('model'=>$model,'attribute'=>'images','type_image'=>'thumb_upload')); ?>
 							<?php echo $form->error($model, 'images'); ?>				
 						</li>
 					</div>

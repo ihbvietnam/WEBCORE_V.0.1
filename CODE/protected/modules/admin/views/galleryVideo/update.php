@@ -37,10 +37,27 @@
 					 <div class="row">
 						<li>
 							<?php echo $form->labelEx($model,'introimage'); ?>
-							<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_update')); ?>		
+							<?php echo $this->renderPartial('/image/_signupload', array('model'=>$model,'attribute'=>'introimage','type_image'=>'thumb_upload')); ?>		
 							<?php echo $form->error($model, 'introimage'); ?>
 						</li>
 					</div>	
+					 <?php 
+						$list=array();
+						foreach ($list_category as $id=>$cat){
+							$view = "";
+							for($i=1;$i<$cat['level'];$i++){
+								$view .="---";
+							}
+							$list[$id]=$view." ".$cat['name']." ".$view;
+						}
+						?>
+						<div class="row">
+						<li>
+							<?php echo $form->labelEx($model,'category'); ?>
+							<?php echo $form->dropDownList($model,'catid',$list,array('style'=>'width:200px')); ?>
+							<?php echo $form->error($model, 'catid'); ?>
+						</li>
+						</div>		
 					<div class="row">
                     	<li>
                         	<?php echo $form->labelEx($model,'list_special'); ?>

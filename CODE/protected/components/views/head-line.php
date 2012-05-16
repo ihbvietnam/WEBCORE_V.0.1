@@ -1,6 +1,6 @@
   			<div id="slider" class="nivoSlider">
   			<?php $index=0;?>
-  			<?php foreach ($list_id as $id):?>	
+  			<?php foreach ($list_images as $id):?>	
   				<?php 
   				$index++;
   				$image = Image::model ()->findByPk ( $id );

@@ -45,6 +45,8 @@ class Image extends CActiveRecord
 			'introimage'=>array('h'=>100,'w'=>130)
 		),
 		'Album'=>array(
+			'thumb_upload'=>array('h'=>100,'w'=>'100'),
+			'thumb'=>array('h'=>50,'w'=>50)
 		),
 		'Banner'=>array(
 			'thumb_upload'=>array('h'=>100,'w'=>'100'),
@@ -58,6 +60,8 @@ class Image extends CActiveRecord
 			'thumb_right'=>array('h'=>450,'w'=>300)
 		),
 		'GalleryVideo'=>array(
+			'thumb_upload'=>array('h'=>100,'w'=>'100'),
+			'thumb'=>array('h'=>50,'w'=>50)
 		),
 		'Image'=>array(
 		),
