@@ -125,7 +125,6 @@ class AlbumController extends Controller
 		$this->initCheckbox('checked-album-list');
 		$model=new Album('search');		
 		$model->unsetAttributes();  // clear any default values
-		$model->lang=Article::LANG_VI;
 		if(isset($_GET['Album']))
 			$model->attributes=$_GET['Album'];
 		$this->render('index',array(

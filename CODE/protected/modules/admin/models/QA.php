@@ -144,7 +144,6 @@ class QA extends CActiveRecord
 			array('email','email','message'=>'Sai dịnh dạng mail','on'=>'question'),
 			array('phone', 'length', 'max'=>13,'message'=>'Tối đa 13 kí tự','on'=>'question'),
 			array('answer,lang','safe','on'=>'answer'),
-			array('lang', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'answer,question'),
 			array('title,status,lang','safe','on'=>'search'),
 		);
 	}

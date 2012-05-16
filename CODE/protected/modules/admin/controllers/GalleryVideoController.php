@@ -140,7 +140,6 @@ class GalleryVideoController extends Controller
 		$this->initCheckbox('checked-video-list');
 		$model=new GalleryVideo('search');
 		$model->unsetAttributes();  // clear any default values
-		$model->lang=Article::LANG_VI;
 		if(isset($_GET['GalleryVideo']))
 			$model->attributes=$_GET['GalleryVideo'];
 		$this->render('index',array(

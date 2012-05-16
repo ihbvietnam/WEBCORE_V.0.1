@@ -89,7 +89,9 @@ class Product extends CActiveRecord
 	 * @return string $url, url of this product
 	 */
  	public function getUrl(){
-		$url=Yii::app()->createUrl("site/video",array('video_alias'=>$this->alias)); 
+ 		$cat_alias=$this->category->alias;
+ 		$alias=$this->alias;
+		$url=Yii::app()->createUrl("site/product",array('cat_alias'=>$cat_alias,'product_alias'=>$alias)); 
 		return $url;
 	}
  	
@@ -101,16 +103,40 @@ class Product extends CActiveRecord
 		if($this->introimage>0){
 			$image=Image::model()->findByPk($this->introimage);
 			$src=$image->getThumb('Product',$type);
-			return '<img class="img" src="'.$src.'" alt="'.$image->name.'">';
+			return '<img class="img" src="'.$src.'" alt="'.$image->title.'">';
 		}
 		else {
 			
 			return '<img class="img" src="'.Image::getDefaultThumb('Product', $type).'" alt=""';
 		}
 	}
+
 	/**
 	 * Get all specials of class Product
 	 * Used in dropDownList when create or update product
+	 */
+	public function getList_similar(){
+		if($this->list_suggest != ''){
+			$list = array_diff ( explode ( ',', $this->list_suggest ), array ('' ) );
+			$result=array();
+			foreach ($list as $id){
+				$result[]=Product::model()->findByPk($id);
+			}
+		}
+		else {
+			$criteria=new CDbCriteria;
+			$criteria->compare('status', Product::STATUS_ACTIVE);
+			$criteria->order='id desc';
+			$criteria->compare('catid',$this->catid);
+			$criteria->compare('manufacturer_id',$this->manufacturer_id);
+			$criteria->limit=Setting::s('LIMIT_SIMILAR_PRODUCT');
+			$result=Product::model()->findAll($criteria);		
+		}
+		return $result;
+	}
+	/**
+	 * Get all specials of class Product
+	 * Use in drop select when create, update album
 	 */
 	static function getList_label_specials()
  	{
@@ -199,8 +225,8 @@ class Product extends CActiveRecord
 		return array(
 			array('name,catid,manufacturer_id,code,introimage','required','message'=>'Dữ liệu bắt buộc','on'=>'write'),
 			array('description,parameter', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'write'),
-			array('list_special,lang,num_price,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
-			array('lang', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
+			array('list_special,lang,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
+			array('num_price', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
 			array('name,lang, manufacturer_id, catid,special, amount_status','safe','on'=>'search'),
 			array('introimage','safe','on'=>'upload_image'),		
 		);
@@ -504,7 +530,7 @@ class Product extends CActiveRecord
 			//var_dump($manufacturer['parent_id']);
 			//exit;
 			$tmp = Category::model()->findByPk($id);
-			if(($manufacturer['lang']==Article::LANG_VI)&&($tmp['parent_id']==Category::GROUP_MANUFACTURER)) 
+			if($tmp['parent_id']==Category::GROUP_MANUFACTURER) 
 				$list_manufacturer[$id]=$manufacturer['name'];
 		}
 		
@@ -529,8 +555,7 @@ class Product extends CActiveRecord
 			//var_dump($manufacturer['parent_id']);
 			//exit;
 			$tmp = Category::model()->findByPk($id);
-			if(($manufacturer['lang']==Article::LANG_VI)) 
-				$list_manufacturer[$id]=$manufacturer['name'];
+			$list_manufacturer[$id]=$manufacturer['name'];
 		}
 		
 		return $list_manufacturer;
@@ -550,8 +575,7 @@ class Product extends CActiveRecord
 		$list_manufacturer=array();
 		foreach ($list as $id=>$manufacturer){			
 			$tmp = Category::model()->findByPk($id);
-			if(($manufacturer['lang']==Article::LANG_VI)) 
-				$list_manufacturer[$id]=$manufacturer['name'];
+			$list_manufacturer[$id]=$manufacturer['name'];
 		}
 		
 		return $list_manufacturer;

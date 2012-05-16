@@ -55,7 +55,7 @@
                     <ul>
                      <li>
 							<?php echo $form->labelEx($model,'lang'); ?>
-							<?php echo $form->dropDownList($model,'lang',array(''=>'Tất cả',Article::LANG_EN=>'English',Article::LANG_VI=>'Tiếng Việt'),array('style'=>'width:200px')); ?>
+							<?php echo $form->dropDownList($model,'lang',array(''=>'Tất cả')+LanguageForm::getList_languages_exist(),array('style'=>'width:200px')); ?>
                     	</li> 
                   	 <?php 
 					$list=array(''=>'Tất cả',QA::STATUS_NOT_ANSWER=>'Chưa trả lời',QA::STATUS_ANSWER=>'Đã trả lời');

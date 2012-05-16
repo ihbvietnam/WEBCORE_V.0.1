@@ -221,7 +221,6 @@ class Album extends CActiveRecord
 			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'write'),
 			array('description', 'length', 'max'=>512,'message'=>'Tối đa 512 kí tự','on'=>'write'),
 			array('lang,list_special','safe','on'=>'write'),
-			array('lang', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
 			array('title,special,lang','safe','on'=>'search'),
 			array('images','safe','on'=>'upload_image'),
 		);

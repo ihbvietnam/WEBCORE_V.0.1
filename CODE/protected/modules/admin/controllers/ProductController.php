@@ -90,7 +90,7 @@ class ProductController extends Controller
 		$list=$group->list_categories;
 		$list_category=array();
 		foreach ($list as $id=>$cat){
-			if($cat['lang']==Article::LANG_VI) $list_category[$id]=$cat;
+			$list_category[$id]=$cat;
 		}
 		
 		//List manufacturer
@@ -99,7 +99,7 @@ class ProductController extends Controller
 		$list=$group->list_categories;
 		$list_manufacturer=array();
 		foreach ($list as $id=>$manufacturer){
-			if($manufacturer['lang']==Article::LANG_VI) $list_manufacturer[$id]=$manufacturer;
+			$list_manufacturer[$id]=$manufacturer;
 		}
 		
 		//Handler list suggest product
@@ -131,7 +131,6 @@ class ProductController extends Controller
 			$model->scenario = 'write';
 			// Ajax validate
 			$this->performAjaxValidation ( $model );
-			
 			if (isset ( $_POST ['Product'] )) {
 				$model->attributes = $_POST ['Product'];
 				if(!isset($_POST['Product']['list_special'])) $model->list_special=array();
@@ -144,7 +143,7 @@ class ProductController extends Controller
 		$list=$group->list_categories;
 		$list_category=array();
 		foreach ($list as $id=>$cat){
-			if($cat['lang']==Article::LANG_VI) $list_category[$id]=$cat;
+			$list_category[$id]=$cat;
 		}
 		
 		//List manufacturer
@@ -153,7 +152,7 @@ class ProductController extends Controller
 		$list=$group->list_categories;
 		$list_manufacturer=array();
 		foreach ($list as $id=>$manufacturer){
-			if($manufacturer['lang']==Article::LANG_VI) $list_manufacturer[$id]=$manufacturer;
+			$list_manufacturer[$id]=$manufacturer;
 		}
 			
 		//Handler list suggest Product
@@ -332,7 +331,7 @@ class ProductController extends Controller
 	public function initCheckbox($name_params){
 		if (! isset ( Yii::app ()->session [$name_params] ))
 			Yii::app ()->session [$name_params] = array ();
-		if (! Yii::app ()->getRequest ()->getIsAjaxRequest ())
+		if (! Yii::app ()->getRequest ()->getIsAjaxRequest () && $name_params != 'checked-suggest-list')
 			Yii::app ()->session [$name_params] = array ();
 		else {
 			if (isset ( $_POST ['list-checked'] )) {

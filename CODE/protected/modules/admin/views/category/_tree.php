@@ -3,20 +3,8 @@
 	<li><label><b>Cây danh mục</b></label></li>
 	<li>
 		<?php 
-			if(isset ( $_GET ['lang'] )) {
-			$lang = $_GET ['lang'];
-			switch ($lang) {
-				case 'en' :
-					$code_lang = Article::LANG_EN;
-					break;
-				case 'vi' :
-					$code_lang = Article::LANG_VI;
-					break;
-			}
 			foreach ( $list as $id => $cat ) {
-				if (isset($cat['lang']) && $cat ['lang'] == $code_lang)
 					$list_category [$id] = $cat;
-			}
 			}
 		if(!isset($list_category)) 	
 			$list_category=$list;

@@ -62,7 +62,9 @@ class News extends CActiveRecord
 	const LIST_NEWS=10;
 	const LIST_SEARCH=10;
 	const PRESENT_CATEGORY=31;
-	const PRESENT_CATEGORY_EN=71;
+	const GUIDE_CATEGORY=71;
+	const ALIAS_PRESENT_CATEGORY='gioi-thieu';
+	const ALIAS_GUIDE_CATEGORY='huong-dan';
 	
 	/**
 	 * variable using to store cached data
@@ -128,7 +130,30 @@ class News extends CActiveRecord
 		$cat=$this->category;
 		return $cat->name;
  	}	
+
  	/**
+	 * Get similar news
+	 */
+	public function getList_similar(){
+		if($this->list_suggest != ''){
+			$list = array_diff ( explode ( ',', $this->list_suggest ), array ('' ) );
+			$result=array();
+			foreach ($list as $id){
+				$result[]=News::model()->findByPk($id);
+			}
+		}
+		else {
+			$criteria=new CDbCriteria;
+			$criteria->compare('status', News::STATUS_ACTIVE);
+			$criteria->order='id desc';
+			$criteria->compare('catid',$this->catid);
+			$criteria->limit=Setting::s('LIMIT_SIMILAR_NEWS');
+			$result=News::model()->findAll($criteria);		
+		}
+		return $result;
+	}
+ 	/*
+>>>>>>> defab6eef27b51adf1326fec7582bd2ad0abc4eb
 	 * Get all specials of class News
 	 * Used in dropdownlist when create or update news
 	 */
@@ -237,7 +262,6 @@ class News extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('title,catid,fulltext', 'required','message'=>'Dữ liệu bắt buộc','on'=>'write,copy'),
-			array('title', 'validatorTitle','on'=>'write,copy'),
 			array('catid,order_view', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write,copy'),
 			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'write,copy'),
 			array('introimage', 'length', 'max'=>8,'on'=>'write,copy'),
@@ -268,10 +292,9 @@ class News extends CActiveRecord
 	/**
 	 * Function validate unique title
 	 */
-	public function validateUniqueTitle() {
+	public function validateUniqueAlias() {
 		$criteria = new CDbCriteria ();
-		$criteria->compare ( 'catid', $this->catid );
-		$criteria->compare ( 'lower(title)', strtolower ( $this->title ) );
+		$criteria->compare ( 'lower(alias)', strtolower ( $this->alias) );
 		if ($this->id > 0)
 			$criteria->addCondition ( 'id <> ' . $this->id );
 		$list = News::model ()->findAll ( $criteria );
@@ -366,12 +389,20 @@ class News extends CActiveRecord
 				$this->status=News::STATUS_ACTIVE;
 				//Set alias
 				$this->alias=iPhoenixString::createAlias($this->title);	
-			}	
+				while(!$this->validateUniqueAlias()){
+					$pre=rand(1,100);
+					$this->alias=$pre.'-'.$this->alias;
+					}
+				}	
 			else {
 				$modified=$this->modified;
 				$modified[time()]=Yii::app()->user->id;
 				$this->modified=json_encode($modified);	
 				if($this->title != $this->old_title) $this->alias=iPhoenixString::createAlias($this->title);
+				while(!$this->validateUniqueAlias()){
+					$pre=rand(1,100);
+					$this->alias=$pre.'-'.$this->alias;
+				}
 				//Handler list suggest news
 				$list_clear=array_diff(explode(',',$this->list_suggest),array(''));
 				$list_filter=array_diff($list_clear,array($this->id));
@@ -548,8 +579,11 @@ class News extends CActiveRecord
 			$copy_id = Yii::app ()->db->getLastInsertID ();
 			$model = News::model ()->findByPk ( $copy_id );
 			$model->scenario = 'copy';
-			while(!$model->validateUniqueTitle()){
-				$model->title = $model->title . ' - Copy ';
+			$model->title = $model->title . ' - Copy ';
+			$model->alias=$model->alias . '-copy';
+			while(!$model->validateUniqueAlias()){
+				$pre=rand(1,100);
+				$model->alias=$pre.'-'.$model->alias;
 			}
 			$model->created_date = time ();
 			$model->introimage=Image::copy($model->introimage,$model->id);			

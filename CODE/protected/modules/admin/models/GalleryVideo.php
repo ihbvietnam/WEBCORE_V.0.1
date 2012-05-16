@@ -93,9 +93,11 @@ class GalleryVideo extends CActiveRecord
 			$src=$image->getThumb('GalleryVideo',$type);
 			return '<img class="img" src="'.$src.'" alt="'.$image->title.'">';
 		}
-		else {
-			
-			return '<img class="img" src="'.Image::getDefaultThumb('GalleryVideo', $type).'" alt=""';
+		else {			
+			//return '<img class="img" src="'.Image::getDefaultThumb('GalleryVideo', $type).'" alt=""';
+					//Get thumb youtube
+		parse_str( parse_url( $this->link, PHP_URL_QUERY ), $vars );
+		return '<img class="img" src="http://img.youtube.com/vi/'.$vars['v'].'/1.jpg">';
 		}
 	}
 	/**
@@ -194,7 +196,6 @@ class GalleryVideo extends CActiveRecord
 			array('description', 'length', 'max'=>512,'message'=>'Tối đa 512 kí tự','on'=>'write'),
 			array('introimage', 'length', 'max'=>8,'message'=>'Tối đa 512 kí tự','on'=>'write'),
 			array('list_special,lang', 'safe','on'=>'write'),
-			array('lang', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
 			array('title,lang','safe','on'=>'search'),
 			array('link','safe','on'=>'upload_video'),
 			array('introimage','safe','on'=>'upload_image'),
@@ -282,15 +283,7 @@ class GalleryVideo extends CActiveRecord
 				if($this->title != $this->old_title) $this->alias=iPhoenixString::createAlias($this->title).'-'.date('d').date('m').date('Y');
 			}	
 			//Encode special
-			$this->special=iPhoenixStatus::encodeStatus($this->list_special);
-			//Set list_special of other gallery to empty
-			if(sizeof($this->list_special)>0){
-				$list_gallery=GalleryVideo::model()->findAll('id <> '.$this->id.' AND lang = '.$this->lang);
-				foreach ($list_gallery as $gallery){
-					$gallery->list_special=array();
-					$gallery->save();
-				}
-			} 
+			$this->special=iPhoenixStatus::encodeStatus($this->list_special); 
 			$this->type=Article::ARTICLE_VIDEO;
 			$this->other=json_encode($this->list_other_attributes);
 			return true;
