@@ -137,7 +137,7 @@ class News extends CActiveRecord
 	return array(
 			self::SPECIAL_NOTICE=>'Hiển thị trong thông báo',
 			self::SPECIAL_REMARK=>'Hiển thị trong phần tin nổi bật',
-			self::SPECIAL_MARQUEE=>'Hiển thị trong phần tin chạy thuộc trang chủ',
+			self::SPECIAL_MARQUEE=>'Hiển thị trong phần tin chạy',
 		);
  	}
  	 /*

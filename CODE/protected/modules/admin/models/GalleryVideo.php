@@ -203,7 +203,8 @@ class GalleryVideo extends CActiveRecord
 			'introimage'=>'Ảnh minh họa',
 			'list_special'=>'Trạng thái hiển thị',
 			'lang'=>'Ngôn ngữ',
-			'special'=>'Lọc theo nhóm hiển thị'
+			'special'=>'Lọc theo nhóm hiển thị',
+			'catid'=>'Danh mục'
 		);
 	}
 /**

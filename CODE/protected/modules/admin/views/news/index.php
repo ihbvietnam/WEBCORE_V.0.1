@@ -40,7 +40,15 @@
 								'style'=>'width:230px;',
 								),
 						)); ?>								
-                        </li>                       
+                        </li>   
+                         <?php 
+							$list=array(''=>'Không lọc');
+							$list +=News::getList_label_specials();
+						?>	
+						<li>
+							<?php echo $form->labelEx($model,'special'); ?>
+							<?php echo $form->dropDownList($model,'special',$list,array('style'=>'width:200px')); ?>
+						</li>                    
                         <li>
                         <?php 
 							echo CHtml::submitButton('Lọc kết quả',

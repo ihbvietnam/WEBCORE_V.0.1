@@ -883,7 +883,7 @@ class Category extends CActiveRecord
 		elseif($this->findGroup() == Category::GROUP_NEWS){
 			
  			$cat_alias=$this->alias;
- 			$url=Yii::app()->createUrl("/news/index",array('cat_alias'=>$cat_alias));
+ 			$url=Yii::app()->createUrl("/news/list",array('cat_alias'=>$cat_alias));
 			return $url;
 		}
 		elseif($this->findGroup() == Category::GROUP_STATICPAGE){
@@ -907,7 +907,7 @@ class Category extends CActiveRecord
 		elseif($this->findGroup() == Category::GROUP_PRODUCT){
 
  			$cat_alias=$this->alias;
- 			$url=Yii::app()->createUrl("/product/index",array('cat_alias'=>$cat_alias));
+ 			$url=Yii::app()->createUrl("/product/list",array('cat_alias'=>$cat_alias));
 			return $url;
 		}
 		else 

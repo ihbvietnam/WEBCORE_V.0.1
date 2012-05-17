@@ -115,7 +115,7 @@
 						'htmlOptions'=>array('style'=>'text-align:center'),	
 					), 	
 					array(
-						'name'=>'category',
+						'name'=>'catid',
 						'value'=>'$data->label_category',
 						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
 					), 

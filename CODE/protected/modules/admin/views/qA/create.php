@@ -26,8 +26,8 @@
 						<?php echo $form->textField($model,'title',array('style'=>'width:280px;','maxlength'=>'128'))?>
 						<?php echo $form->error($model,'title'); ?>
 					</li>	
-					</div>
-					<?php 
+					</div>	
+					    <?php 
 							$list = QA::getList_label_specials();
 							unset($list[QA::SPECIAL_ANSWER]);						
 						?>	
@@ -37,7 +37,7 @@
                         	<?php echo $form->dropDownList($model,'list_special',$list,array('style'=>'width:250px','multiple' => 'multiple')); ?>
                   			<?php echo $form->error($model, 'list_special'); ?>
                     	</li>
-                    	</div>		
+                    	</div>
 					<div class="row">
 					<li>
 						<?php echo $form->labelEx($model,'fullname'); ?>

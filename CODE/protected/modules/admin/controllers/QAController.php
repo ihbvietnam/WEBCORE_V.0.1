@@ -49,10 +49,10 @@ class QAController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new QA();	
+		$model=new QA('create');	
 		if(Yii::app()->user->checkAccess('update', array('post' => $model)))	
 		{
-		$model->scenario = 'question';
+		$model->scenario = 'create';
 		// Ajax validate
 		$this->performAjaxValidation($model);	
 		// Uncomment the following line if AJAX validation is needed
@@ -60,7 +60,7 @@ class QAController extends Controller
 		if(isset($_POST['QA']))
 		{
 			$model->attributes=$_POST['QA'];
-			$model->title=$model->question;
+			if(!isset($_POST['QA']['list_special'])) $model->list_special=array();
 			if($model->save())
 				$this->redirect(array('update','id'=>$model->id));
 		}		
@@ -89,7 +89,7 @@ class QAController extends Controller
 		if(isset($_POST['QA']))
 		{
 			$model->attributes=$_POST['QA'];
-			$model->title=$model->question;
+			if(!isset($_POST['QA']['list_special'])) $model->list_special=array();
 			if($model->save())
 				$this->redirect(array('update','id'=>$model->id));
 		}		
@@ -129,6 +129,7 @@ class QAController extends Controller
 		$this->initCheckbox('checked-qa-list');
 		$model=new QA('search');
 		$model->unsetAttributes();  // clear any default values
+		$model->status_answer=0;
 		if(isset($_GET['QA']))
 			$model->attributes=$_GET['QA'];
 		$this->render('index',array(

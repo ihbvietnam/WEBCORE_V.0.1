@@ -41,6 +41,15 @@
 								),
 						)); ?>								
                         </li>  
+                        <?php 
+							$list=array(''=>'Không lọc');
+							$list += QA::getList_label_specials();
+							unset($list[QA::SPECIAL_ANSWER]);						
+						?>	
+						<li>
+							<?php echo $form->labelEx($model,'special'); ?>
+							<?php echo $form->dropDownList($model,'special',$list,array('style'=>'width:200px')); ?>
+						</li>  
                          <li>
                         <?php 
 							echo CHtml::submitButton('Lọc kết quả',
@@ -57,6 +66,13 @@
                  <!--begin right content-->
                 <div class="fl" style="width:480px;">
                     <ul>
+                    <?php 
+					$list=array(''=>'Tất cả',QA::STATUS_NOT_ANSWER=>'Chưa trả lời',QA::STATUS_ANSWER=>'Đã trả lời');
+					?>
+					<li>
+						<label>Trạng thái</label>
+						<?php echo $form->dropDownList($model,'status_answer',$list,array('style'=>'width:200px')); ?>
+					</li>
                      <li>
 							<?php echo $form->labelEx($model,'lang'); ?>
 							<?php echo $form->dropDownList($model,'lang',array(''=>'Tất cả')+LanguageForm::getList_languages_exist(),array('style'=>'width:200px')); ?>
@@ -80,10 +96,14 @@
 						'headerHtmlOptions'=>array('width'=>'2%','class'=>'table-title'),
 						'checked'=>'in_array($data->id,Yii::app()->session["checked-qa-list"])'
     				),	
+    				array(
+						'name'=>'title',
+						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),		
+					),	
 					array(
 						'name'=>'question',
 						'value'=>'iPhoenixString::createIntrotext($data->question,QA::SIZE_INTRO_QUESTION)',
-						'headerHtmlOptions'=>array('width'=>'40%','class'=>'table-title'),		
+						'headerHtmlOptions'=>array('width'=>'30%','class'=>'table-title'),		
 					),		
 					array(
 						'name'=>'answer',

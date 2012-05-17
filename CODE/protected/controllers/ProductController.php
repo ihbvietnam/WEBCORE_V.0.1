@@ -12,9 +12,19 @@ class ProductController extends Controller {
 		Yii::app()->clientScript->scriptMap['jquery.min.js'] = false;
 	}
 	/**
-	 * Displays category
+	 * Displays all product
 	 */
-	public function actionIndex($cat_alias) {
+	public function actionIndex() {
+			$criteria = new CDbCriteria ();
+			$criteria->compare ( 'status', Product::STATUS_ACTIVE );
+			$criteria->order = 'id desc';
+			$list_product = new CActiveDataProvider ( 'Product', array ('pagination' => array ('pageSize' => Setting::s ( 'PRODUCT_PAGE_SIZE','Product' ) ), 'criteria' => $criteria ) );
+			$this->render ( 'list-product', array ('cat' => $cat, 'list_product' => $list_product ) );
+	}
+	/**
+	 * Displays a category product
+	 */
+	public function actionList($cat_alias) {
 		$criteria = new CDbCriteria ();
 		$criteria->compare ( 'alias', $cat_alias );
 		$list_cat = Category::model ()->findAll ( $criteria );

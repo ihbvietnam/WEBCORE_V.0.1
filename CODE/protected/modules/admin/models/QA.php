@@ -18,8 +18,10 @@ class QA extends CActiveRecord
 	 */
 	const STATUS_PENDING=0;
 	const STATUS_ACTIVE=1;
-	const STATUS_NOT_ANSWER=2;
-	const STATUS_ANSWER=3;	
+	
+	const STATUS_NOT_ANSWER=0;
+	const STATUS_ANSWER=1;
+	
 	const LIST_QA=10;
 	const OTHER_QA=5;
 	const LIST_ADMIN=10;
@@ -30,15 +32,67 @@ class QA extends CActiveRecord
 	public $old_title;
 	private $config_other_attributes=array('modified','question','answer','address','phone','email','fullname','metakey','metadesc');	
 	private $list_other_attributes;
+	public $list_special;
+	/*
+	 * Config special
+	 * SPECIAL_REMARK album is viewed at homepage
+	 */
+	const SPECIAL_ANSWER=1;
+	const SPECIAL_REMARK=0;
 	/*
 	 * Get url
 	 */
+	public $status_answer;
 	public function getUrl()
  	{		
  		$url=Yii::app()->createUrl("qA/view",array('qa_alias'=>$this->alias));
 		return $url;
  	}
-		/*
+	/*
+	 * Get all specials of class QA
+	 * Use in drop select when create, update qa
+	 */
+	static function getList_label_specials()
+ 	{
+	return array(
+			self::SPECIAL_REMARK=>'Hiển thị trong phần câu hỏi nổi bật',
+			self::SPECIAL_ANSWER=>'Đã trả lời'
+		);
+ 	}
+	/*
+ 	 * Get specials of a object qa
+ 	 * Use in page lit admin
+ 	 */
+	public function getLabel_specials()
+ 	{
+		$label_specials=array();
+		foreach ($this->list_special as $special) {
+			$list_label_specials=self::getList_label_specials();
+			$label_specials[]= $list_label_specials[$special];
+		}
+		return $label_specials;
+ 	}
+ /*
+ 	 * Special is encoded before save in database
+ 	 * Function get all code of the special
+ 	 */
+	static function getCode_special($index=null)
+ 	{
+ 		$result=array();
+ 		$full=range(0,pow(2,sizeof(self::getList_label_specials()))-1);
+ 		if($index === null){
+ 			$result=$full;
+ 		}
+ 		else {			
+ 			foreach ($full as $num){
+ 				if(in_array($index, iPhoenixStatus::decodeStatus($num))){
+ 					$result[]=$num;
+ 				}
+ 			}
+ 		}
+ 		return $result;
+ 	}
+	/*
 	 * Get similar news
 	 */
 	public function getList_similar() {
@@ -122,13 +176,15 @@ class QA extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('answer,question','required','message'=>'Dữ liệu bắt buộc','on'=>'question,answer',),
-			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự','on'=>'question,answer'),
-			array('question', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'question,answer'),
-			array('email','email','message'=>'Sai dịnh dạng mail','on'=>'question,answer'),
-			array('phone', 'length', 'max'=>13,'message'=>'Tối đa 13 kí tự','on'=>'question,answer'),
-			array('address,lang', 'safe', 'on'=>'question,answer'),
-			array('title,status,lang','safe','on'=>'search'),
+			array('title,question','required','message'=>'Dữ liệu bắt buộc'),
+			array('answer','required','message'=>'Dữ liệu bắt buộc','on'=>'create,answer',),
+			array('title', 'length', 'max'=>256,'message'=>'Tối đa 256 kí tự'),
+			array('question', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự'),
+			array('email','email','message'=>'Sai dịnh dạng mail'),
+			array('phone', 'length', 'max'=>13,'message'=>'Tối đa 13 kí tự'),
+			array('list_special','safe','on'=>'create,answer'),
+			array('address,lang,fullname', 'safe'),
+			array('title,status,lang,status_answer,special','safe','on'=>'search'),
 		);
 	}
 
@@ -158,7 +214,9 @@ class QA extends CActiveRecord
 			'email'=>'Email',
 			'fullname'=>'Họ và tên',
 			'created_date'=>'Thời điểm đặt câu hỏi',
-			'lang'=>'Ngôn ngữ'
+			'lang'=>'Ngôn ngữ',
+			'list_special' => 'Hiển thị',
+			'special'=>'Hiển thị'
 		);
 	}
 /**
@@ -177,6 +235,8 @@ class QA extends CActiveRecord
 			$this->answer=CHtml::decode($answer);
 			$this->old_answer=$this->answer;
 		}
+		//Get list special
+		$this->list_special=iPhoenixStatus::decodeStatus($this->special);
 		if(isset($this->list_other_attributes['modified']))
 			$this->list_other_attributes['modified']=(array)json_decode($this->list_other_attributes['modified']);
 		else 
@@ -200,9 +260,9 @@ class QA extends CActiveRecord
 			if($this->isNewRecord)
 			{
 				$this->created_date=time();
-				$this->status=QA::STATUS_NOT_ANSWER;
+				$this->status=News::STATUS_ACTIVE;
 				//Set alias
-				$this->alias=iPhoenixString::createAlias($this->title).'-'.date('d').date('m').date('Y');	
+				$this->alias=iPhoenixString::createAlias($this->title).'-'.date('d').date('m').date('Y');						
 			}	
 			else {
 				$modified=$this->modified;
@@ -210,14 +270,18 @@ class QA extends CActiveRecord
 				$this->modified=json_encode($modified);	
 				if($this->title != $this->old_title) $this->alias=iPhoenixString::createAlias($this->title).'-'.date('d').date('m').date('Y');
 			}	
+			if($this->answer !="" && !in_array(self::SPECIAL_ANSWER, $this->list_special)){
+					$list=$this->list_special;
+					$list[]=self::SPECIAL_ANSWER;
+					$this->list_special=$list;
+				}
+			//Encode special
+			$this->special=iPhoenixStatus::encodeStatus($this->list_special);
 			$this->type=Article::ARTICLE_QA;
 			//Encode answer
 			if($this->old_answer != $this->answer){
 				$answer=$this->answer;
 				$this->answer=CHtml::encode($answer);				
-				}
-			if($this->answer != "" && $this->status != QA::STATUS_PENDING){
-				$this->status=QA::STATUS_ACTIVE;				
 				}
 			$this->other=json_encode($this->list_other_attributes);			
 			return true;
@@ -235,14 +299,19 @@ class QA extends CActiveRecord
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria=new CDbCriteria;		
 		$criteria->compare('lang',$this->lang);
 		$criteria->compare('title',$this->title,true);
-		if($this->status==self::STATUS_ANSWER){
-			$criteria->addInCondition('status', array(self::STATUS_ACTIVE,self::STATUS_PENDING));
+		//Filter special
+		if ($this->special != ''){
+			$criteria->addInCondition ( 'special', self::getCode_special ( $this->special ) );
 		}
-		else {
-			$criteria->compare('status',$this->status);
+		//Filter answer
+		if($this->status_answer !== ''){
+			if ($this->status_answer == self::STATUS_ANSWER)
+				$criteria->addInCondition ( 'special', self::getCode_special ( self::SPECIAL_ANSWER ) );
+			if ($this->status_answer == self::STATUS_NOT_ANSWER)
+				$criteria->addNotInCondition('special', self::getCode_special ( self::SPECIAL_ANSWER ) );
 		}
 		$criteria->order="id DESC";
 		if(isset($_GET['pageSize']))
@@ -291,10 +360,6 @@ class QA extends CActiveRecord
 			case self::STATUS_ACTIVE:
 				$status=self::STATUS_PENDING;
 				break;
-			case self::STATUS_NOT_ANSWER:
-				$status=self::STATUS_NOT_ANSWER;
-				break;
-				break;
 		}
 		$sql='UPDATE tbl_article SET status = '.$status.' WHERE id = '.$id;
 		$command=Yii::app()->db->createCommand($sql);
@@ -306,7 +371,7 @@ class QA extends CActiveRecord
  			case self::STATUS_PENDING:
  				$src=Yii::app()->request->getBaseUrl(true).'/images/admin/disable.png';
  				break;
- 		}	
+ 		}		
 			return $src;
 		}
 		else return false;

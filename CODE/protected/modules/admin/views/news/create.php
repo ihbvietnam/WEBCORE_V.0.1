@@ -29,6 +29,13 @@
 							</li>
 						</div>
 						<div class="row">
+						<li>
+                        	<?php echo $form->labelEx($model,'list_special'); ?>
+                        	<?php echo $form->dropDownList($model,'list_special',News::getList_label_specials(),array('style'=>'width:250px','multiple' => 'multiple')); ?>
+                  			<?php echo $form->error($model, 'list_special'); ?>
+                    	</li>
+                    	</div>
+						<div class="row">
 							<li>
 								<?php echo $form->labelEx($model,'lang'); ?>
 								<?php echo $form->dropDownList(
