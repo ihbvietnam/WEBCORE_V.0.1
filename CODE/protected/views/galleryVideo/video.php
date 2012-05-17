@@ -1,9 +1,15 @@
 <?php 
-$this->bread_crumbs=array(
-	array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
-	array('url'=>Yii::app()->createUrl('galleryVideo/list',array('cat_alias'=>$cat->alias)),'title'=>Language::t($cat->name)),
-	array('url'=>'','title'=>$video->title),
-)
+if(isset($cat))
+	$this->bread_crumbs=array(
+		array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
+		array('url'=>Yii::app()->createUrl('galleryVideo/list',array('cat_alias'=>$cat->alias)),'title'=>Language::t($cat->name)),
+		array('url'=>'','title'=>$video->title),
+	);
+else
+	$this->bread_crumbs=array(
+		array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
+		array('url'=>'','title'=>$video->title),
+	);
 ?>
 <div class="news-outer">
             	<div class="news-left">

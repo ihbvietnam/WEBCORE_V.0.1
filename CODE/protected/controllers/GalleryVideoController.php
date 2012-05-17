@@ -69,27 +69,22 @@ class GalleryVideoController extends Controller
 	}	
 	public function actionView($cat_alias,$video_alias)
 	{	
-		$criteria=new CDbCriteria;
-		$criteria->compare('alias',$cat_alias);
-		$list_cat=Category::model()->findAll($criteria);
-		foreach ($list_cat as $category) {
-			if($category->findGroup() == Category::GROUP_GALLERYVIDEO) $cat=$category;
+		$criteria = new CDbCriteria ();
+		$criteria->compare ( 'alias', $cat_alias );
+		$list_cat = Category::model ()->findAll ( $criteria );
+		foreach ( $list_cat as $category ) {
+			if ($category->findGroup () == Category::GROUP_GALLERYVIDEO)
+				$cat = $category;
 		}
-		if(isset($cat)) {
-			if($video_alias != ""){			
-			$criteria=new CDbCriteria;
-			$criteria->compare('catid', $cat->id);	
-			$criteria->compare('alias', $video_alias);		
-			$video=GalleryVideo::model()->find($criteria);
-				if(isset($video)) {
-					$this->render('video',array(
-					'cat'=>$cat,
-					'video'=>$video,
-					));
-				}
-			}			
-		}	
-	}	
+		$criteria = new CDbCriteria ();
+		if (isset ( $cat ))
+			$criteria->compare ( 'catid', $cat->id );
+		$criteria->compare ( 'alias', $video_alias );
+		$video = GalleryVideo::model ()->find ( $criteria );
+		if (isset ( $video )) {
+			$this->render ( 'video', array ('cat' => $cat, 'video' => $video ) );
+		}
+	}			
 }
 
 

@@ -1,9 +1,15 @@
 <?php 
-$this->bread_crumbs=array(
-	array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
-	array('url'=>Yii::app()->createUrl('product/list',array('cat_alias'=>$cat->alias)),'title'=>Language::t($cat->name)),
-	array('url'=>'','title'=>Language::t($product->name)),
-)
+if(isset($cat))
+	$this->bread_crumbs=array(
+		array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
+		array('url'=>Yii::app()->createUrl('product/list',array('cat_alias'=>$cat->alias)),'title'=>Language::t($cat->name)),
+		array('url'=>'','title'=>Language::t($product->name)),
+	);
+else
+	$this->bread_crumbs=array(
+		array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
+		array('url'=>'','title'=>Language::t($product->name)),
+	);
 ?>
 <?php  
   $cs = Yii::app()->getClientScript();

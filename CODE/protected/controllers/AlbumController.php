@@ -67,28 +67,23 @@ class AlbumController extends Controller
 				));
 		}	
 	}	
-	public function actionView($cat_alias,$album_alias="")
-	{	
-		$criteria=new CDbCriteria;
-		$criteria->compare('alias',$cat_alias);
-		$list_cat=Category::model()->findAll($criteria);
-		foreach ($list_cat as $category) {
-			if($category->findGroup() == Category::GROUP_ALBUM) $cat=$category;
+	public function actionView($cat_alias,$album_alias)
+	{
+		$criteria = new CDbCriteria ();
+		$criteria->compare ( 'alias', $cat_alias );
+		$list_cat = Category::model ()->findAll ( $criteria );
+		foreach ( $list_cat as $category ) {
+			if ($category->findGroup () == Category::GROUP_ALBUM)
+				$cat = $category;
 		}
-		if(isset($cat)) {
-			if($album_alias != ""){			
-			$criteria=new CDbCriteria;
-			$criteria->compare('catid', $cat->id);	
-			$criteria->compare('alias', $album_alias);		
-			$album=Album::model()->find($criteria);
-				if(isset($album)) {
-					$this->render('album',array(
-					'cat'=>$cat,
-					'album'=>$album,
-					));
-				}
-			}			
-		}	
-	}	
+		$criteria = new CDbCriteria ();
+		if (isset ( $cat ))
+			$criteria->compare ( 'catid', $cat->id );
+		$criteria->compare ( 'alias', $album_alias );
+		$album = Album::model ()->find ( $criteria );
+		if (isset ( $album )) {
+			$this->render ( 'album', array ('cat' => $cat, 'album' => $album ) );
+		}
+	}			
 }
 

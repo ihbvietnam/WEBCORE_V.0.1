@@ -1,9 +1,15 @@
 <?php 
+if(isset($cat))
 $this->bread_crumbs=array(
 	array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
 	array('url'=>Yii::app()->createUrl('album/list',array('cat_alias'=>$cat->alias)),'title'=>Language::t($cat->name)),
 	array('url'=>'','title'=>$album->title),
-)
+);
+else 
+$this->bread_crumbs=array(
+	array('url'=>Yii::app()->createUrl('site/home'),'title'=>Language::t('Trang chủ')),
+	array('url'=>'','title'=>$album->title),
+);
 ?>
 <div class="news-outer">
             	<div class="news-left">

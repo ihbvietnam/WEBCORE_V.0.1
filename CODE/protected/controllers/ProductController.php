@@ -59,14 +59,13 @@ class ProductController extends Controller {
 			if ($category->findGroup () == Category::GROUP_PRODUCT)
 				$cat = $category;
 		}
-		if (isset ( $cat )) {
-			$criteria = new CDbCriteria ();
+		$criteria = new CDbCriteria ();
+		if (isset ( $cat ))
 			$criteria->compare ( 'catid', $cat->id );
-			$criteria->compare ( 'alias', $product_alias );
-			$product = Product::model ()->find ( $criteria );
-			if (isset ( $product )) {
-				$this->render ( 'product', array ('cat' => $cat, 'product' => $product ) );
-			}
+		$criteria->compare ( 'alias', $product_alias );
+		$product = Product::model ()->find ( $criteria );
+		if (isset ( $product )) {
+			$this->render ( 'product', array ('cat' => $cat, 'product' => $product ) );
 		}
 	}
 }

@@ -49,26 +49,21 @@ class StaticPageController extends Controller
 		}	
 	}	
 	public function actionView($cat_alias,$staticPage_alias="")
-	{	
-		$criteria=new CDbCriteria;
-		$criteria->compare('alias',$cat_alias);
-		$list_cat=Category::model()->findAll($criteria);
-		foreach ($list_cat as $category) {
-			if($category->findGroup() == Category::GROUP_STATICPAGE) $cat=$category;
+	{
+		$criteria = new CDbCriteria ();
+		$criteria->compare ( 'alias', $cat_alias );
+		$list_cat = Category::model ()->findAll ( $criteria );
+		foreach ( $list_cat as $category ) {
+			if ($category->findGroup () == Category::GROUP_STATICPAGE)
+				$cat = $category;
 		}
-		if(isset($cat)) {
-			if($staticPage_alias != ""){			
-			$criteria=new CDbCriteria;
-			$criteria->compare('catid', $cat->id);	
-			$criteria->compare('alias', $staticPage_alias);		
-			$page=StaticPage::model()->find($criteria);
-				if(isset($page)) {
-					$this->render('page',array(
-					'cat'=>$cat,
-					'page'=>$page,
-					));
-				}
-			}			
-		}	
-	}
+		$criteria = new CDbCriteria ();
+		if (isset ( $cat ))
+			$criteria->compare ( 'catid', $cat->id );
+		$criteria->compare ( 'alias', $staticPage_alias );
+		$page = StaticPage::model ()->find ( $criteria );
+		if (isset ( $page )) {
+			$this->render ( 'page', array ('cat' => $cat, 'page' => $page ) );
+		}
+	}			
 }

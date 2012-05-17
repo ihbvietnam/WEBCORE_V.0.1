@@ -67,27 +67,22 @@ class NewsController extends Controller
 				));
 		}	
 	}	
-	public function actionView($cat_alias,$news_alias="")
-	{	
-		$criteria=new CDbCriteria;
-		$criteria->compare('alias',$cat_alias);
-		$list_cat=Category::model()->findAll($criteria);
-		foreach ($list_cat as $category) {
-			if($category->findGroup() == Category::GROUP_NEWS) $cat=$category;
+	public function actionView($cat_alias,$news_alias)
+	{
+		$criteria = new CDbCriteria ();
+		$criteria->compare ( 'alias', $cat_alias );
+		$list_cat = Category::model ()->findAll ( $criteria );
+		foreach ( $list_cat as $category ) {
+			if ($category->findGroup () == Category::GROUP_NEWS)
+				$cat = $category;
 		}
-		if(isset($cat)) {
-			if($news_alias != ""){			
-			$criteria=new CDbCriteria;
-			$criteria->compare('catid', $cat->id);	
-			$criteria->compare('alias', $news_alias);		
-			$news=News::model()->find($criteria);
-				if(isset($news)) {
-					$this->render('news',array(
-					'cat'=>$cat,
-					'news'=>$news,
-					));
-				}
-			}			
-		}	
+		$criteria = new CDbCriteria ();
+		if (isset ( $cat ))
+			$criteria->compare ( 'catid', $cat->id );
+		$criteria->compare ( 'alias', $news_alias );
+		$news = News::model ()->find ( $criteria );
+		if (isset ( $news )) {
+			$this->render ( 'news', array ('cat' => $cat, 'news' => $news ) );
+		}
 	}	
 }

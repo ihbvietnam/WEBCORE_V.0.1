@@ -581,19 +581,19 @@ class Category extends CActiveRecord
 			case 'action':
 				switch ($value['controller']) {	
 					case 'product':													
-							return array('view_category'=>'Hiển thị theo danh mục','index'=>'Quản lý danh sách','create'=>'Tạo mới','manager_category'=>'Quản lý danh mục','manufacturer'=>'Nhà sản xuất');
+							return array('view_all'=>'Hiển thị tất cả sản phẩm','view_category'=>'Hiển thị theo danh mục','index'=>'Quản lý danh sách','create'=>'Tạo mới','manager_category'=>'Quản lý danh mục','manufacturer'=>'Nhà sản xuất');
 						break;			
 					case 'news':						
-							return array('view_category'=>'Hiển thị theo danh mục','index'=>'Quản lý danh sách','create'=>'Tạo mới','manager_category'=>'Quản lý danh mục');					
+							return array('view_all'=>'Hiển thị tất cả tin tức','view_category'=>'Hiển thị theo danh mục','index'=>'Quản lý danh sách','create'=>'Tạo mới','manager_category'=>'Quản lý danh mục');					
 						break;
 					case 'staticPage':						
-							return array('view_category'=>'Hiển thị danh mục','view_page'=>'Hiển thị trang','home'=>'Trang chủ','index'=>'Quản lý danh sách','create'=>'Tạo mới','manager_category'=>'Quản lý danh mục');					
+							return array('view_all'=>'Hiển thị tất cả các trang tĩnh','view_category'=>'Hiển thị danh mục','view_page'=>'Hiển thị trang','home'=>'Trang chủ','index'=>'Quản lý danh sách','create'=>'Tạo mới','manager_category'=>'Quản lý danh mục');					
 						break;
 					case 'album':							
-						return array('view_category'=>'Hiển thị theo danh mục','index'=>'Quản lý danh sách','create'=>'Tạo mới','manager_category'=>'Quản lý danh mục');
+						return array('view_all'=>'Hiển thị tất cả album','view_category'=>'Hiển thị theo danh mục','index'=>'Quản lý danh sách','create'=>'Tạo mới','manager_category'=>'Quản lý danh mục');
 						break;
 					case 'galleryVideo':							
-						return array('view_category'=>'Hiển thị theo danh mục','index'=>'Quản lý danh sách','create'=>'Tạo mới','manager_category'=>'Quản lý danh mục');
+						return array('view_all'=>'Hiển thị tất cả video','view_category'=>'Hiển thị theo danh mục','index'=>'Quản lý danh sách','create'=>'Tạo mới','manager_category'=>'Quản lý danh mục');
 						break;
 					case 'config':								
 						return array('root'=>'Danh mục gốc','menu'=>'Menu','clear_image'=>'Dọn dẹp ảnh rác');
@@ -709,11 +709,18 @@ class Category extends CActiveRecord
 							$result[$index]=$label;
 						}
 						return $result;	
+						break;
 					case 'view_page':
 						$criteria=new CDbCriteria;
 						$group=new Category();		
 						$group->group=Category::GROUP_STATICPAGE;
-						$list_category=$group->list_categories;
+						$list_category = array ();
+						//Set itself
+						$list_child_id [] = $cat->id;
+						if ($group->list_categories != null)
+							foreach ( $group->list_categories as $id => $child_cat ) {
+								$list_category [] = $id;
+						}
 						$criteria->addInCondition('catid',$list_category);
 						$criteria->compare('status',StaticPage::STATUS_ACTIVE);
 						$list_page=StaticPage::model()->findAll($criteria);
@@ -721,7 +728,8 @@ class Category extends CActiveRecord
 							$index=json_encode(array('cat_alias'=>$page->category->alias,'pageStatic_alias'=>$page->alias));
 							$result[$index]=$page->title;
 						}
-						return $result;				
+						return $result;	
+						break;			
 					default:
 						return $result;
 				}
@@ -772,36 +780,42 @@ class Category extends CActiveRecord
 	public function getRoute(){
 		$config=array(
 			'product'=>array(
+				'view_all'=>'/product/index',
 				'index'=>'/admin/product/index',
 				'create'=>'/admin/product/create',
 				'manager_category'=>'/admin/category',
-				'view_category'=>'/site/product',
+				'view_category'=>'/product/list',
 				'manufacturer'=>'/admin/category'
 			),
 			'news'=>array(
 				'index'=>'/admin/news/index',
 				'create'=>'/admin/news/create',
 				'manager_category'=>'/admin/category',
-				'view_category'=>'/site/news',
+				'view_category'=>'/news/list',
+				'view_all'=>'/news/index',
 			),
 			'staticPage'=>array(
 				'index'=>'/admin/staticPage/index',
 				'create'=>'/admin/staticPage/create',
 				'manager_category'=>'/admin/category',
-				'view_category'=>'staticPage/index',
+				'view_category'=>'staticPage/list',
+				'view_all'=>'/staticPage/index',
+				'view_page'=>'/staticPage/view',
 				'home'=>'site/home'
 			),
 			'album'=>array(
 				'index'=>'/admin/album/index',
 				'create'=>'/admin/album/create',
 				'manager_category'=>'/admin/category',
-				'view_category'=>'/site/albume',
+				'view_category'=>'/album/list',
+				'view_all'=>'/album/index',
 			),
 			'galleryVideo'=>array(
 				'index'=>'/admin/galleryVideo/index',
 				'create'=>'/admin/galleryVideo/create',
 				'manager_category'=>'/admin/category',
-				'view_category'=>'/site/galleryVideo',
+				'view_category'=>'/galleryVideo/list',
+				'view_all'=>'/galleryVideo/index',
 			),
 			'order'=>array(
 				'index'=>'/admin/order/index',
