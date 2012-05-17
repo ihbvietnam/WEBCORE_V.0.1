@@ -20,6 +20,7 @@ class QAController extends Controller
 	{
 			$criteria = new CDbCriteria ();
 			$criteria->compare ( 'status', QA::STATUS_ACTIVE );
+			$criteria->addInCondition ( 'special', QA::getCode_special ( QA::SPECIAL_ANSWER ) );
 			$criteria->order = 'id desc';
 			$list_qa = new CActiveDataProvider ( 'QA', array ('pagination' => array ('pageSize' => Setting::s ( 'QA_PAGE_SIZE','QA' ) ), 'criteria' => $criteria ) );
 			$this->render ( 'list-qa', array ('list_qa' => $list_qa ) );
@@ -31,6 +32,8 @@ class QAController extends Controller
 	{
 			$criteria = new CDbCriteria ();
 			$criteria->compare ( 'alias', $qa_alias );
+			$criteria->compare ( 'status', QA::STATUS_ACTIVE );
+			$criteria->addInCondition ( 'special', QA::getCode_special ( QA::SPECIAL_ANSWER ) );
 			$qa = QA::model ()->find ( $criteria );
 			if (isset ( $qa )) {
 				$this->render ( 'qa', array ('cat' => $cat, 'qa' => $qa ) );

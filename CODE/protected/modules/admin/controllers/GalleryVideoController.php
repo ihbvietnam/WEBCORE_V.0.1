@@ -64,7 +64,7 @@ class GalleryVideoController extends Controller
 		}
 		//List category product
 		$group=new Category();		
-		$group->group=Category::GROUP_ALBUM;
+		$group->group=Category::GROUP_GALLERYVIDEO;
 		$list=$group->list_categories;
 		$list_category=array();
 		foreach ($list as $id=>$cat){
@@ -98,7 +98,7 @@ class GalleryVideoController extends Controller
 			}
 		//List category product
 		$group=new Category();		
-		$group->group=Category::GROUP_ALBUM;
+		$group->group=Category::GROUP_GALLERYVIDEO;
 		$list=$group->list_categories;
 		$list_category=array();
 		foreach ($list as $id=>$cat){
@@ -140,7 +140,7 @@ class GalleryVideoController extends Controller
 			$model->attributes=$_GET['GalleryVideo'];
 		//List category product
 		$group=new Category();		
-		$group->group=Category::GROUP_ALBUM;
+		$group->group=Category::GROUP_GALLERYVIDEO;
 		$list=$group->list_categories;
 		$list_category=array();
 		foreach ($list as $id=>$cat){

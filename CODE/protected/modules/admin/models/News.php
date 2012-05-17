@@ -121,6 +121,7 @@ class News extends CActiveRecord
 			$criteria=new CDbCriteria;
 			$criteria->compare('status', News::STATUS_ACTIVE);
 			$criteria->addCondition('id <>'. $this->id);
+			$criteria->compare ( 'status', QA::STATUS_ACTIVE );
 			$criteria->order='id desc';
 			$criteria->compare('catid',$this->catid);
 			$criteria->limit=Setting::s('LIMIT_SIMILAR_NEWS','News');

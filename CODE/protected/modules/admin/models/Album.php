@@ -51,9 +51,21 @@ class Album extends CActiveRecord
 	 */
 	public function getUrl()
  	{
- 		$url=Yii::app()->createUrl("site/album",array('album_alias'=>$this->alias));
+ 		$url=Yii::app()->createUrl("album/view",array('cat_alias'=>$this->category->alias,'album_alias'=>$this->alias));
 		return $url;
  	}
+ 	/*
+	 * Get similar news
+	 */
+	public function getList_similar() {
+		$criteria = new CDbCriteria ();
+		$criteria->addCondition('id <>'. $this->id);
+		$criteria->compare ( 'status', Album::STATUS_ACTIVE );
+		$criteria->order = 'id desc';
+		$criteria->limit = Setting::s ( 'LIMIT_SIMILAR_ALBUM','Album' );
+		$result = Album::model ()->findAll ( $criteria );
+		return $result;
+	}		
 	/*
 	 * Get all specials of class Album
 	 * Use in drop select when create, update album

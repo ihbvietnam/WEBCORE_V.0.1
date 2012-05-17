@@ -2,7 +2,7 @@
 
 class Setting extends CActiveRecord
 {
-	public $list=array('System'=>'System','News'=>'News','Product'=>'Product','QA'=>'QA','StaticPage'=>'StaticPage');
+	public $list=array('System'=>'System','News'=>'News','Product'=>'Product','QA'=>'QA','StaticPage'=>'StaticPage','GalleryVideo'=>'GalleryVideo','Album'=>'Album');
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

@@ -97,8 +97,9 @@ class QA extends CActiveRecord
 	 */
 	public function getList_similar() {
 		$criteria = new CDbCriteria ();
-		$criteria->compare ( 'status', News::STATUS_ACTIVE );
 		$criteria->addCondition('id <>'. $this->id);
+		$criteria->compare ( 'status', QA::STATUS_ACTIVE );
+		$criteria->addInCondition ( 'special', QA::getCode_special ( QA::SPECIAL_ANSWER ) );
 		$criteria->order = 'id desc';
 		$criteria->limit = Setting::s ( 'LIMIT_SIMILAR_QA','QA' );
 		$result = QA::model ()->findAll ( $criteria );

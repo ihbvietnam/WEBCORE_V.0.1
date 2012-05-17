@@ -102,6 +102,7 @@ class Product extends CActiveRecord
 			$criteria=new CDbCriteria;
 			$criteria->compare('status', Product::STATUS_ACTIVE);
 			$criteria->order='id desc';
+			$criteria->compare ( 'status', QA::STATUS_ACTIVE );
 			$criteria->compare('catid',$this->catid);
 			$criteria->limit=Setting::s('LIMIT_SIMILAR_PRODUCT','Product');
 			$criteria->addCondition('id <>'. $this->id);

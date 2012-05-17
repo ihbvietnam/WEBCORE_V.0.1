@@ -45,8 +45,8 @@ class Image extends CActiveRecord
 			'introimage'=>array('h'=>100,'w'=>130)
 		),
 		'Album'=>array(
-			'thumb_upload'=>array('h'=>100,'w'=>'100'),
-			'thumb'=>array('h'=>50,'w'=>50)
+			'thumb_upload'=>array('h'=>100,'w'=>125),
+			'thumb'=>array('h'=>100,'w'=>125)
 		),
 		'Banner'=>array(
 			'thumb_upload'=>array('h'=>100,'w'=>'100'),

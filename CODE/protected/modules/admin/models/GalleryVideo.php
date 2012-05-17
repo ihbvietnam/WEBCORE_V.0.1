@@ -53,7 +53,7 @@ class GalleryVideo extends CActiveRecord
  	 * Get url
  	 */
  	public function getUrl(){
-		$url=Yii::app()->createUrl("site/video",array('video_alias'=>$this->alias)); 
+		$url=Yii::app()->createUrl("galleryVideo/view",array('cat_alias'=>$this->category->alias,'video_alias'=>$this->alias)); 
 		return $url;
 	}
  	
@@ -74,8 +74,8 @@ class GalleryVideo extends CActiveRecord
 		}
 	}
 /*
-	 * Get all specials of class Album
-	 * Use in drop select when create, update album
+	 * Get all specials of class GalleryVideo
+	 * Use in drop select when create, update video
 	 */
 	static function getList_label_specials()
  	{
@@ -83,6 +83,18 @@ class GalleryVideo extends CActiveRecord
 			self::SPECIAL_REMARK=>'Hiển thị ở trang chủ',
 		);
  	}
+ 	/*
+	 * Get similar news
+	 */
+	public function getList_similar() {
+		$criteria = new CDbCriteria ();
+		$criteria->addCondition('id <>'. $this->id);
+		$criteria->compare ( 'status', GalleryVideo::STATUS_ACTIVE );
+		$criteria->order = 'id desc';
+		$criteria->limit = Setting::s ( 'LIMIT_SIMILAR_GALLERYVIDEO','GalleryVideo' );
+		$result = GalleryVideo::model ()->findAll ( $criteria );
+		return $result;
+	}	
  	/*
  	 * Get label category
  	 */
@@ -92,7 +104,7 @@ class GalleryVideo extends CActiveRecord
 		return $cat->name;
  	}
  	/*
- 	 * Get specials of a object album
+ 	 * Get specials of a object video
  	 * Use in page lit admin
  	 */
 	public function getLabel_specials()
