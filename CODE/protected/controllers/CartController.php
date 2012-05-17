@@ -38,6 +38,7 @@ class CartController extends Controller {
 		{
 			$model=new Order('create');
 			if(isset($_POST['Order'])){
+				if(sizeof(Yii::app()->session['cart'])>0){
 				$model->attributes=$_POST['Order'];
 				$list_product=Yii::app()->session['cart'];
 				$list_item=array();
@@ -51,6 +52,11 @@ class CartController extends Controller {
 					Yii::app()->session['cart']=array();
 					$model->unsetAttributes();
 					Yii::app()->user->setFlash('success', Language::t('Đơn hàng đã được ghi nhận'));
+				}
+				}
+				else 
+				{
+					Yii::app()->user->setFlash('error', Language::t('Giỏ hàng trống'));
 				}
 			}			
 			$list_product=Yii::app()->session['cart'];		

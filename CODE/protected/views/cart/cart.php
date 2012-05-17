@@ -51,12 +51,12 @@ $this->bread_crumbs=array(
                     </table>
                 </div><!--product-table-->
                 <div class="cart-button">
-                    <a href="<?php echo Yii::app()->createUrl('site/product');?>" class="fleft big-button"><?php echo Language::t('Mua hàng tiếp')?></a>
+                    <a href="<?php echo Yii::app()->createUrl('product/index');?>" class="fleft big-button"><?php echo Language::t('Mua hàng tiếp')?></a>
                 </div><!--cart-button-->
                 <div class="cart-note">
                     <p><b><?php echo Language::t('Lưu ý')?>: </b><?php echo Language::t('Một số sản phẩm chưa được báo giá cụ thể, khi đặt hàng khách hàng sẽ thoả thuận để có được giá phù hợp nhất')?>.</p>
                 </div><!--cart-note-->	
-               <?php $form=$this->beginWidget('CActiveForm', array('action'=>Yii::app()->createUrl('site/cart'),'method'=>'post','enableAjaxValidation'=>false,'htmlOptions'=>array('class'=>'contact-form form','style'=>'display:block'))); ?>
+               <?php $form=$this->beginWidget('CActiveForm', array('action'=>Yii::app()->createUrl('cart/cart'),'method'=>'post','enableAjaxValidation'=>false,'htmlOptions'=>array('class'=>'contact-form form','style'=>'display:block'))); ?>
                      <?php
     					foreach(Yii::app()->user->getFlashes() as $key => $message) {
         					echo '<div class="flash-' . $key . '">' . $message . "</div>\n";

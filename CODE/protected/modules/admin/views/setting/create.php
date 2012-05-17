@@ -5,7 +5,7 @@
 			<h1>quản trị các tham số cấu hình</h1>
 			<div class="header-menu">
 				<ul>
-					<li><a class="header-menu-active new-icon" href=""><span>Chỉnh sửa các tham số cấu hình</span></a></li>					
+					<li><a class="header-menu-active new-icon" href=""><span>Thêm tham số cấu hình</span></a></li>					
 				</ul>
 			</div>
 		</div>
@@ -41,7 +41,7 @@
                     </li>
                     <li>
                    		<input type="reset" class="button" value="Hủy thao tác" style="margin-left:153px; width:125px;" />
-                    	<input type="submit" class="button" value="Cập nhật" style="margin-left:20px; width:125px;" />					 
+                    	<input type="submit" class="button" value="Thêm" style="margin-left:20px; width:125px;" />					 
                     	</li>
 				</ul>
 			</div>
