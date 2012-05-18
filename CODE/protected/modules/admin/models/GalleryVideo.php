@@ -1,11 +1,27 @@
 <?php
+/**
+ * 
+ * GalleryVideo class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+
+/**
+ * GalleryVideo includes attributes and methods of GalleryVideo class  
+ */
 class GalleryVideo extends CActiveRecord
 {
+	/**
+	 * @return string the associated database table name
+	 */
 	public function tableName()
 	{
 		return 'tbl_article';
 	}
-	/*
+	/**
 	 * Get scope of gallery video
 	 */
 	public function defaultScope(){
@@ -13,12 +29,12 @@ class GalleryVideo extends CActiveRecord
 			'condition'=>'type = '.Article::ARTICLE_VIDEO,
 		);	
 	}
-	/*
-	 * Config status of gallery video
+   /**
+	* Config status of gallery video
 	*/
 	const STATUS_PENDING=0;
 	const STATUS_ACTIVE=1;
-	/*
+	/**
 	 * Config special
 	 * SPECIAL_REMARK gallery video is viewed at homepage
 	 */
@@ -28,15 +44,24 @@ class GalleryVideo extends CActiveRecord
 	
 	const LIST_ADMIN=10;
 	
+	/**	 	 
+	 * @var string $old_video, keep the information of model to check changing in model
+	 */
 	public $old_video;
 	public $old_introimage;
-	public $old_title;
+	public $old_title;	
 	public $list_special;
+	/**
+	 * @var array config list other attributes of the banner
+	 * this attribute no need to search	 
+	 */
 	private $config_other_attributes=array('modified','link','description','introimage','metakey','metadesc');	
 	private $list_other_attributes;
 	
-	/*
-	 * Get image url which view status of gallery video 
+	/**
+	 * Get image url which display status of contact
+	 * @return string path to enable.png if this status is STATUS_ACTIVE
+	 * path to disable.png if status is STATUS_PENDING
 	 */
  	public function getImageStatus()
  	{
@@ -49,16 +74,18 @@ class GalleryVideo extends CActiveRecord
  				break;
  		}	
  	}
- 	/*
- 	 * Get url
+ 	/**
+ 	 * Get url of this video
+ 	 * @return string $url, absoluted path to this video
  	 */
  	public function getUrl(){
 		$url=Yii::app()->createUrl("galleryVideo/view",array('cat_alias'=>$this->category->alias,'video_alias'=>$this->alias)); 
 		return $url;
 	}
  	
- 	/*
-	 * Get thumb of video
+ 	/**
+	 * Get thumb of this video
+	 * @return string, html code of this video thumb image
 	 */
 	public function getThumb_url($type){
 		if($this->introimage>0){
@@ -73,9 +100,10 @@ class GalleryVideo extends CActiveRecord
 		return '<img class="img" src="http://img.youtube.com/vi/'.$vars['v'].'/1.jpg">';
 		}
 	}
-/*
-	 * Get all specials of class GalleryVideo
-	 * Use in drop select when create, update video
+
+	/**
+	 * Get all specials of class Album
+	 * Used in dropdown in creating, updating an album
 	 */
 	static function getList_label_specials()
  	{
@@ -103,9 +131,10 @@ class GalleryVideo extends CActiveRecord
 		$cat=$this->category;
 		return $cat->name;
  	}
- 	/*
- 	 * Get specials of a object video
- 	 * Use in page lit admin
+
+ 	/**
+ 	 * Get specials of a object album
+ 	 * Used in listing page in admin board
  	 */
 	public function getLabel_specials()
  	{
@@ -116,7 +145,7 @@ class GalleryVideo extends CActiveRecord
 		}
 		return $label_specials;
  	}
- 	/*
+ 	/**
  	 * Special is encoded before save in database
  	 * Function get all code of the special
  	 */
@@ -136,8 +165,12 @@ class GalleryVideo extends CActiveRecord
  		}
  		return $result;
  	}
+ 	
 	/**
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -149,6 +182,8 @@ class GalleryVideo extends CActiveRecord
 	
 	/**
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -219,7 +254,7 @@ class GalleryVideo extends CActiveRecord
 			'catid'=>'Danh mục'
 		);
 	}
-/**
+	/**
 	 * This event is raised after the record is instantiated by a find method.
 	 * @param CEvent $event the event parameter
 	 */
@@ -277,7 +312,16 @@ class GalleryVideo extends CActiveRecord
 			return true;
 		}
 	}
-	
+
+	/**
+	 * This method is invoked after saving a record.
+	 * The default implementation raises the {@link onAfterSave} event.
+	 * You may override this method to do any preparation work for record saving.
+	 * Make sure you call the parent implementation so that the event is raised properly.
+	 * ****
+	 * Check changing in introimage,change the introimage if necessary
+	 * @return boolean whether the saving should be executed. Defaults to true.
+	 */	
 	public function afterSave(){
 		/*
 		if ($this->old_video != $this->video) {
@@ -307,7 +351,7 @@ class GalleryVideo extends CActiveRecord
 		return true;
 	}
 	
-/**
+	/**
 	 * This method is invoked before delete a record 
 	 */
 	public function beforeDelete() {
@@ -391,9 +435,11 @@ class GalleryVideo extends CActiveRecord
 			$titles[]=$qa->title;
 			return $titles;
 	}
-	/*
-	 * Set status of qa
-	 */
+
+	/**
+	 * Change status of contact
+	 * @param integer $id, the ID of contact model
+	 */	
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
 		->select('status')

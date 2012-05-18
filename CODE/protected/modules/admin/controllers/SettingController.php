@@ -1,10 +1,29 @@
 <?php
+/**
+ * 
+ * SettingController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * SettingController includes actions relevant to system setting
+ *** create
+ *** update
+ *** delete
+ *** index
+ *** suggest name
+ *** load model
+ *** perform action to list of selected models from checkbox   
+ */
 class SettingController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. Defaults to '/protected/modules/admin/view/layouts/main'.
+	 * See '/protected/modules/admin/view/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -103,10 +122,10 @@ class SettingController extends Controller
 	}
 
 	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
+	 * Performs the action with multi-selected model from checked models in section
+	 * @param string action to perform
+	 * @return boolean, true if the action is procced successfully, otherwise return false
+	 */	
 	public function actionCheckbox($action)
 	{
 		$this->initCheckbox('checked-setting-list');
@@ -158,9 +177,11 @@ class SettingController extends Controller
 			if($titles!==array())
 				echo implode("\n",$titles);
 		}
-	}
-	/*
-	 * Init checkbox
+	}	
+
+	/**
+	 * Init checkbox selection
+	 * @param string $name_params, name of section to work	 
 	 */
 	public function initCheckbox($name_params){
 		if (! isset ( Yii::app ()->session [$name_params] ))

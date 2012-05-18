@@ -1,10 +1,28 @@
 <?php
+/**
+ * 
+ * LanguageController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+
+/**
+ * LanguageController includes actions relevant to Laguage:
+ *** create Language
+ *** delete Language
+ *** edit Language
+ *** import Language
+ *** export Language  
+ */
 
 class LanguageController extends Controller
 {
-/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	/**
+	 * @var string the default layout for the views. Defaults to '/protected/modules/admin/view/layouts/main'.
+	 * See '/protected/modules/admin/view/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -39,6 +57,10 @@ class LanguageController extends Controller
 			),
 		);
 	}
+	/**
+	 * 
+	 * create new Language in system
+	 */
 	public function actionCreate() {
 		$model=new LanguageForm('create');
 		if (isset ( $_POST ['LanguageForm'] )) {
@@ -50,6 +72,11 @@ class LanguageController extends Controller
 			}
 		$this->render ( 'create', array ('model' => $model ) );
 	}
+	
+	/**
+	 * 
+	 * delete language
+	 */
 	public function actionDelete() {
 		$model=new LanguageForm('delete');
 		if (isset ( $_POST ['LanguageForm'] )) {
@@ -61,6 +88,10 @@ class LanguageController extends Controller
 			}
 		$this->render ( 'delete', array ('model' => $model ) );
 	}
+	/**
+	 * 
+	 * Edit exist language
+	 */
 	public function actionEdit() {
 		$model = new LanguageForm ('edit');
 		$model->lang = isset ( $_GET ['language'] ) ? $_GET ['language'] : Language::DEFAULT_LANGUAGE;
@@ -108,6 +139,11 @@ class LanguageController extends Controller
 		$list=$model->search();	
 		$this->render ( 'edit', array ('model' => $model, 'list'=>$list ) );
 	}
+	/**
+	 * 
+	 * import new language into system
+	 * news word are stored in excel file
+	 */
 	public function actionImport() {
 		$model=new ImportForm();
 		$model->lang=Language::DEFAULT_LANGUAGE;
@@ -157,7 +193,11 @@ class LanguageController extends Controller
 		}
 		$this->render('import',array('model'=>$model));
 	}
-public function actionExport() {   
+	/**
+	 * 
+	 * Export language into excel file (MS 2007 - .xlsx)
+	 */
+	public function actionExport() {   
 		$model = new LanguageForm ( 'export' );
 		$model->lang=Yii::app()->language;
 		if (isset ( $_POST ['LanguageForm'] )) {

@@ -1,10 +1,29 @@
 <?php
+/**
+ * 
+ * BannerController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * BannerController includes actions relevant to Banner:
+ *** create new banner
+ *** update information of a banner
+ *** delete banner
+ *** reverse banner's status
+ *** suggest banner's title
+ *** load model Banner from banner's id
+ *** perform action to list of selected banner from checkbox  
+ */
 class BannerController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. Defaults to '/protected/modules/admin/view/layouts/main'.
+	 * See '/protected/modules/admin/view/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -132,6 +151,7 @@ class BannerController extends Controller
 	}
 	/**
 	 * Reverse status of news
+	 * @param interger $id the ID of the model to change status 
 	 */
 	public function actionReverseStatus($id)
 	{
@@ -157,6 +177,7 @@ class BannerController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer the ID of the model to be loaded
+	 * @return Banner model of the id
 	 */
 	public function loadModel($id)
 	{
@@ -178,7 +199,13 @@ class BannerController extends Controller
 			Yii::app()->end();
 		}
 	}
-public function actionCheckbox($action)
+	
+	/**
+	 * Performs the action with multi-selected album from checked Banner in section
+	 * @param string action to perform
+	 * @return boolean, true if the action is procced successfully, otherwise return false
+	 */
+	public function actionCheckbox($action)
 	{
 		$this->initCheckbox('checked-banner-list');
 		$list_checked = Yii::app()->session["checked-banner-list"];
@@ -204,8 +231,10 @@ public function actionCheckbox($action)
 		Yii::app()->end();
 		
 	}
-	/*
-	 * Init checkbox
+	
+	/**
+	 * Init checkbox selection
+	 * @param string $name_params, name of section to work	 
 	 */
 	public function initCheckbox($name_params) {
 		if (! isset ( Yii::app ()->session [$name_params] ))
