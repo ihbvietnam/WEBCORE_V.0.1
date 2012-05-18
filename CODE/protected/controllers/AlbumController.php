@@ -28,7 +28,6 @@ class AlbumController extends Controller
 					'criteria'=>$criteria,
 				));
 				$this->render('list-album',array(
-					'cat'=>$cat,
 					'list_album'=>$list_album
 				));
 	}	
