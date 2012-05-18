@@ -1,0 +1,136 @@
+/*sprite css*/
+.m-1{margin:1px;}
+.m-2{margin:2px;}
+.m-3{margin:3px;}
+.m-4{margin:4px;}
+.m-5{margin:5px;}
+.m-01{margin:0 1px 0 0;}
+.m-02{margin:0 2px 0 0;}
+.m-03{margin:0 3px 0 0;}
+.m-04{margin:0 4px 0 0;}
+.m-05{margin:0 5px 0 0;}
+.m-11{margin:1px 1px 0 0;}
+.m-12{margin:1px 2px 0 0;}
+.m-13{margin:1px 3px 0 0;}
+.m-14{margin:1px 4px 0 0;}
+.m-15{margin:1px 5px 0 0;}
+.m-21{margin:2px 1px 0 0;}
+.m-22{margin:2px 2px 0 0;}
+.m-23{margin:2px 3px 0 0;}
+.m-24{margin:2px 4px 0 0;}
+.m-25{margin:2px 5px 0 0;}
+.m-31{margin:3px 1px 0 0;}
+.m-32{margin:3px 2px 0 0;}
+.m-33{margin:3px 3px 0 0;}
+.m-34{margin:3px 4px 0 0;}
+.m-35{margin:3px 5px 0 0;}
+.m-41{margin:4px 1px 0 0;}
+.m-42{margin:4px 2px 0 0;}
+.m-43{margin:4px 3px 0 0;}
+.m-44{margin:4px 4px 0 0;}
+.m-45{margin:4px 5px 0 0;}
+.m-51{margin:5px 1px 0 0;}
+.m-52{margin:5px 2px 0 0;}
+.m-53{margin:5px 3px 0 0;}
+.m-54{margin:5px 4px 0 0;}
+.m-55{margin:5px 5px 0 0;}
+.mt-1{margin-top:1px;}
+.mt-2{margin-top:2px;}
+.mt-3{margin-top:3px;}
+.mt-4{margin-top:4px;}
+.mt-5{margin-top:5px;}
+.mr-1{margin-right:1px;}
+.mr-2{margin-right:2px;}
+.mr-3{margin-right:3px;}
+.mr-4{margin-right:4px;}
+.mr-5{margin-right:5px;}
+.mtminus-1{margin-top:-1px !important;}
+.mtminus-2{margin-top:-2px !important;}
+.mtminus-3{margin-top:-3px !important;}
+.mtminus-4{margin-top:-4px !important;}
+.mtminus-5{margin-top:-5px !important;}
+
+.i12{width:12px; height:12px;display:inline-block;}
+.i16{width:16px; height:16px;display:inline-block;}
+
+.i12-cloud {background-position:0 0; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-mark {background-position:-12px 0; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-like {background-position:-24px 0; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-fourdot {background-position:-36px 0; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-pen {background-position:-48px 0; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-list {background-position:-60px 0; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-clouddot {background-position:-72px 0; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-trashblue {background-position:-84px 0; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-plusblue {background-position:-96px 0; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-minusblue {background-position:-108px 0; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-pengray {background-position:0 -12px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-closeborder {background-position:-12px -12px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-trashgray {background-position:-24px -12px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-placegray {background-position:-36px -12px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-image {background-position:-48px -12px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-cloudovelay {background-position:-60px -12px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-likeovelay {background-position:-72px -12px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-uparow {background-position:-84px -12px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-downarow {background-position:-96px -12px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-toparow {background-position:-108px -12px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-bdclose {background-position:0 -24px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-ballyellow {background-position:-12px -24px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-clock {background-position:-24px -24px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-removewhite{background-position:-36px -24px; background-image:url(img/sprite-12.png); background-color: transparent}
+.i12-ballwhite{background-position:-48px -24px; background-image:url(img/sprite-12.png); background-color: transparent}
+
+.i16-1-1 {background-position:0 0; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-trashgray {background-position:-16px 0; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-1-3 {background-position:-32px 0; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-1-4 {background-position:-48px 0; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-1-5 {background-position:-64px 0; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-checkgray {background-position:-80px 0; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-checkblue {background-position:-96px 0; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-checkwhite {background-position:-112px 0; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-emailblack {background-position:-128px 0; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-friendblack {background-position:-144px 0; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-writeblack {background-position:0 -16px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-menublue {background-position:-16px -16px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-arrowreturn {background-position:-32px -16px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-placeblue {background-position:-48px -16px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-bicycleblack {background-position:-64px -16px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-photo {background-position:-80px -16px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-statustext {background-position:-96px -16px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-statuslink {background-position:-112px -16px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-statusimage {background-position:-128px -16px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-cloudovelay {background-position:-144px -16px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-buildblack {background-position:0 -32px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-museumblack {background-position:-16px -32px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-libblack {background-position:-32px -32px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-shopblack {background-position:-48px -32px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-resblack {background-position:-64px -32px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-facebook {background-position:-80px -32px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-twitter {background-position:-96px -32px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-albumupload {background-position:-112px -32px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-photoupload {background-position:-128px -32px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-albumdown {background-position:-144px -32px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-albumpre {background-position:0 -48px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-albumnext {background-position:-16px -48px; background-image:url(img/sprite-16.png); background-color: transparent}
+
+.i16-chartovelay {background-position:-96px -48px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-starovelay {background-position:-112px -48px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-uploadovelay {background-position:-128px -48px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-moreovelay {background-position:-144px -48px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-manageovelay {background-position:0 -64px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-catovelay {background-position:-16px -64px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-editgray {background-position:-32px -64px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-removegray {background-position:-48px -64px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-backovelay {background-position:-64px -64px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-readovelay {background-position:-80px -64px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-likeovelay {background-position:-96px -64px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-eye {background-position:-112px -64px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-uquestion {background-position:-128px -64px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-removewhite {background-position:-144px -64px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-desblue{background-position:0 -80px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-warmblue {background-position:-16px -80px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-chartblue {background-position:-32px -80px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-noteblue {background-position:-48px -80px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-quote {background-position:-64px -80px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-star {background-position:-80px -80px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-cat {background-position:-96px -80px; background-image:url(img/sprite-16.png); background-color: transparent}
+.i16-upload {background-position:-112px -80px; background-image:url(img/sprite-16.png); background-color: transparent}
