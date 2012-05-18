@@ -1,4 +1,13 @@
 <?php
+/**
+ * 
+ * LoginForm class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
 /**
  * LoginForm class.
@@ -7,10 +16,21 @@
  */
 class LoginForm extends CFormModel
 {
+	/**
+	 * @var string $username
+	 */
 	public $username;
+	/**
+	 * @var string $password
+	 */	
 	public $password;
+	/**
+	 * @var boolean $rememberMe
+	 */		
 	public $rememberMe;
-
+	/**
+	 *  
+	 */
 	private $_identity;
 
 	/**

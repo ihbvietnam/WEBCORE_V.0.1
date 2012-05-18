@@ -3,8 +3,8 @@
 class AlbumController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. Defaults to '//layouts/main', meaning
+	 * using main layout. See 'protected/modules/admin/views/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -134,7 +134,7 @@ class AlbumController extends Controller
 	}
 
 	/**
-	 * Lists all models.
+	 * Lists all models.		 
 	 */
 	public function actionIndex()
 	{
@@ -158,6 +158,8 @@ class AlbumController extends Controller
 	}
 	/**
 	 * Reverse status of news
+	 * If reversion is successful, the Album status will be change from Pending to Active and vice verser
+	 * @param integer $id the ID of the model to be Reverse
 	 */
 	public function actionReverseStatus($id)
 	{
@@ -167,8 +169,10 @@ class AlbumController extends Controller
 			else 
 				echo json_encode(array('success'=>false));		
 	}
+	
 	/**
 	 * Suggests title of news.
+	 * GET keyword characters from keyboard and return the list of title similar to the keyword
 	 */
 	public function actionSuggestTitle()
 	{
@@ -183,6 +187,7 @@ class AlbumController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer the ID of the model to be loaded
+	 * @return Album which had id as $id
 	 */
 	public function loadModel($id)
 	{
@@ -204,7 +209,13 @@ class AlbumController extends Controller
 			Yii::app()->end();
 		}
 	}
-public function actionCheckbox($action)
+	
+	/**
+	 * Performs the action with multi-selected album from checked albums in section
+	 * @param string action to perform
+	 * @return boolean, true if the action is procced successfully, otherwise return false
+	 */
+	public function actionCheckbox($action)
 	{
 		$this->initCheckbox('checked-album-list');
 		$list_checked = Yii::app()->session["checked-album-list"];
@@ -230,8 +241,10 @@ public function actionCheckbox($action)
 		Yii::app()->end();
 		
 	}
-	/*
-	 * Init checkbox
+	
+	/**
+	 * Init checkbox selection
+	 * @param $name_params, name of section to work	 
 	 */
 	public function initCheckbox($name_params){
 		if (! isset ( Yii::app ()->session [$name_params] ))

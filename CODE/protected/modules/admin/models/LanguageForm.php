@@ -1,4 +1,17 @@
-<?php 
+<?php
+/**
+ * 
+ * LanguageForm class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+
+/**
+ * LanguageForm includes attributes and methods of LanguageForm class  
+ */ 
 class LanguageForm extends CFormModel
 {
 	const DEFAULT_MODULES='admin';
@@ -11,7 +24,11 @@ class LanguageForm extends CFormModel
     public $controller;
     public $store_action;
     public $action;
-	//Get list module
+
+	/** 
+	 * Get list modules
+	 * @return array $list, list modules
+	 */
 	public function getList_modules(){
 		$dbCommand = Yii::app()->db->createCommand("
    			SELECT module FROM `tbl_language` WHERE lang = '$this->lang' GROUP BY `module`
@@ -23,7 +40,11 @@ class LanguageForm extends CFormModel
 		}
         return $list;
     }
- 	//Get list controller
+    
+ 	/** 
+	 * Get list controllers
+	 * @return array $list, list controllers
+	 */
 	public function getList_controllers(){
 		$dbCommand = Yii::app()->db->createCommand("
    			SELECT controller FROM `tbl_language` WHERE lang = '$this->lang' AND module = '$this->module' GROUP BY `controller`
@@ -35,7 +56,10 @@ class LanguageForm extends CFormModel
 		}
         return $list;
     }
-	//Get list action
+ 	/** 
+	 * Get list actions
+	 * @return array $list, list actions
+	 */
 	public function getList_actions(){
 		$dbCommand = Yii::app()->db->createCommand("
    			SELECT action FROM `tbl_language` WHERE lang = '$this->lang' AND module =  '$this->module' AND controller ='$this->controller' GROUP BY `action`
@@ -47,13 +71,22 @@ class LanguageForm extends CFormModel
 		}
         return $list;
     } 	
+    
+ 	/** 
+	 * Get list languages
+	 * @return array $list, list language from config_languages.php
+	 */    
     static function getList_all_languages(){
     	//Get list all language
 		$configFile = dirname ( __FILE__ ).'/../config/'.DIRECTORY_SEPARATOR.'config_languages.php';
     	$list=require($configFile); 
     	return $list;
     }
-    //Get list existing languages
+    
+ 	/** 
+	 * Get list existing language
+	 * @return array $list, list existing language in system
+	 */  
  	static function getList_languages_exist(){	
         $dbCommand = Yii::app()->db->createCommand("
    			SELECT lang FROM `tbl_language` GROUP BY `lang`
@@ -66,14 +99,20 @@ class LanguageForm extends CFormModel
 		}
         return $list_languages_exist;
     }
-    //Get list languages which don't exist
+    /**     
+     * Get list languages which don't exist in system
+     * @return 
+     */
     static function getList_languages_not_exist(){
     	$list=self::getList_all_languages();
         $list_languages_exist=self::getList_languages_exist();
         $tmp=array_diff($list, $list_languages_exist);        
         return $tmp;
     }
-	//Get list delete records
+    /**     
+     * Get list deleted record
+     * @return
+     */
     static function getList_delete_languages(){
         $dbCommand = Yii::app()->db->createCommand("
    			SELECT lang FROM `tbl_language` GROUP BY `lang`
@@ -87,7 +126,11 @@ class LanguageForm extends CFormModel
 		}
         return $list_delete_languages;    	
     }
-	//Get list old records 
+    
+	/**     
+     * Get list old records
+     * @return
+     */
 	public function getList_old_records(){	
 		$result=array();
 		if(in_array($this->lang,array_keys(self::getList_languages_exist()))){
@@ -107,7 +150,11 @@ class LanguageForm extends CFormModel
 		}
 		return $result;
     }
-	//Get records which have updated
+    
+	/**     
+     * Get records which have updated
+     * @return
+     */
 	public function getList_change_records() {
 		$result=array();
 		if (sizeof ( $this->list_old_records ) == 0)
@@ -131,7 +178,7 @@ class LanguageForm extends CFormModel
 		}
 		return $result;
 	}
-	/*
+	/**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -142,6 +189,10 @@ class LanguageForm extends CFormModel
 			array('lang,module,controller,action,store_lang,store_module,store_controller,store_action','safe','on'=>'edit')
 		);
 	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */	
 	public function attributeLabels()
 	{
 		return array(
@@ -152,6 +203,13 @@ class LanguageForm extends CFormModel
 			'action'=>'Action',
 		);
 	}
+
+	/**
+	 * Copy language
+	 * @param string $origin_language, code of language to be copied
+	 * @param string $language, code of new language  
+	 * @return array customized attribute labels (name=>label)
+	 */		
 	static function copyLanguage($origin_language,$language){
 		$criteria=new CDbCriteria;
 		$criteria->compare('lang', $origin_language);
@@ -169,6 +227,11 @@ class LanguageForm extends CFormModel
     	}	
     	return true;
  	}
+	/**
+	 * Delete existing language
+	 * @param string $language, code of language to be copied  
+	 * @return array customized attribute labels (name=>label)
+	 */	 	
 	static function deleteLanguage($language){
 		if ($language == Language::DEFAULT_LANGUAGE)
 			return false;
@@ -189,6 +252,10 @@ class LanguageForm extends CFormModel
 		}
 		return true;
  	}
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 */ 	
 	public function search(){
 		$criteria=new CDbCriteria;
 		$criteria->compare('lang', $this->lang);
@@ -198,7 +265,10 @@ class LanguageForm extends CFormModel
 		$criteria->order='origin';
     	$list=Language::model()->findAll($criteria);
     	return $list;
- 	}	
+ 	}
+   /**
+ 	* @param array $list, list of saving language
+ 	*/ 		
 	static function saveLanguage($list) {
 		foreach ($list as $id=>$value){
 			$record=Language::model()->findByPk($id);
