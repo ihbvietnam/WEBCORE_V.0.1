@@ -55,7 +55,7 @@ return array(
 				'list-tin-tuc/<cat_alias>'=>'news/list',
 				'tat-ca-tin-tuc'=>'news/index',
 		
-				'hien-thi-trang-tinh<cat_alias>/<staticPage_alias>'=>array('staticPage/view','urlSuffix'=>'.html'),
+				'hien-thi-trang-tinh/<cat_alias>/<staticPage_alias>'=>array('staticPage/view','urlSuffix'=>'.html'),
 				'list-trang-tinh/<cat_alias>'=>'staticPage/list',
 				'tat-ca-trang-tinh'=>'staticPage/index',
 		
@@ -66,9 +66,11 @@ return array(
 				'list-album/<cat_alias>'=>'album/list',
 				'tat-ca-album'=>'album/index',
 		
-				'hien-thi-video/<cat_alias>/<video_alias>'=>array('video/view','urlSuffix'=>'.html'),
-				'list-video/<cat_alias>'=>'video/list',
-				'tat-ca-video'=>'video/index',
+				'hien-thi-video/<cat_alias>/<video_alias>'=>array('galleryVideo/view','urlSuffix'=>'.html'),
+				'list-video/<cat_alias>'=>'galleryVideo/list',
+				'tat-ca-video'=>'galleryVideo/index',
+		
+				'tim-kiem'=>'search/product',
 		
 				'gio-hang'=>'cart/cart',
 				
