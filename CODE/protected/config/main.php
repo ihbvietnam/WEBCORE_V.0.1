@@ -42,30 +42,28 @@ return array(
 		'counter' => array(
             'class' => 'ext.UserCounter',
 		),
-		/*
 		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName'=>false,
 			'rules'=>array(				
 				'hien-thi-san-pham/<cat_alias>/<product_alias>'=>array('product/view','urlSuffix'=>'.html'),
-				'list-san-pham/<cat_alias>/<product_alias>'=>'product/list',
+				'list-san-pham/<cat_alias>'=>'product/list',
 				'tat-ca-san-pham'=>'product/index',
 		
 				'hien-thi-tin-tuc/<cat_alias>/<news_alias>'=>array('news/view','urlSuffix'=>'.html'),
-				'list-tin-tuc/<cat_alias>/<news_alias>'=>'news/list',
+				'list-tin-tuc/<cat_alias>'=>'news/list',
 				'tat-ca-tin-tuc'=>'news/index',
 		
-				'hien-thi-trang/<cat_alias>/<staticPage_alias>'=>array('staticPage/view','urlSuffix'=>'.html'),
-				'list-trang/<cat_alias>/<staticPage_alias>'=>'staticPage/list',
-				'tat-ca-trang'=>'staticPage/index',
+				'hien-thi-trang-tinh<cat_alias>/<staticPage_alias>'=>array('staticPage/view','urlSuffix'=>'.html'),
+				'list-trang-tinh/<cat_alias>'=>'staticPage/list',
+				'tat-ca-trang-tinh'=>'staticPage/index',
 		
-				'hien-thi-qa/<cat_alias>/<qA_alias>'=>array('qA/view','urlSuffix'=>'.html'),
-				'list-qq/<cat_alias>/<qA_alias>'=>'qA/list',
-				'tat-ca-qa'=>'qA/index',
+				'hien-thi-cau-hoi/<qa_alias>'=>array('qA/view','urlSuffix'=>'.html'),
+				'tat-ca-cau-hoi'=>'qA/index',
 		
 				'hien-thi-album/<cat_alias>/<album_alias>'=>array('album/view','urlSuffix'=>'.html'),
-				'list-album/<cat_alias>/<album_alias>'=>'album/list',
+				'list-album/<cat_alias>'=>'album/list',
 				'tat-ca-album'=>'album/index',
 		
 				'hien-thi-video/<cat_alias>/<video_alias>'=>array('video/view','urlSuffix'=>'.html'),
@@ -83,7 +81,6 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-		*/
 		/*
 		'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
