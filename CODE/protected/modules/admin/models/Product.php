@@ -365,6 +365,7 @@ class Product extends CActiveRecord
 	 * This method is invoked before delete a record 
 	 */
 	public function beforeDelete() {
+	//Delete introimage	
 		if (parent::beforeDelete ()) {
 			$introimage = Image::model()->findByPk($this->introimage);
 			if(isset($introimage)){
@@ -372,6 +373,20 @@ class Product extends CActiveRecord
 					return true;
 				else 
 					return false;	
+			}
+			return true;	
+		}
+		//Delete otherimage
+		if (parent::beforeDelete ()) {
+			$list=array_diff ( explode ( ',', $this->otherimage ), array ('' ) );	
+			foreach ($list as $id){				
+			$otherimage = Image::model()->findByPk($id);
+			if(isset($introimage)){
+				if($introimage->delete()) 
+					return true;
+				else 
+					return false;	
+			}
 			}
 			return true;	
 		}
