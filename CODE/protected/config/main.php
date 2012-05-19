@@ -47,19 +47,37 @@ return array(
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName'=>false,
-			'rules'=>array(
-				'video/<video_alias>'=>array('site/video','urlSuffix'=>'.html'),
-				'video'=>'site/video',
-				'hoi-dap/<qa_alias>'=>array('site/qa','urlSuffix'=>'.html'),
-				'hoi-dap'=>'site/qa',
+			'rules'=>array(				
+				'hien-thi-san-pham/<cat_alias>/<product_alias>'=>array('product/view','urlSuffix'=>'.html'),
+				'list-san-pham/<cat_alias>/<product_alias>'=>'product/list',
+				'tat-ca-san-pham'=>'product/index',
+		
+				'hien-thi-tin-tuc/<cat_alias>/<news_alias>'=>array('news/view','urlSuffix'=>'.html'),
+				'list-tin-tuc/<cat_alias>/<news_alias>'=>'news/list',
+				'tat-ca-tin-tuc'=>'news/index',
+		
+				'hien-thi-trang/<cat_alias>/<staticPage_alias>'=>array('staticPage/view','urlSuffix'=>'.html'),
+				'list-trang/<cat_alias>/<staticPage_alias>'=>'staticPage/list',
+				'tat-ca-trang'=>'staticPage/index',
+		
+				'hien-thi-qa/<cat_alias>/<qA_alias>'=>array('qA/view','urlSuffix'=>'.html'),
+				'list-qq/<cat_alias>/<qA_alias>'=>'qA/list',
+				'tat-ca-qa'=>'qA/index',
+		
+				'hien-thi-album/<cat_alias>/<album_alias>'=>array('album/view','urlSuffix'=>'.html'),
+				'list-album/<cat_alias>/<album_alias>'=>'album/list',
+				'tat-ca-album'=>'album/index',
+		
+				'hien-thi-video/<cat_alias>/<video_alias>'=>array('video/view','urlSuffix'=>'.html'),
+				'list-video/<cat_alias>'=>'video/list',
+				'tat-ca-video'=>'video/index',
+		
+				'gio-hang'=>'cart/cart',
+				
+				'dat-cau-hoi'=>'qA/question',
 				'trang-chu'=>'site/home',
-				'lien-he'=>array('site/contact'),
-				'dat-cau-hoi'=>array('site/question'),
-				'tin-tuc/<cat_alias>/<news_alias>'=>array('site/news','urlSuffix'=>'.html'),
-				'tin-tuc/<cat_alias>'=>array('site/news'),
-				'san-pham/<cat_alias>/<product_alias>'=>array('site/product','urlSuffix'=>'.html'),
-				'san-pham/<cat_alias>'=>array('site/product'),
-				'san-pham'=>array('site/product'),
+				'lien-he'=>'site/contact',
+		
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',

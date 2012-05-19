@@ -14,9 +14,20 @@ class StaticPageController extends Controller
 		Yii::app()->clientScript->scriptMap['jquery.min.js'] = false;
 	}
 	/**
+	 * Displays all news
+	 */
+	public function actionIndex()
+	{
+		$criteria = new CDbCriteria ();
+		$criteria->compare ( 'status', News::STATUS_ACTIVE );
+		$criteria->order = 'id desc';
+		$list_news = new CActiveDataProvider ( 'StaticPage', array ('pagination' => array ('pageSize' => Setting::s ( 'NEWS_PAGE_SIZE', 'News' ) ), 'criteria' => $criteria ) );
+		$this->render ( 'list-news', array ('list_news' => $list_news ) );
+	}	
+	/**
 	 * Displays static page
 	 */
-	public function actionIndex($cat_alias)
+	public function actionList($cat_alias)
 	{	
 		$criteria=new CDbCriteria;
 		$criteria->compare('alias',$cat_alias);
