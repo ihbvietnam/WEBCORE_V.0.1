@@ -1,10 +1,29 @@
 <?php
+/**
+ * 
+ * OrderController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * OrderController includes actions relevant to Order in the eCommercial website:
+ *** view
+ *** delete
+ *** index
+ *** reverse Order's status
+ *** reverse Order's process status
+ *** load model
+ *** perform action to list of selected models from checkbox   
+ */
 class OrderController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. Defaults to '/protected/modules/admin/view/layouts/main'.
+	 * See '/protected/modules/admin/view/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -44,6 +63,11 @@ class OrderController extends Controller
 		);
 	}
 
+	/**
+	 * 
+	 * display Order model
+	 * @param integer $id, the ID of model to be viewed
+	 */
 	public function actionView($id)
 	{
 		$model=$this->loadModel($id);			
@@ -92,6 +116,7 @@ class OrderController extends Controller
 	}
 	/**
 	 * Reverse processing status of order
+	 * @param integer $id, the ID of model
 	 */
 	public function actionReverseStatus($id)
 	{
@@ -104,6 +129,7 @@ class OrderController extends Controller
 	
 	/**
 	 * Reverse processing status of order
+	 * @param integer $id, the ID of model
 	 */
 	public function actionReverseProcessStatus($id)
 	{
@@ -151,7 +177,13 @@ class OrderController extends Controller
 			Yii::app()->end();
 		}
 	}
-public function actionCheckbox($action)
+	
+	/**
+	 * Performs the action with multi-selected orders from checked models in section
+	 * @param string action to perform
+	 * @return boolean, true if the action is procced successfully, otherwise return false
+	 */
+	public function actionCheckbox($action)
 	{
 		$this->initCheckbox('checked-order-list');
 		$list_checked = Yii::app()->session["checked-order-list"];
@@ -177,8 +209,10 @@ public function actionCheckbox($action)
 		Yii::app()->end();
 		
 	}
-	/*
-	 * Init checkbox
+	
+	/**
+	 * Init checkbox selection
+	 * @param string $name_params, name of section to work	 
 	 */
 	public function initCheckbox($name_params) {
 		if (! isset ( Yii::app ()->session [$name_params] ))

@@ -1232,3 +1232,8 @@ div.form span.required
 .main-popup .grid-view{
 	padding:0px;
 }
+.main-popup .grid-view table.items {
+    height: 300px;
+    overflow: scroll;
+    display: block;
+}

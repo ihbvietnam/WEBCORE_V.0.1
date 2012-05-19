@@ -1,10 +1,30 @@
 <?php
+/**
+ * 
+ * GalleryVideoController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * GalleryVideoController includes actions relevant to GalleryVideo:
+ *** create new GalleryVideo
+ *** update information of a GalleryVideo
+ *** delete GalleryVideo
+ *** index list gallery video
+ *** reverse GalleryVideo's status
+ *** suggest GalleryVideo's title
+ *** load model from id
+ *** perform action to list of selected model from checkbox  
+ */
 class GalleryVideoController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. Defaults to '/protected/modules/admin/view/layouts/main'.
+	 * See '/protected/modules/admin/view/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -151,8 +171,10 @@ class GalleryVideoController extends Controller
 			'list_category'=>$list_category
 		));
 	}
+	
 	/**
-	 * Reverse status of news
+	 * Reverse status of model
+	 * @param integer $id, id of model
 	 */
 	public function actionReverseStatus($id)
 	{
@@ -162,8 +184,9 @@ class GalleryVideoController extends Controller
 			else 
 				echo json_encode(array('success'=>false));		
 	}
+	
 	/**
-	 * Suggests title of news.
+	 * Suggests title of model.
 	 */
 	public function actionSuggestTitle()
 	{
@@ -199,7 +222,12 @@ class GalleryVideoController extends Controller
 			Yii::app()->end();
 		}
 	}
-	
+
+	/**
+	 * Performs the action with multi-selected model from checked models in section
+	 * @param string action to perform
+	 * @return boolean, true if the action is procced successfully, otherwise return false
+	 */	
 	public function actionCheckbox($action)
 	{
 		$this->initCheckbox('checked-video-list');
@@ -226,8 +254,10 @@ class GalleryVideoController extends Controller
 		Yii::app()->end();
 		
 	}
-	/*
-	 * Init checkbox
+	
+	/**
+	 * Init checkbox selection
+	 * @param $name_params, name of section to work	 
 	 */
 	public function initCheckbox($name_params){
 		if (! isset ( Yii::app ()->session [$name_params] ))

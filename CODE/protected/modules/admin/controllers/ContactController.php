@@ -1,5 +1,23 @@
 <?php
+/**
+ * 
+ * ContactController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * ContactController includes actions relevant to Contact:
+ *** view contact 
+ *** delete contact 
+ *** index contact
+ *** reverse status 
+ *** suggest title of contact
+ *** perform action to list of selected banner from checkbox  
+ */
 class ContactController extends Controller
 {
 	/**
@@ -44,6 +62,10 @@ class ContactController extends Controller
 		);
 	}
 
+	/**
+	 * Display the contact information
+	 * @param integer $id, id of contact model	 
+	 */
 	public function actionView($id)
 	{
 		$model=$this->loadModel($id);			
@@ -87,8 +109,10 @@ class ContactController extends Controller
 			'model'=>$model
 		));
 	}
+	
 	/**
-	 * Reverse status of news
+	 * Reverse status of contact
+	 * @param integer $id, id of contact to reverse status
 	 */
 	public function actionReverseStatus($id)
 	{
@@ -99,7 +123,7 @@ class ContactController extends Controller
 				echo json_encode(array('success'=>false));		
 	}
 	/**
-	 * Suggests title of news.
+	 * Suggests title of contact
 	 */
 	public function actionSuggestTitle()
 	{
@@ -135,7 +159,13 @@ class ContactController extends Controller
 			Yii::app()->end();
 		}
 	}
-public function actionCheckbox($action)
+	
+	/**
+	 * Performs the action with multi-selected model from checked contact in section
+	 * @param string action to perform
+	 * @return boolean, true if the action is procced successfully, otherwise return false
+	 */	
+	public function actionCheckbox($action)
 	{
 		$this->initCheckbox('checked-contact-list');
 		$list_checked = Yii::app()->session["checked-contact-list"];
@@ -161,8 +191,10 @@ public function actionCheckbox($action)
 		Yii::app()->end();
 		
 	}
-	/*
-	 * Init checkbox
+	
+	/**
+	 * Init checkbox selection
+	 * @param $name_params, name of section to work	 
 	 */
 	public function initCheckbox($name_params){
 		if (! isset ( Yii::app ()->session [$name_params] ))

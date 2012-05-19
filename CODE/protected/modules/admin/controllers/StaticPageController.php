@@ -35,7 +35,7 @@ class StaticPageController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('reverseStatus','delete'),
+				'actions'=>array('reverseStatus'),
 				'roles'=>array('update'),
 			),
 			array('deny',  // deny all users

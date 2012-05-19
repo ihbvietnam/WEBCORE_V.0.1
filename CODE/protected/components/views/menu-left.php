@@ -5,17 +5,12 @@
                     <?php 
 					foreach ($list_menus as $id=>$menu){
 						if($menu['havechild']){
-							echo '<li>';
+							echo '<li class="'.$menu['class'].'">';
 							echo '<a id="'.$id.'" href="'.$menu['url'].'">'.Language::t($menu['name']).'</a>';
 							echo '<ul>';
 							}
-						elseif ($menu['class']=='x' || $menu['class']=='x active'){
-							echo '<li>';
-							echo '<a id="'.$id.'" href="'.$menu['url'].'">'.Language::t($menu['name']).'</a>';
-							echo '<ul>';
-						}
 						else {
-							echo '<li>';
+							echo '<li class="'.$menu['class'].'">';
 							echo '<a id="'.$id.'" href="'.$menu['url'].'">'.Language::t($menu['name']).'</a>';
 							echo '</li>';
 						}

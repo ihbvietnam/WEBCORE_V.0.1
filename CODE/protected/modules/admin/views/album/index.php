@@ -164,7 +164,7 @@
 					array(
 						'header'=>'Công cụ',
 						'class'=>'CButtonColumn',
-    					'template'=>'{update}{delete}',
+    					'template'=>'{update}{delete}{view}',
 						'deleteConfirmation'=>'Bạn muốn xóa album này?',
 						'afterDelete'=>'function(link,success,data){ if(success) jAlert("Bạn đã xóa thành công"); }',
     					'buttons'=>array
@@ -175,6 +175,9 @@
         					'delete' => array(
     							'label'=>'Xóa bài viết',
     						),
+    						'view'=>array(
+    							'url'=>'$data->url',
+    						)
         				),
 						'headerHtmlOptions'=>array('width'=>'20%','class'=>'table-title'),
 					),    				

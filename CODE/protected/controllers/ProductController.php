@@ -19,7 +19,7 @@ class ProductController extends Controller {
 			$criteria->compare ( 'status', Product::STATUS_ACTIVE );
 			$criteria->order = 'id desc';
 			$list_product = new CActiveDataProvider ( 'Product', array ('pagination' => array ('pageSize' => Setting::s ( 'PRODUCT_PAGE_SIZE','Product' ) ), 'criteria' => $criteria ) );
-			$this->render ( 'list-product', array ('cat' => $cat, 'list_product' => $list_product ) );
+			$this->render ( 'list-product', array ('list_product' => $list_product ) );
 	}
 	/**
 	 * Displays a category product

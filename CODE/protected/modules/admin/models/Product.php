@@ -1,16 +1,31 @@
 <?php
+/**
+ * 
+ * Product class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+/**
+ * This is the model class for table "product".
+ */
 class Product extends CActiveRecord
 {
+	/**
+	 * @return string the associated database table name
+	 */	
 	public function tableName()
 	{
 		return 'tbl_product';
 	}
-	/*
-	 * Config status of product
+   /**
+	* Config status of product
 	*/
 	const STATUS_PENDING=0;
 	const STATUS_ACTIVE=1;
-	/*
+	/**
 	 * Config special
 	 * SPECIAL_REMARK product is viewed at homepage
 	 */
@@ -24,7 +39,12 @@ class Product extends CActiveRecord
 	const LIST_ADMIN=10;
 	const PRESENT_CATEGORY=31;
 	
-	static $config_unit_price = array('VND'=>'VND');
+	/**
+	 * @var array $config_unit_price, config the unit of product price
+	 */
+	static $config_unit_price = array('VND'=>'VND');	
+	public $num_price;
+	public $unit_price;
 	public $old_video;
 	public $old_introimage;
 	public $old_name;
@@ -32,8 +52,10 @@ class Product extends CActiveRecord
 	private $config_other_attributes=array('list_suggest','modified','unit','year','warranty','parameter','description','unit_price','introimage','otherimage','metakey','metadesc');	
 	private $list_other_attributes;
 	
-	/*
-	 * Get image url which view status of product 
+	/**
+	 * Get image url which display status of contact
+	 * @return string path to enable.png if this status is STATUS_ACTIVE
+	 * path to disable.png if status is STATUS_PENDING
 	 */
  	public function getImageStatus()
  	{
@@ -46,8 +68,9 @@ class Product extends CActiveRecord
  				break;
  		}	
  	}
-	/*
-	 * Get image url which view amount status of product 
+	/**
+	 * Get url of image which displays amount status of product 
+	 * @return string, absoluted url of status image
 	 */
  	public function getImageAmountStatus()
  	{
@@ -60,9 +83,11 @@ class Product extends CActiveRecord
  				break;
  		}	
  	}
- 	/*
- 	 * Get url
- 	 */
+ 	
+	/**
+	 * Get url of this image
+	 * @return string $url, url of this product
+	 */
  	public function getUrl(){
 		$cat_alias=$this->category->alias;
  		$alias=$this->alias;
@@ -70,8 +95,9 @@ class Product extends CActiveRecord
 		return $url;
 	}
  	
- 	/*
-	 * Get thumb of video
+ 	/**
+	 * Get url product thumb image
+	 * @return string, absoluted path of thumb image
 	 */
 	public function getThumb_url($type){
 		if($this->introimage>0){
@@ -84,8 +110,10 @@ class Product extends CActiveRecord
 			return '<img class="img" src="'.Image::getDefaultThumb('Product', $type).'" alt=""';
 		}
 	}
-	/*
-	 * Get similar product
+
+	/**
+	 * Get all specials of class Product
+	 * Used in dropDownList when create or update product
 	 */
 	public function getList_similar(){
 		if($this->list_suggest != ''){
@@ -93,9 +121,18 @@ class Product extends CActiveRecord
 			$result=array();
 			$index=0;
 			foreach ($list as $id){
-				$index++;
-				if($index <= Setting::s('LIMIT_SIMILAR_PRODUCT','Product'))
-					$result[]=Product::model()->findByPk($id);
+				$product=Product::model()->findByPk($id);
+				if(isset($product)){
+					$index++;
+					if($index <= Setting::s('LIMIT_SIMILAR_PRODUCT','Product'))
+						$result[]=Product::model()->findByPk($id);
+				}
+				else{
+					$list_clear=array_diff(explode(',',$this->list_suggest),array(''));
+					$list_filter=array_diff($list_clear,array($id));
+					$this->list_suggest=implode(',', $list_filter);
+					$this->save();
+				}
 			}
 		}
 		else {
@@ -110,8 +147,8 @@ class Product extends CActiveRecord
 		}
 		return $result;
 	}
-	/*
-	 * Get all specials of class Album
+	/**
+	 * Get all specials of class Product
 	 * Use in drop select when create, update album
 	 */
 	static function getList_label_specials()
@@ -120,10 +157,10 @@ class Product extends CActiveRecord
 			self::SPECIAL_REMARK=>'Hiển thị trong phần sản phẩm nổi bật',
 			self::SPECIAL_BESTSELLER=>'Hiển thị trong phần sản phẩm bán chạy',
 		);
- 	}	
- 	/*
- 	 * Get specials of a object album
- 	 * Use in page lit admin
+ 	}
+ 	/**
+ 	 * Get specials label of a product object
+ 	 * Used in list page of admin board
  	 */
 	public function getLabel_specials()
  	{
@@ -134,7 +171,7 @@ class Product extends CActiveRecord
 		}
 		return $label_specials;
  	}
- 	/*
+ 	/**
  	 * Special is encoded before save in database
  	 * Function get all code of the special
  	 */
@@ -156,6 +193,9 @@ class Product extends CActiveRecord
  	}
 	/**
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -167,6 +207,8 @@ class Product extends CActiveRecord
 	
 	/**
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -199,8 +241,7 @@ class Product extends CActiveRecord
 			array('description,parameter', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'write'),
 			array('list_special,lang,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
 			array('num_price', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
-			array('name,lang, manufacturer_id, catid,special, amount_status','safe','on'=>'search'),
-			array('introimage','safe','on'=>'upload_image'),		
+			array('name,lang, manufacturer_id, catid,special, amount_status','safe','on'=>'search'),	
 		);
 	}
 
@@ -244,7 +285,7 @@ class Product extends CActiveRecord
 			'list_suggest'=>'Sản phẩm liên quan'
 		);
 	}
-/**
+	/**
 	 * This event is raised after the record is instantiated by a find method.
 	 * @param CEvent $event the event parameter
 	 */
@@ -306,6 +347,12 @@ class Product extends CActiveRecord
 		}
 	}
 	
+	/**
+	 * This method is invoked after saving a record successfully.
+	 * The default implementation raises the {@link onAfterSave} event.
+	 * You may override this method to do postprocessing after record saving.
+	 * Make sure you call the parent implementation so that the event is raised properly.
+	 */
 	public function afterSave(){
 		if($this->old_introimage != $this->introimage){
 			$introimage = Image::model()->findByPk($this->introimage);
@@ -322,19 +369,27 @@ class Product extends CActiveRecord
 		return true;
 	}
 	
-/**
+	/**
 	 * This method is invoked before delete a record 
 	 */
 	public function beforeDelete() {
+			//Delete introimage	
 		if (parent::beforeDelete ()) {
-			$introimage = Image::model()->findByPk($this->introimage);
-			if(isset($introimage)){
-				if($introimage->delete()) 
-					return true;
-				else 
-					return false;	
+			$introimage = Image::model ()->findByPk ( $this->introimage );
+			if (isset ( $introimage )) {
+				if (! $introimage->delete ())
+					return false;
 			}
-			return true;	
+			//Delete otherimage
+			$list = array_diff ( explode ( ',', $this->otherimage ), array ('' ) );
+			foreach ( $list as $id ) {
+				$image = Image::model ()->findByPk ( $id );
+				if (isset ( $image )) {
+					if (! $image->delete ())
+						return false;
+				}
+			}
+			return true;
 		}
 	}
 	
@@ -384,7 +439,7 @@ class Product extends CActiveRecord
 		if ($this->special != '') {
 			$criteria->addInCondition ( 'special', self::getCode_special ( $this->special ) );
 		}
-		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Yii::app ()->params ['defaultPageSize'] ) ) ) );
+		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Setting::s('DEFAULT_PAGE_SIZE','System') ) ) ) );
 	}
 	/**
 	 * Suggests a list of existing names matching the specified keyword.
@@ -407,8 +462,9 @@ class Product extends CActiveRecord
 			$names[]=$qa->name;
 			return $names;
 	}
-	/*
-	 * Set status of qa
+	/**
+	 * Change status of product
+	 * @param integer $id, the ID of product model
 	 */
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
@@ -439,8 +495,9 @@ class Product extends CActiveRecord
 		}
 		else return false;
 	}
-/*
-	 * Set status of qa
+	/**
+	 * Change status of Amount
+	 * @param integer $id, the ID of product model
 	 */
 	static function reverseAmountStatus($id){
 		$command=Yii::app()->db->createCommand()
@@ -471,15 +528,19 @@ class Product extends CActiveRecord
 		}
 		else return false;
 	}
-
-	// Get list manufacturer
+	
+	/**
+	 * 
+	 * static function, get all manufacturer
+	 * @return array, list of all manufacturer
+	 */
 	public static function getManufacturerOption()
 	{
 		//List manufacturer
 		$group=new Category();		
 		$group->group=Category::GROUP_MANUFACTURER;
 		$list=$group->list_categories;
-		//$temp=Category::model()->findByPk(190);		
+		
 		$list_manufacturer=array();
 		foreach ($list as $id=>$manufacturer){			
 			//var_dump($manufacturer['parent_id']);
@@ -493,14 +554,18 @@ class Product extends CActiveRecord
 	}
 	
 	
-		// Get all list manufacturer
+	/**
+	 * 
+	 * static function, get all manufacturer and group of product
+	 * @return array, list of all manufacturer
+	 */
 	public static function getAllManufacturerOption()
 	{
 		//List manufacturer
 		$group=new Category();		
 		$group->group=Category::GROUP_MANUFACTURER;
 		$list=$group->list_categories;
-		//$temp=Category::model()->findByPk(190);		
+		
 		$list_manufacturer=array();
 		foreach ($list as $id=>$manufacturer){			
 			//var_dump($manufacturer['parent_id']);
@@ -510,9 +575,13 @@ class Product extends CActiveRecord
 		}
 		
 		return $list_manufacturer;
-	}
+	}	
 	
-	// Get all category option	
+	/**
+	 * 
+	 * Get all category option, used in dropDownList in create, update and import product
+	 * @return array of existing category
+	 */
 	public static function getAllCategoryOption()
 	{
 		//List manufacturer
@@ -527,7 +596,10 @@ class Product extends CActiveRecord
 		
 		return $list_manufacturer;
 	}
-	
+	/**
+	 * 
+	 * Used to display hyperlink site/contactproduct if this product doesn't have price
+	 */
 	public function checkprice()
 	{
 		$returnvalue = $this->num_price;
