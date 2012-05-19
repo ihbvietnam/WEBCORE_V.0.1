@@ -160,7 +160,7 @@ class Category extends CActiveRecord
 		while ($check){
 			$current=Category::model()->findByPk($current_id);
 			$bread_crumb[]=$current_id;
-			if(in_array($current->parent_id,array(Category::GROUP_NEWS,Category::GROUP_PRODUCT,Category::GROUP_STATICPAGE,Category::GROUP_ALBUM,Category::GROUP_GALLERYVIDEO))){
+			if(in_array($current->parent_id,array(Category::GROUP_NEWS,Category::GROUP_PRODUCT,Category::GROUP_STATICPAGE,Category::GROUP_ALBUM,Category::GROUP_GALLERYVIDEO,Category::GROUP_ADMIN_MENU,Category::GROUP_MANUFACTURER,Category::GROUP_USER_MENU))){
 				$check=false;
 			}
 			else 
