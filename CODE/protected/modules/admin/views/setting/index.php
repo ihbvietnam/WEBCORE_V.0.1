@@ -95,7 +95,7 @@
 					array(
 						'header'=>'Công cụ',
 						'class'=>'CButtonColumn',
-    					'template'=>'{update}{delete}',
+    					'template'=>'{update}',
 						'deleteConfirmation'=>'Bạn muốn xóa bài viết này?',
 						'afterDelete'=>'function(link,success,data){ if(success) jAlert("Bạn đã xóa thành công"); }',
     					'buttons'=>array
@@ -120,12 +120,14 @@
   				'summaryText'=>'Có tổng cộng {count} tin',
  	 			'pager'=>array('class'=>'CLinkPager','header'=>'','prevPageLabel'=>'< Trước','nextPageLabel'=>'Sau >','htmlOptions'=>array('class'=>'pages fr')),
 				'actions'=>array(
-					'delete'=>array(
+					/*
+ 	 				'delete'=>array(
 						'action'=>'delete',
 						'label'=>'Xóa',
 						'imageUrl' => '/images/admin/delete.png',
 						'url'=>'admin/setting/checkbox'
-					),					
+					),		
+					*/			
 				),
  	 			)); ?>
 		</div>

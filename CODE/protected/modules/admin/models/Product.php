@@ -42,7 +42,7 @@ class Product extends CActiveRecord
 	/**
 	 * @var array $config_unit_price, config the unit of product price
 	 */
-	static $config_unit_price = array('USA'=>'USA');	
+	static $config_unit_price = array('VND'=>'VND');	
 	public $num_price;
 	public $unit_price;
 	public $old_video;
@@ -121,9 +121,18 @@ class Product extends CActiveRecord
 			$result=array();
 			$index=0;
 			foreach ($list as $id){
-				$index++;
-				if($index <= Setting::s('LIMIT_SIMILAR_PRODUCT','Product'))
-					$result[]=Product::model()->findByPk($id);
+				$product=Product::model()->findByPk($id);
+				if(isset($product)){
+					$index++;
+					if($index <= Setting::s('LIMIT_SIMILAR_PRODUCT','Product'))
+						$result[]=Product::model()->findByPk($id);
+				}
+				else{
+					$list_clear=array_diff(explode(',',$this->list_suggest),array(''));
+					$list_filter=array_diff($list_clear,array($id));
+					$this->list_suggest=implode(',', $list_filter);
+					$this->save();
+				}
 			}
 		}
 		else {
@@ -232,8 +241,7 @@ class Product extends CActiveRecord
 			array('description,parameter', 'length', 'max'=>1024,'message'=>'Tối đa 1024 kí tự','on'=>'write'),
 			array('list_special,lang,unit_price,otherimage,list_suggest', 'safe','on'=>'write'),
 			array('num_price', 'numerical', 'integerOnly'=>true,'message'=>'Sai định dạng','on'=>'write'),
-			array('name,lang, manufacturer_id, catid,special, amount_status','safe','on'=>'search'),
-			array('introimage','safe','on'=>'upload_image'),		
+			array('name,lang, manufacturer_id, catid,special, amount_status','safe','on'=>'search'),	
 		);
 	}
 
@@ -365,30 +373,23 @@ class Product extends CActiveRecord
 	 * This method is invoked before delete a record 
 	 */
 	public function beforeDelete() {
-	//Delete introimage	
+			//Delete introimage	
 		if (parent::beforeDelete ()) {
-			$introimage = Image::model()->findByPk($this->introimage);
-			if(isset($introimage)){
-				if($introimage->delete()) 
-					return true;
-				else 
-					return false;	
+			$introimage = Image::model ()->findByPk ( $this->introimage );
+			if (isset ( $introimage )) {
+				if (! $introimage->delete ())
+					return false;
 			}
-			return true;	
-		}
-		//Delete otherimage
-		if (parent::beforeDelete ()) {
-			$list=array_diff ( explode ( ',', $this->otherimage ), array ('' ) );	
-			foreach ($list as $id){				
-			$otherimage = Image::model()->findByPk($id);
-			if(isset($introimage)){
-				if($introimage->delete()) 
-					return true;
-				else 
-					return false;	
+			//Delete otherimage
+			$list = array_diff ( explode ( ',', $this->otherimage ), array ('' ) );
+			foreach ( $list as $id ) {
+				$image = Image::model ()->findByPk ( $id );
+				if (isset ( $image )) {
+					if (! $image->delete ())
+						return false;
+				}
 			}
-			}
-			return true;	
+			return true;
 		}
 	}
 	
@@ -438,7 +439,7 @@ class Product extends CActiveRecord
 		if ($this->special != '') {
 			$criteria->addInCondition ( 'special', self::getCode_special ( $this->special ) );
 		}
-		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Yii::app ()->params ['defaultPageSize'] ) ) ) );
+		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Setting::s('DEFAULT_PAGE_SIZE','System') ) ) ) );
 	}
 	/**
 	 * Suggests a list of existing names matching the specified keyword.

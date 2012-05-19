@@ -79,7 +79,6 @@ class Image extends CActiveRecord
 	 * Config thumb_type 
 	 * declare thumb_type images
 	 */
-	static $config_thumb_type=array('left');
 	private $config_other_attributes=array();	
 	private $list_other_attributes;
 	
@@ -450,7 +449,12 @@ class Image extends CActiveRecord
 	 */
 	public function beforeDelete() {
 		if (parent::beforeDelete ()) {
-			foreach ( self::$config_thumb_type as $type ) {
+			$list_thumb_type=array('origin');
+			$model=self::$config_thumb_size[$this->category];
+			foreach ($model as $type => $size){
+				$list_thumb_type[]=$type;
+			}
+			foreach ($list_thumb_type as $type){
 				$dir = Yii::getPathOfAlias ( 'webroot' ) . '/' . $this->src . '/' . $type;
 				$file = $dir . '/' . $this->filename . '.' . $this->extension;
 				if (file_exists ( $file )) {
@@ -484,7 +488,7 @@ class Image extends CActiveRecord
 				$attribute = $this->parent_attribute;
 				$old_attributes = array_diff ( explode ( ',', $parent->$attribute ), array ('' ) );
 				foreach ( $old_attributes as $id => $image_id ) {
-					if ($image_id == $this->id) {
+	 				if ($image_id == $this->id) {
 						unset ( $old_attributes [$id] );
 					}
 				}

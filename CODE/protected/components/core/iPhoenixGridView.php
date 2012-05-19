@@ -2,12 +2,12 @@
 Yii::import('zii.widgets.grid.CGridView');
 class iPhoenixGridView extends CGridView
 {
-	public $checkboxCssClass='list-action-checbox';
-	public $displayboxCssClass='display-box';
-	public $actions=array();
-	public function init(){
-		parent::init();
-		$this->beforeAjaxUpdate='function(id,options){
+	public $checkboxCssClass = 'list-action-checbox';
+	public $displayboxCssClass = 'display-box';
+	public $actions = array ();
+	public function init() {
+		parent::init ();
+		$this->beforeAjaxUpdate = 'function(id,options){
 									name=$("thead :checkbox").attr("name");
 									name=name.substring(0, name.length - 4) + "[]";
 									list_checked=new Array();
@@ -24,14 +24,11 @@ class iPhoenixGridView extends CGridView
         							};
         							options.type="POST";
         							return true;
-        						}';	
+        						}';
 	}
-	public function renderCheckbox()
-	{
-	$cs = Yii::app()->getClientScript(); 
-	$cs->registerScript(
-  		'js-checkbox',
-  		"jQuery(function($) { $('body').on('click','.action-checkbox',	
+	public function renderCheckbox() {
+		$cs = Yii::app ()->getClientScript ();
+		$cs->registerScript ( 'js-checkbox', "jQuery(function($) { $('body').on('click','.action-checkbox',	
   		function(){  			
   			$.fn.yiiGridView.update('{$this->id}', {
 			type:'GET',
@@ -43,16 +40,17 @@ class iPhoenixGridView extends CGridView
 		});
 		return false;
         });
-        })",
-  CClientScript::POS_END
-);
-		echo '<div class="'.$this->checkboxCssClass.'">';
-		echo 'Công cụ: ';
-		foreach ($this->actions as $action) {
-					$this->renderAction($action);
-					echo " ";
-				}
-		echo '</div>';
+        })", CClientScript::POS_END );
+		
+		if (sizeof ( $this->actions ) > 0) {
+			echo '<div class="' . $this->checkboxCssClass . '">';
+			echo 'Công cụ: ';
+			foreach ( $this->actions as $action ) {
+				$this->renderAction ( $action );
+				echo " ";
+			}
+			echo '</div>';
+		}
 	}
 
 	protected function renderAction($action)
@@ -92,8 +90,8 @@ class iPhoenixGridView extends CGridView
         })",
   		CClientScript::POS_END
 		);
-		$pageSize = Yii::app ()->user->getState ( 'pageSize', Yii::app ()->params ['defaultPageSize'] );
-		echo CHtml::dropDownList ( 'pageSize', $pageSize, array (1 => '1', 2 => '2', 5 => '5'), array ('class' => $this->displayboxCssClass ) );
+		$pageSize = Yii::app ()->user->getState ( 'pageSize', Setting::s('DEFAULT_PAGE_SIZE','System'));
+		echo CHtml::dropDownList ( 'pageSize', $pageSize, array (Setting::s('DEFAULT_PAGE_SIZE','System') => Setting::s('DEFAULT_PAGE_SIZE','System'), 10*Setting::s('DEFAULT_PAGE_SIZE','System') => 10*Setting::s('DEFAULT_PAGE_SIZE','System'), 100*Setting::s('DEFAULT_PAGE_SIZE','System') => 100*Setting::s('DEFAULT_PAGE_SIZE','System')), array ('class' => $this->displayboxCssClass ) );
 	}
 }
 ?>

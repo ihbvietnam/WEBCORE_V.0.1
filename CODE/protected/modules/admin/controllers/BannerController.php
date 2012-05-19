@@ -54,7 +54,7 @@ class BannerController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('reverseStatus','delete','checkbox'),
+				'actions'=>array('reverseStatus','checkbox'),
 				'roles'=>array('update'),
 			),
 			array('deny',  // deny all users

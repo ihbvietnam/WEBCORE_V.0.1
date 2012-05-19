@@ -997,7 +997,7 @@ class Category extends CActiveRecord
 			if($menu['url']== Yii::app()->request->requestUri)
 			{
 				$current=Category::model()->findByPk($id);
-				$result[]=(int)$current->root;
+				$result=$current->bread_crumb;
 			}
 		}
 		return $result;

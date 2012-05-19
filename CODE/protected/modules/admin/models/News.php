@@ -150,13 +150,22 @@ class News extends CActiveRecord
 	 */
 	public function getList_similar(){
 		if($this->list_suggest != ''){
-			$list = array_diff ( explode ( ',', $this->list_suggest ), array ('' ) );
+		$list = array_diff ( explode ( ',', $this->list_suggest ), array ('' ) );
 			$result=array();
 			$index=0;
 			foreach ($list as $id){
-				$index++;
-				if($index <= Setting::s('LIMIT_SIMILAR_NEWS','News'))
-					$result[]=News::model()->findByPk($id);
+				$news=News::model()->findByPk($id);
+				if(isset($news)){
+					$index++;
+					if($index <= Setting::s('LIMIT_SIMILAR_NEWS','News'))
+						$result[]=News::model()->findByPk($id);
+				}
+				else{
+					$list_clear=array_diff(explode(',',$this->list_suggest),array(''));
+					$list_filter=array_diff($list_clear,array($id));
+					$this->list_suggest=implode(',', $list_filter);
+					$this->save();
+				}
 			}
 		}
 		else {
@@ -540,7 +549,7 @@ class News extends CActiveRecord
 			$criteria->addInCondition ( 'special', self::getCode_special ( $this->special ) );
 		
 		//$criteria->order="order_view DESC,id DESC";
-		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Yii::app ()->params ['defaultPageSize'] ) ), 'sort' => array ('defaultOrder' => 'order_view DESC,id DESC' )    		
+		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Setting::s('DEFAULT_PAGE_SIZE','System')  ) ), 'sort' => array ('defaultOrder' => 'order_view DESC,id DESC' )    		
 		));
 	}
 	/**

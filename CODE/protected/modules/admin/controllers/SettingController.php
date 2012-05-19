@@ -46,7 +46,7 @@ class SettingController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('update','create','delete','index','delete','checkbox','suggestName'),
+				'actions'=>array('update','create','index','delete','checkbox','suggestName'),
 				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -100,7 +100,7 @@ class SettingController extends Controller
 			'model'=>$model			
 		));
 	}
-
+	
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.

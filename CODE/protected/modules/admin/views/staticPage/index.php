@@ -156,7 +156,7 @@
 					array(
 						'header'=>'Công cụ',
 						'class'=>'CButtonColumn',
-    					'template'=>'{copy}{update}{delete}',
+    					'template'=>'{copy}{update}{view}',
 						'deleteConfirmation'=>'Bạn muốn xóa bài viết này?',
 						'afterDelete'=>'function(link,success,data){ if(success) jAlert("Bạn đã xóa thành công"); }',
     					'buttons'=>array
@@ -173,6 +173,9 @@
             					'imageUrl'=>Yii::app()->request->getBaseUrl(true).'/images/admin/copy.gif',
             					'url'=>'Yii::app()->createUrl("admin/staticPage/copy", array("id"=>$data->id))',
         					),
+        					'view'=>array(
+    							'url'=>'$data->url',
+    						)
         				),
 						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),
 					),    				
@@ -181,12 +184,14 @@
   				'summaryText'=>'Có {count} trang',
  	 			'pager'=>array('class'=>'CLinkPager','header'=>'','prevPageLabel'=>'< Trước','nextPageLabel'=>'Sau >','htmlOptions'=>array('class'=>'pages fr')),
 				'actions'=>array(
+ 	 				/*
 					'delete'=>array(
 						'action'=>'delete',
 						'label'=>'Xóa',
 						'imageUrl' => '/images/admin/delete.png',
 						'url'=>'admin/staticPage/checkbox'
 					),
+					*/
 					'copy'=>array(
 						'action'=>'copy',
 						'label'=>'Copy',

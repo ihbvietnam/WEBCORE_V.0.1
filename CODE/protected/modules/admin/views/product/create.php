@@ -279,7 +279,7 @@ $('#select5').click(function () {
 	<input type="submit" class="button" value="Lọc bài viết">
 	</li>
 	<?php $this->endWidget(); ?>	
-	<li>
+	<li class="list-suggest">
 	  <?php 
 			$this->widget('iPhoenixGridView', array(
   				'id'=>'product-list',

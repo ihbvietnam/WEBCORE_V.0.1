@@ -456,7 +456,7 @@ class StaticPage extends CActiveRecord
 			$criteria->addInCondition ( 'special', self::getCode_special ( $this->special ) );
 		
 		//$criteria->order="order_view DESC,id DESC";
-		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Yii::app ()->params ['defaultPageSize'] ) ), 'sort' => array ('defaultOrder' => 'order_view DESC,id DESC' )    		
+		return new CActiveDataProvider ( $this, array ('criteria' => $criteria, 'pagination' => array ('pageSize' => Yii::app ()->user->getState ( 'pageSize', Setting::s('DEFAULT_PAGE_SIZE','System') ) ), 'sort' => array ('defaultOrder' => 'order_view DESC,id DESC' )    		
 		));
 	}
 	/**
