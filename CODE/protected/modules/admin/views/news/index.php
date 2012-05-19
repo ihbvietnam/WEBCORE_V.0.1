@@ -109,7 +109,7 @@
 					array(
 						'name'=>'category',
 						'value'=>'$data->label_category',
-						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
+						'headerHtmlOptions'=>array('width'=>'8%','class'=>'table-title'),		
 					), 
 					/*		
 					array(
@@ -121,7 +121,7 @@
 					array(
 						'name'=>'order_view',
 						'value'=>'$data->order_view',
-						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),		
+						'headerHtmlOptions'=>array('width'=>'8%','class'=>'table-title'),		
 					),
 					array(
 						'name'=>'author',
@@ -159,12 +159,12 @@
 								return false;}',
         					),
         				),
-						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),
+						'headerHtmlOptions'=>array('width'=>'5%','class'=>'table-title'),
 					),    											   	   
 					array(
 						'header'=>'Công cụ',
 						'class'=>'CButtonColumn',
-    					'template'=>'{copy}{update}{delete}',
+    					'template'=>'{copy}{update}{delete}{view}',
 						'deleteConfirmation'=>'Bạn muốn xóa bài viết này?',
 						'afterDelete'=>'function(link,success,data){ if(success) jAlert("Bạn đã xóa thành công"); }',
     					'buttons'=>array
@@ -181,6 +181,9 @@
             					'imageUrl'=>Yii::app()->request->getBaseUrl(true).'/images/admin/copy.gif',
             					'url'=>'Yii::app()->createUrl("admin/news/copy", array("id"=>$data->id))',
         					),
+        					'view'=>array(
+    							'url'=>'$data->url',
+    						)
         				),
 						'headerHtmlOptions'=>array('width'=>'10%','class'=>'table-title'),
 					),    				

@@ -1,10 +1,30 @@
 <?php
+/**
+ * 
+ * ImageController class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
 
+/**
+ * ImageController includes actions relevant to Image:
+ *** upload image
+ *** delete image
+ *** update image
+ *** list image
+ *** clear image
+ *** reverse model's status
+ *** suggest model's title
+ *** load model from id  
+ */
 class ImageController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. Defaults to '/protected/modules/admin/view/layouts/main'.
+	 * See '/protected/modules/admin/view/layouts/main.php'.
 	 */
 	public $layout='main';
 
@@ -40,6 +60,10 @@ class ImageController extends Controller
 		);
 	}
 
+	/**
+	 * 
+	 * upload image into server
+	 */
 	public function actionUpload()
 	{
 		Yii::import("ext.EAjaxUpload.qqFileUploader");
@@ -52,7 +76,12 @@ class ImageController extends Controller
         $result=htmlspecialchars(json_encode($result), ENT_NOQUOTES);
         echo $result;// it's array
 	}
-
+	
+	/**
+	 * 
+	 * delete model
+	 * @param integer $id the ID of model to be deleted
+	 */
 	public function actionDelete($id)
 	{
 			if($this->loadModel($id)->delete()) 
@@ -83,7 +112,7 @@ class ImageController extends Controller
 	
 	/**
 	 * 
-	 * List all images which are of a object (banner or album)
+	 * List all images belong to a object (banner or album)
 	 * @param $catid
 	 * @param $params_size_1
 	 * @param $params_size_2
@@ -99,6 +128,10 @@ class ImageController extends Controller
 		));
 	}
 	
+	/**
+	 * 
+	 * Clear all image in the list of object (album or banner)
+	 */
 	public function actionClear()
 	{
 		$list_images=Image::model()->findAll('parent_id = 0');
@@ -113,6 +146,7 @@ class ImageController extends Controller
 	
 	/**
 	 * Reverse status of image
+	 * @param integer $id, the ID of model to be reversed
 	 */
 	public function actionReverseStatus($id)
 	{
@@ -122,6 +156,7 @@ class ImageController extends Controller
 			else 
 				echo json_encode(array('success'=>false));		
 	}
+	
 	/**
 	 * Suggests title of image.
 	 */
@@ -134,6 +169,13 @@ class ImageController extends Controller
 				echo implode("\n",$titles);
 		}
 	}
+	
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer the ID of the model to be loaded
+	 * @return Image $model, the model has ID
+	 */
 	public function loadModel($id)
 	{
 		$model=Image::model()->findByPk($id);

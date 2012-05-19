@@ -53,7 +53,8 @@
     <?php 
     foreach (array_diff(explode(',',$model->$attribute),array('')) as $image_id){
     	$image=Image::model()->findByPk($image_id);
-    	echo '<div class="item-image" id="'.$image_id.'"><img style="height:'.$h.'px; width:'.$w.'px" src="'.$image->getThumb($category,$type_image).'" /><a class="close"></a></div>';
+    	if(isset($image))
+    		echo '<div class="item-image" id="'.$image_id.'"><img style="height:'.$h.'px; width:'.$w.'px" src="'.$image->getThumb($category,$type_image).'" /><a class="close"></a></div>';
 	}
     ?>
     </div>

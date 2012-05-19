@@ -1,6 +1,0 @@
-assets/*
-protected/runtime/*
-.settings/*
-.buildpath
-.project
-error_log

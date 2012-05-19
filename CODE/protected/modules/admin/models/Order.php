@@ -1,29 +1,48 @@
 <?php
+/**
+ * 
+ * Order class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+/**
+ * This is the model class for table "order".
+ */
 class Order extends CActiveRecord
 {
+	/**
+	 * @return string the associated database table name
+	 */	
 	public function tableName()
 	{
 		return 'tbl_order';
 	}
-	/*
-	 * Config status of contact
+	/**
+	 * Config status of order
 	 */
 	const STATUS_PENDING=0;
 	const STATUS_ACTIVE=1;
 	
 	const LIST_ADMIN=10;
 	const SIZE_INTRO_CONTENT=50;
-
-	// array('product_id1'=>'amount1','product_id2'=>'amount2',...)
+	
 	public $start_time=null;
 	public $stop_time=null;
 	public $list_item;
 	public $old_answer;
+	/**
+	 * @var array config list other attributes of the banner
+	 * this attribute no need to search	 
+	 */	
 	private $config_other_attributes = array('modified','address','content','phone','email','fullname','note','metakey','metadesc');
 	public $list_other_attributes;
 
-	/*
-	 * Decode content from list item in database for viewing
+   /**
+	* Decode content from list item in database to for displaying
+	* @param array $content, array of {product_id=>amount} in this order 
 	*/
 	public function getOrder_content(){
 		$order_content = '';
@@ -36,6 +55,7 @@ class Order extends CActiveRecord
 		}		
 		return ($order_content);
 	}
+
 	/*
 	 * Get total order
 	*/
@@ -50,8 +70,12 @@ class Order extends CActiveRecord
 		}		
 		return number_format($value, 0, ',', '.').' '.$content['unit_price'];
 	}
-	/*
-	 * Get image url which view status of contact
+
+	
+	/**
+	 * Get image url which display status of order (representing the actived action of customers)
+	 * @return string path to enable.png if this status is STATUS_ACTIVE
+	 * path to disable.png if status is STATUS_PENDING
 	 */
  	public function getImageStatus()
  	{
@@ -64,6 +88,12 @@ class Order extends CActiveRecord
  				break;
  		}	
  	}
+
+	/**
+	 * Get image url which display processing status of order (representing the actived processing of shoper)
+	 * @return string path to enable.png if this status is STATUS_ACTIVE
+	 * path to disable.png if status is STATUS_PENDING
+	 */ 	
  	public function getImageProcessStatus()
  	{
  		switch ($this->process_status) {
@@ -77,6 +107,9 @@ class Order extends CActiveRecord
  	}
 	/**
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -88,6 +121,8 @@ class Order extends CActiveRecord
 	
 	/**
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -159,7 +194,7 @@ class Order extends CActiveRecord
 			'order_value'=>'Tổng giá trị'
 		);
 	}
-/**
+	/**
 	 * This event is raised after the record is instantiated by a find method.
 	 * @param CEvent $event the event parameter
 	 */
@@ -234,7 +269,7 @@ class Order extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination' => array (
-				'pageSize' => Yii::app ()->user->getState ( 'pageSize', Yii::app ()->params ['defaultPageSize'] )),
+				'pageSize' => Yii::app ()->user->getState ( 'pageSize', Setting::s('DEFAULT_PAGE_SIZE','System'))),
 		));
 	}
 	/**
@@ -258,8 +293,9 @@ class Order extends CActiveRecord
 			$titles[]=$contact->title;
 			return $titles;
 	}
-	/*
-	 * Set status of contact
+	/**
+	 * Change status of order
+	 * @param integer $id, the ID of order model
 	 */
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
@@ -291,8 +327,9 @@ class Order extends CActiveRecord
 		else return false;
 	}
 	
-/*
-	 * Set status of contact
+	/**
+	 * Change processing status of order
+	 * @param integer $id, the ID of order model
 	 */
 	static function reverseProcessStatus($id){
 		$command=Yii::app()->db->createCommand()

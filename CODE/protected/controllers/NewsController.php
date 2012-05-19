@@ -28,7 +28,6 @@ class NewsController extends Controller
 					'criteria'=>$criteria,
 				));
 				$this->render('list-news',array(
-					'cat'=>$cat,
 					'list_news'=>$list_news
 				));
 	}	

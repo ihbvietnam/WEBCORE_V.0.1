@@ -1,11 +1,27 @@
 <?php
+/**
+ * 
+ * Contact class file 
+ * @author ihbvietnam <hotro@ihbvietnam.com>
+ * @link http://iphoenix.vn
+ * @copyright Copyright &copy; 2012 IHB Vietnam
+ * @license http://iphoenix.vn/license
+ *
+ */
+
+/**
+ * Contact includes attributes and methods of Contact class  
+ */
 class Contact extends CActiveRecord
 {
+	/**
+	 * @return string the associated database table name
+	 */
 	public function tableName()
 	{
 		return 'tbl_article';
 	}
-	/*
+	/**
 	 * Config scope of news
 	 */
 	public function defaultScope(){
@@ -13,7 +29,7 @@ class Contact extends CActiveRecord
 			'condition'=>'type = '.Article::ARTICLE_CONTACT,
 		);	
 	}
-	/*
+	/**
 	 * Config status of contact
 	 */
 	const STATUS_PENDING=0;
@@ -22,12 +38,19 @@ class Contact extends CActiveRecord
 	const LIST_ADMIN=10;
 	const SIZE_INTRO_CONTENT=50;
 
-	
+	/**
+	 * @var array config list other attributes of the banner
+	 * this attribute no need to search	 
+	 */
 	public $old_answer;
 	private $config_other_attributes=array('modified','address','content','phone','email','fullname','metakey','metadesc');	
+	
 	private $list_other_attributes;
-	/*
-	 * Get image url which view status of contact
+	
+	/**
+	 * Get image url which display status of contact
+	 * @return string path to enable.png if this status is STATUS_ACTIVE
+	 * path to disable.png if status is STATUS_PENDING
 	 */
  	public function getImageStatus()
  	{
@@ -43,6 +66,9 @@ class Contact extends CActiveRecord
 
 	/**
 	 * PHP setter magic method for other attributes
+	 * @param $name the attribute name
+	 * @param $value the attribute value
+	 * set value into particular attribute
 	 */
 	public function __set($name,$value)
 	{
@@ -54,6 +80,8 @@ class Contact extends CActiveRecord
 	
 	/**
 	 * PHP getter magic method for other attributes
+	 * @param $name the attribute name
+	 * @return value of {$name} attribute
 	 */
 	public function __get($name)
 	{
@@ -206,8 +234,9 @@ class Contact extends CActiveRecord
 			$titles[]=$contact->title;
 			return $titles;
 	}
-	/*
-	 * Set status of contact
+	/**
+	 * Change status of contact
+	 * @param integer $id, the ID of contact model
 	 */
 	static function reverseStatus($id){
 		$command=Yii::app()->db->createCommand()
