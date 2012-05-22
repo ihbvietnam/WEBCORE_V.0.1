@@ -779,7 +779,7 @@ class Category extends CActiveRecord
 						$criteria->compare('status',StaticPage::STATUS_ACTIVE);
 						$list_page=StaticPage::model()->findAll($criteria);
 						foreach ($list_page as $page){
-							$index=json_encode(array('cat_alias'=>$page->category->alias,'pageStatic_alias'=>$page->alias));
+							$index=json_encode(array('cat_alias'=>$page->category->alias,'staticPage_alias'=>$page->alias));
 							$result[$index]=$page->title;
 						}
 						return $result;	
